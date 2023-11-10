@@ -27,4 +27,5 @@ def load_CARRA_data(*args):
                             'al': 'albedo',
                             'skt': 't_surf'
                         })
+    df_carra['t_surf']  = df_carra.t_surf-273.15
     return df_carra

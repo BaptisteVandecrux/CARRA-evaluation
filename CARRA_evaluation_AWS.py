@@ -33,15 +33,13 @@ for station in df_meta.stid:
         df_aws = pd.read_csv(path_l3 + station + '/'+station+'_day.csv')
         df_aws.time = pd.to_datetime(df_aws.time, utc=True)
         df_aws=df_aws.set_index('time')
-        Msg('AWS info:')
-        Msg('%s'%', '.join(
-            df_meta.loc[df_meta.stid==station, ['lat','lon','alt']].astype(str).values[0].tolist())
+        Msg('AWS altitude %s'%', '.join(
+            df_meta.loc[df_meta.stid==station, ['alt']].astype(str).values[0].tolist())
             )
-
+        Msg('')
         df_carra = load_CARRA_data("./data/CARRA_at_AWS.nc", station)
-        Msg('CARRA info:')
-        Msg('%s'%', '.join(
-            df_carra[['latitude', 'longitude','altitude']]
+        Msg('CARRA altitude %s'%', '.join(
+            df_carra[['altitude_mod']]
             .drop_duplicates()
             .astype(str).values[0].tolist())
             )
@@ -72,7 +70,7 @@ for station in df_meta.stid:
             
             # first plot
             df_aws[var].plot(ax=ax1, label='AWS')
-            df_carra[var].plot(ax=ax1, label='CARRA')
+            df_carra[var].plot(ax=ax1,alpha=0.7, label='CARRA')
             ax1.set_ylabel(var)
             ax1.set_title(station)
             ax1.legend()
