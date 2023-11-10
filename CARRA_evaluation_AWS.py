@@ -33,8 +33,20 @@ for station in df_meta.stid:
         df_aws = pd.read_csv(path_l3 + station + '/'+station+'_day.csv')
         df_aws.time = pd.to_datetime(df_aws.time, utc=True)
         df_aws=df_aws.set_index('time')
+        Msg('AWS info:')
+        Msg('%s'%', '.join(
+            df_meta.loc[df_meta.stid==station, ['lat','lon','alt']].astype(str).values[0].tolist())
+            )
+
+        df_carra = load_CARRA_data("./data/CARRA_at_AWS.nc", station)
+        Msg('CARRA info:')
+        Msg('%s'%', '.join(
+            df_carra[['latitude', 'longitude','altitude']]
+            .drop_duplicates()
+            .astype(str).values[0].tolist())
+            )
         
-        df_carra = load_CARRA_data("./data/CARRA_at_AWS.nc", station)[
+        df_carra = df_carra[
             ['t_u', 'albedo', 'dsr', 'dlr', 'p_u', 't_surf', 'wspd_u', 
              'rh_u', 'ulr', 'usr']].resample('D').mean()
         
@@ -43,6 +55,10 @@ for station in df_meta.stid:
         common_idx = df_aws.index.intersection(df_carra.index)
         df_aws = df_aws.loc[common_idx, :]
         df_carra = df_carra.loc[common_idx, :]
+        
+
+
+        
         plt.close('all')
         for var in ['t_u', 'albedo', 'dsr', 'dlr', 'p_u', 't_surf', 'wspd_u', 
                     'rh_u', 'ulr', 'usr']:
