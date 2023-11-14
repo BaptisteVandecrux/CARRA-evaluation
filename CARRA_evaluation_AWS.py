@@ -39,7 +39,11 @@ for station in df_meta.stid:
                                     'dsr':'dsr_uncor', 
                                     'usr':'usr_uncor', 
                                     'dsr_cor':'dsr', 
-                                    'usr_cor':'usr'
+                                    'usr_cor':'usr',
+                                    'rh_u':'rh_u_wrt_w',
+                                    'rh_u_cor':'rh_u',
+                                    'rh_l':'rh_l_wrt_w',
+                                    'rh_l_cor':'rh_l',
                                     })
     Msg('AWS altitude %s'%', '.join(
         df_meta.loc[df_meta.stid==station, ['alt']].astype(str).values[0].tolist())
@@ -82,8 +86,8 @@ for station in df_meta.stid:
     
    
         plt.close('all')
-        for var in ['t_u', 'albedo', 'dsr', 'dlr', 'p_u', 't_surf', 'wspd_u', 
-                    'rh_u', 'ulr', 'usr']:
+        for var in ['t_u', 'rh_u','p_u', 'wspd_u','dlr', 'ulr',  't_surf', 
+                     'albedo', 'dsr',  'usr']:
             ME = np.mean(df_carra[var] - df_aws[var])
             RMSE = np.sqrt(np.mean((df_carra[var] - df_aws[var])**2))
         
