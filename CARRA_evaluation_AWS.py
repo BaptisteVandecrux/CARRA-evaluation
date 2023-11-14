@@ -26,23 +26,43 @@ def Msg(txt):
     f.write(txt + "\n")
 
 df_meta = pd.read_csv(path_l3+'../AWS_latest_locations.csv')
+aws_ds = xr.open_dataset("./data/CARRA_at_AWS.nc")
+
+
 # station= 'KAN_L'
 for station in df_meta.stid:
     Msg('## '+station)
+    df_aws = pd.read_csv(path_l3 + station + '/'+station+'_day.csv')
+    df_aws.time = pd.to_datetime(df_aws.time, utc=True)
+    df_aws=df_aws.set_index('time')
+    Msg('AWS altitude %s'%', '.join(
+        df_meta.loc[df_meta.stid==station, ['alt']].astype(str).values[0].tolist())
+        )
+    Msg('')
+    
     try:
-        df_aws = pd.read_csv(path_l3 + station + '/'+station+'_day.csv')
-        df_aws.time = pd.to_datetime(df_aws.time, utc=True)
-        df_aws=df_aws.set_index('time')
-        Msg('AWS altitude %s'%', '.join(
-            df_meta.loc[df_meta.stid==station, ['alt']].astype(str).values[0].tolist())
-            )
-        Msg('')
-        df_carra = load_CARRA_data("./data/CARRA_at_AWS.nc", station)
-        Msg('CARRA altitude %s'%', '.join(
-            df_carra[['altitude_mod']]
-            .drop_duplicates()
-            .astype(str).values[0].tolist())
-            )
+        df_carra = aws_ds.where(aws_ds.stid==station, drop=True).squeeze().to_dataframe()
+    
+        # converting to a pandas dataframe and renaming some of the columns
+        df_carra = df_carra.rename(columns={
+                                't2m': 't_u', 
+                                'r2': 'rh_u', 
+                                'si10': 'wspd_u', 
+                                'sp': 'p_u', 
+                                'ssrd': 'dsr',
+                                'ssru': 'usr',
+                                'strd': 'dlr',
+                                'stru': 'ulr',
+                                'al': 'albedo',
+                                'skt': 't_surf'
+                            })
+        df_carra['t_surf']  = df_carra.t_surf-273.15
+        
+        # Msg('CARRA altitude %s'%', '.join(
+        #     df_carra[['altitude_mod', 'name']]
+        #     .drop_duplicates()
+        #     .astype(str).values[0].tolist())
+        #     )
         
         df_carra = df_carra[
             ['t_u', 'albedo', 'dsr', 'dlr', 'p_u', 't_surf', 'wspd_u', 
@@ -53,10 +73,8 @@ for station in df_meta.stid:
         common_idx = df_aws.index.intersection(df_carra.index)
         df_aws = df_aws.loc[common_idx, :]
         df_carra = df_carra.loc[common_idx, :]
-        
-
-
-        
+    
+   
         plt.close('all')
         for var in ['t_u', 'albedo', 'dsr', 'dlr', 'p_u', 't_surf', 'wspd_u', 
                     'rh_u', 'ulr', 'usr']:
