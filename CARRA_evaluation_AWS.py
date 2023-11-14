@@ -35,6 +35,12 @@ for station in df_meta.stid:
     df_aws = pd.read_csv(path_l3 + station + '/'+station+'_day.csv')
     df_aws.time = pd.to_datetime(df_aws.time, utc=True)
     df_aws=df_aws.set_index('time')
+    df_aws = df_aws.rename(columns={
+                                    'dsr':'dsr_uncor', 
+                                    'usr':'usr_uncor', 
+                                    'dsr_cor':'dsr', 
+                                    'usr_cor':'usr'
+                                    })
     Msg('AWS altitude %s'%', '.join(
         df_meta.loc[df_meta.stid==station, ['alt']].astype(str).values[0].tolist())
         )

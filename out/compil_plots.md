@@ -13,7 +13,7 @@ AWS altitude 1888.8
 ![](../figures/CARRA_vs_AWS/CEN1_usr.png)
  
 ## CEN2
-AWS altitude 1895.8
+AWS altitude 1895.0
 
 ![](../figures/CARRA_vs_AWS/CEN2_t_u.png)
 ![](../figures/CARRA_vs_AWS/CEN2_albedo.png)
@@ -27,7 +27,7 @@ AWS altitude 1895.8
 ![](../figures/CARRA_vs_AWS/CEN2_usr.png)
  
 ## CP1
-AWS altitude 1947.4
+AWS altitude 1946.7
 
 ![](../figures/CARRA_vs_AWS/CP1_t_u.png)
 ![](../figures/CARRA_vs_AWS/CP1_albedo.png)
@@ -41,7 +41,7 @@ AWS altitude 1947.4
 ![](../figures/CARRA_vs_AWS/CP1_usr.png)
  
 ## DY2
-AWS altitude 2124.8
+AWS altitude 2124.4
 
 ![](../figures/CARRA_vs_AWS/DY2_t_u.png)
 ![](../figures/CARRA_vs_AWS/DY2_albedo.png)
@@ -55,7 +55,7 @@ AWS altitude 2124.8
 ![](../figures/CARRA_vs_AWS/DY2_usr.png)
  
 ## EGP
-AWS altitude 2666.6
+AWS altitude 2666.4
 
 ![](../figures/CARRA_vs_AWS/EGP_t_u.png)
 ![](../figures/CARRA_vs_AWS/EGP_albedo.png)
@@ -69,12 +69,12 @@ AWS altitude 2666.6
 ![](../figures/CARRA_vs_AWS/EGP_usr.png)
  
 ## FRE
-AWS altitude 684.7
+AWS altitude 684.9
 
 error
  
 ## HUM
-AWS altitude 1970.0
+AWS altitude 1970.1
 
 ![](../figures/CARRA_vs_AWS/HUM_t_u.png)
 ![](../figures/CARRA_vs_AWS/HUM_albedo.png)
@@ -102,7 +102,7 @@ AWS altitude 907.7
 ![](../figures/CARRA_vs_AWS/JAR_usr.png)
  
 ## JAR_O
-AWS altitude 927.6
+AWS altitude 927.0
 
 ![](../figures/CARRA_vs_AWS/JAR_O_t_u.png)
 ![](../figures/CARRA_vs_AWS/JAR_O_albedo.png)
@@ -121,7 +121,7 @@ AWS altitude 350.0
 error
  
 ## KAN_L
-AWS altitude 631.8
+AWS altitude 631.4
 
 ![](../figures/CARRA_vs_AWS/KAN_L_t_u.png)
 ![](../figures/CARRA_vs_AWS/KAN_L_albedo.png)
@@ -135,12 +135,12 @@ AWS altitude 631.8
 ![](../figures/CARRA_vs_AWS/KAN_L_usr.png)
  
 ## KAN_Lv3
-AWS altitude 685.8
+AWS altitude 685.3
 
 error
  
 ## KAN_M
-AWS altitude 1271.0
+AWS altitude 1271.1
 
 ![](../figures/CARRA_vs_AWS/KAN_M_t_u.png)
 ![](../figures/CARRA_vs_AWS/KAN_M_albedo.png)
@@ -154,7 +154,7 @@ AWS altitude 1271.0
 ![](../figures/CARRA_vs_AWS/KAN_M_usr.png)
  
 ## KAN_U
-AWS altitude 1829.1
+AWS altitude 1829.4
 
 ![](../figures/CARRA_vs_AWS/KAN_U_t_u.png)
 ![](../figures/CARRA_vs_AWS/KAN_U_albedo.png)
@@ -168,7 +168,7 @@ AWS altitude 1829.1
 ![](../figures/CARRA_vs_AWS/KAN_U_usr.png)
  
 ## KPC_L
-AWS altitude 360.9
+AWS altitude 360.5
 
 ![](../figures/CARRA_vs_AWS/KPC_L_t_u.png)
 ![](../figures/CARRA_vs_AWS/KPC_L_albedo.png)
@@ -224,7 +224,7 @@ AWS altitude 866.0
 ![](../figures/CARRA_vs_AWS/KPC_Uv3_usr.png)
  
 ## LYN_L
-AWS altitude 541.9
+AWS altitude 541.1
 
 ![](../figures/CARRA_vs_AWS/LYN_L_t_u.png)
 ![](../figures/CARRA_vs_AWS/LYN_L_albedo.png)
@@ -238,7 +238,7 @@ AWS altitude 541.9
 ![](../figures/CARRA_vs_AWS/LYN_L_usr.png)
  
 ## LYN_T
-AWS altitude 942.2
+AWS altitude 943.2
 
 ![](../figures/CARRA_vs_AWS/LYN_T_t_u.png)
 ![](../figures/CARRA_vs_AWS/LYN_T_albedo.png)
@@ -266,7 +266,7 @@ AWS altitude 430.2
 ![](../figures/CARRA_vs_AWS/MIT_usr.png)
  
 ## NAE
-AWS altitude 2626.6
+AWS altitude 2625.9
 
 ![](../figures/CARRA_vs_AWS/NAE_t_u.png)
 ![](../figures/CARRA_vs_AWS/NAE_albedo.png)
@@ -280,7 +280,7 @@ AWS altitude 2626.6
 ![](../figures/CARRA_vs_AWS/NAE_usr.png)
  
 ## NAU
-AWS altitude 2337.7
+AWS altitude 2337.3
 
 ![](../figures/CARRA_vs_AWS/NAU_t_u.png)
 ![](../figures/CARRA_vs_AWS/NAU_albedo.png)
@@ -294,7 +294,7 @@ AWS altitude 2337.7
 ![](../figures/CARRA_vs_AWS/NAU_usr.png)
  
 ## NEM
-AWS altitude 2451.8
+AWS altitude 2450.3
 
 ![](../figures/CARRA_vs_AWS/NEM_t_u.png)
 ![](../figures/CARRA_vs_AWS/NEM_albedo.png)
@@ -308,7 +308,7 @@ AWS altitude 2451.8
 ![](../figures/CARRA_vs_AWS/NEM_usr.png)
  
 ## NSE
-AWS altitude 2388.0
+AWS altitude 2387.0
 
 ![](../figures/CARRA_vs_AWS/NSE_t_u.png)
 ![](../figures/CARRA_vs_AWS/NSE_albedo.png)
@@ -322,12 +322,12 @@ AWS altitude 2388.0
 ![](../figures/CARRA_vs_AWS/NSE_usr.png)
  
 ## NUK_B
-AWS altitude 108.8
+AWS altitude 108.6
 
 error
  
 ## NUK_K
-AWS altitude 702.3
+AWS altitude 700.9
 
 ![](../figures/CARRA_vs_AWS/NUK_K_t_u.png)
 ![](../figures/CARRA_vs_AWS/NUK_K_albedo.png)
@@ -341,7 +341,7 @@ AWS altitude 702.3
 ![](../figures/CARRA_vs_AWS/NUK_K_usr.png)
  
 ## NUK_L
-AWS altitude 491.0
+AWS altitude 490.5
 
 ![](../figures/CARRA_vs_AWS/NUK_L_t_u.png)
 ![](../figures/CARRA_vs_AWS/NUK_L_albedo.png)
@@ -374,7 +374,7 @@ AWS altitude 1115.0
 ![](../figures/CARRA_vs_AWS/NUK_U_usr.png)
  
 ## NUK_Uv3
-AWS altitude 1116.7
+AWS altitude 1115.8
 
 ![](../figures/CARRA_vs_AWS/NUK_Uv3_t_u.png)
 ![](../figures/CARRA_vs_AWS/NUK_Uv3_albedo.png)
@@ -393,7 +393,7 @@ AWS altitude 1000.0
 error
  
 ## QAS_L
-AWS altitude 237.0
+AWS altitude 236.9
 
 ![](../figures/CARRA_vs_AWS/QAS_L_t_u.png)
 ![](../figures/CARRA_vs_AWS/QAS_L_albedo.png)
@@ -407,7 +407,7 @@ AWS altitude 237.0
 ![](../figures/CARRA_vs_AWS/QAS_L_usr.png)
  
 ## QAS_Lv3
-AWS altitude 240.1
+AWS altitude 239.2
 
 error
  
@@ -426,7 +426,7 @@ AWS altitude 678.0
 ![](../figures/CARRA_vs_AWS/QAS_M_usr.png)
  
 ## QAS_Mv3
-AWS altitude 677.4
+AWS altitude 676.7
 
 error
  
@@ -445,7 +445,7 @@ AWS altitude 885.1
 ![](../figures/CARRA_vs_AWS/QAS_U_usr.png)
  
 ## QAS_Uv3
-AWS altitude 885.6
+AWS altitude 884.8
 
 ![](../figures/CARRA_vs_AWS/QAS_Uv3_t_u.png)
 ![](../figures/CARRA_vs_AWS/QAS_Uv3_albedo.png)
@@ -459,7 +459,7 @@ AWS altitude 885.6
 ![](../figures/CARRA_vs_AWS/QAS_Uv3_usr.png)
  
 ## Roof_GEUS
-AWS altitude 29.4
+AWS altitude 29.1
 
 error
  
@@ -497,7 +497,7 @@ AWS altitude nan
 ![](../figures/CARRA_vs_AWS/SCO_U_usr.png)
  
 ## SDL
-AWS altitude 2472.2
+AWS altitude 2471.2
 
 ![](../figures/CARRA_vs_AWS/SDL_t_u.png)
 ![](../figures/CARRA_vs_AWS/SDL_albedo.png)
@@ -511,7 +511,7 @@ AWS altitude 2472.2
 ![](../figures/CARRA_vs_AWS/SDL_usr.png)
  
 ## SDM
-AWS altitude 2897.2
+AWS altitude 2896.5
 
 ![](../figures/CARRA_vs_AWS/SDM_t_u.png)
 ![](../figures/CARRA_vs_AWS/SDM_albedo.png)
@@ -539,7 +539,7 @@ AWS altitude 1120.0
 ![](../figures/CARRA_vs_AWS/SWC_usr.png)
  
 ## SWC_O
-AWS altitude 1161.0
+AWS altitude 1160.4
 
 ![](../figures/CARRA_vs_AWS/SWC_O_t_u.png)
 ![](../figures/CARRA_vs_AWS/SWC_O_albedo.png)
@@ -567,7 +567,7 @@ AWS altitude 880.3
 ![](../figures/CARRA_vs_AWS/TAS_A_usr.png)
  
 ## TAS_L
-AWS altitude 233.1
+AWS altitude 233.0
 
 ![](../figures/CARRA_vs_AWS/TAS_L_t_u.png)
 ![](../figures/CARRA_vs_AWS/TAS_L_albedo.png)
@@ -586,7 +586,7 @@ AWS altitude 570.0
 error
  
 ## THU_L
-AWS altitude 561.8
+AWS altitude 560.2
 
 ![](../figures/CARRA_vs_AWS/THU_L_t_u.png)
 ![](../figures/CARRA_vs_AWS/THU_L_albedo.png)
@@ -600,7 +600,7 @@ AWS altitude 561.8
 ![](../figures/CARRA_vs_AWS/THU_L_usr.png)
  
 ## THU_L2
-AWS altitude 572.2
+AWS altitude 571.9
 
 ![](../figures/CARRA_vs_AWS/THU_L2_t_u.png)
 ![](../figures/CARRA_vs_AWS/THU_L2_albedo.png)
@@ -642,7 +642,7 @@ AWS altitude 745.1
 ![](../figures/CARRA_vs_AWS/THU_U2_usr.png)
  
 ## TUN
-AWS altitude 2078.4
+AWS altitude 2078.2
 
 ![](../figures/CARRA_vs_AWS/TUN_t_u.png)
 ![](../figures/CARRA_vs_AWS/TUN_albedo.png)
@@ -656,7 +656,7 @@ AWS altitude 2078.4
 ![](../figures/CARRA_vs_AWS/TUN_usr.png)
  
 ## UPE_L
-AWS altitude 201.7
+AWS altitude 201.8
 
 ![](../figures/CARRA_vs_AWS/UPE_L_t_u.png)
 ![](../figures/CARRA_vs_AWS/UPE_L_albedo.png)
@@ -670,7 +670,7 @@ AWS altitude 201.7
 ![](../figures/CARRA_vs_AWS/UPE_L_usr.png)
  
 ## UPE_U
-AWS altitude 912.1
+AWS altitude 914.1
 
 ![](../figures/CARRA_vs_AWS/UPE_U_t_u.png)
 ![](../figures/CARRA_vs_AWS/UPE_U_albedo.png)
@@ -684,12 +684,12 @@ AWS altitude 912.1
 ![](../figures/CARRA_vs_AWS/UPE_U_usr.png)
  
 ## UWN
-AWS altitude 554.8
+AWS altitude 552.8
 
 error
  
 ## WEG_B
-AWS altitude 16.1
+AWS altitude 15.9
 
 ![](../figures/CARRA_vs_AWS/WEG_B_t_u.png)
 ![](../figures/CARRA_vs_AWS/WEG_B_albedo.png)
@@ -703,7 +703,7 @@ AWS altitude 16.1
 ![](../figures/CARRA_vs_AWS/WEG_B_usr.png)
  
 ## WEG_L
-AWS altitude 935.1
+AWS altitude 934.4
 
 error
  
@@ -727,7 +727,7 @@ AWS altitude 685.7
 ![](../figures/CARRA_vs_AWS/ZAK_L_usr.png)
  
 ## ZAK_Lv3
-AWS altitude 628.9
+AWS altitude 627.7
 
 error
  
@@ -746,7 +746,7 @@ AWS altitude 630.4
 ![](../figures/CARRA_vs_AWS/ZAK_U_usr.png)
  
 ## ZAK_Uv3
-AWS altitude 862.4
+AWS altitude 861.3
 
 ![](../figures/CARRA_vs_AWS/ZAK_Uv3_t_u.png)
 ![](../figures/CARRA_vs_AWS/ZAK_Uv3_albedo.png)
