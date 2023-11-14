@@ -28,6 +28,7 @@ def Msg(txt):
 df_meta = pd.read_csv(path_l3+'../AWS_latest_locations.csv')
 aws_ds = xr.open_dataset("./data/CARRA_at_AWS.nc")
 
+df_summary = pd.DataFrame()
 
 # station= 'KAN_L'
 for station in df_meta.stid:
@@ -40,9 +41,9 @@ for station in df_meta.stid:
                                     'usr':'usr_uncor', 
                                     'dsr_cor':'dsr', 
                                     'usr_cor':'usr',
-                                    'rh_u':'rh_u_wrt_w',
+                                    'rh_u':'rh_u_uncor',
                                     'rh_u_cor':'rh_u',
-                                    'rh_l':'rh_l_wrt_w',
+                                    'rh_l':'rh_l_uncor',
                                     'rh_l_cor':'rh_l',
                                     })
     Msg('AWS altitude %s'%', '.join(
@@ -86,10 +87,19 @@ for station in df_meta.stid:
     
    
         plt.close('all')
-        for var in ['t_u', 'rh_u','p_u', 'wspd_u','dlr', 'ulr',  't_surf', 
-                     'albedo', 'dsr',  'usr']:
-            ME = np.mean(df_carra[var] - df_aws[var])
-            RMSE = np.sqrt(np.mean((df_carra[var] - df_aws[var])**2))
+        for var in ['t_u', 'rh_u','rh_u_uncor','p_u', 'wspd_u','dlr', 'ulr',  't_surf', 
+                     'albedo', 'dsr', 'dsr_uncor',  'usr',  'usr_uncor']:
+            ME = np.mean(df_carra[var.replace('_uncor', '')] - df_aws[var])
+            RMSE = np.sqrt(np.mean((df_carra[var.replace('_uncor', '')] - df_aws[var])**2))
+            
+            tmp = pd.DataFrame()
+            tmp['station'] = [station]
+            tmp['var'] = [var]
+            tmp['ME'] = [ME]
+            tmp['RMSE'] = [RMSE]
+            tmp['N'] = [(df_carra[var.replace('_uncor', '')] * df_aws[var]).notnull().sum()]
+            df_summary = pd.concat((df_summary, tmp))
+            
         
             fig = plt.figure(figsize=(12, 4))
             gs = gridspec.GridSpec(1, 2, width_ratios=[3, 1]) 
@@ -98,20 +108,20 @@ for station in df_meta.stid:
             
             # first plot
             df_aws[var].plot(ax=ax1, label='AWS')
-            df_carra[var].plot(ax=ax1,alpha=0.7, label='CARRA')
+            df_carra[var.replace('_uncor', '')].plot(ax=ax1,alpha=0.7, label='CARRA')
             ax1.set_ylabel(var)
             ax1.set_title(station)
             ax1.legend()
         
             # second plot
-            ax2.plot(df_aws[var], df_carra[var], marker='.',ls='None')
+            ax2.plot(df_aws[var], df_carra[var.replace('_uncor', '')], marker='.',ls='None')
             ax2.set_xlabel('AWS')
             ax2.set_ylabel('CARRA')
             ax2.set_title(var)
             slope, intercept, r_value, p_value, std_err = linregress(
-                df_aws[var], df_carra[var])
-            max_val = max(df_aws[var].max(), df_carra[var].max())
-            min_val = min(df_aws[var].min(), df_carra[var].min())
+                df_aws[var], df_carra[var.replace('_uncor', '')])
+            max_val = max(df_aws[var].max(), df_carra[var.replace('_uncor', '')].max())
+            min_val = min(df_aws[var].min(), df_carra[var.replace('_uncor', '')].min())
             ax2.plot([min_val, max_val], [min_val, max_val], 'k-', label='1:1 Line')
             regression_line = slope * df_aws[var] + intercept
             ax2.plot(df_aws[var], regression_line, 'r-', label='Linear Regression')
