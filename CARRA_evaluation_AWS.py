@@ -29,7 +29,7 @@ fig_folder = 'figures/CARRA_vs_AWS/'
 for f in os.listdir(fig_folder):
     os.remove(fig_folder+f)
 df_meta = pd.read_csv(path_l3+'../AWS_latest_locations.csv')
-bad_aws = ['MIT','ZAK_A','ZAK_L','ZAK_U','ZAK_Lv3','ZAK_Uv3','WEG_L','WEG_B','UWN', 'Roof_PROMICE','Roof_GEUS']
+bad_aws = ['FRE','MIT','ZAK_A','ZAK_L','ZAK_U','ZAK_Lv3','ZAK_Uv3','WEG_L','WEG_B','UWN', 'Roof_PROMICE','Roof_GEUS']
 df_meta = df_meta.loc[~np.isin(df_meta.stid, bad_aws)]
 aws_ds = xr.open_dataset("./data/CARRA_at_AWS.nc")
 
