@@ -28,10 +28,9 @@ import os
 fig_folder = 'figures/CARRA_vs_AWS/'
 for f in os.listdir(fig_folder):
     os.remove(fig_folder+f)
-df_meta = pd.read_csv(path_l3+'../AWS_latest_locations.csv')
-bad_aws = ['FRE','MIT','ZAK_A','ZAK_L','ZAK_U','ZAK_Lv3','ZAK_Uv3','WEG_L',
-           'WEG_B','UWN', 'Roof_PROMICE','Roof_GEUS','LYN_T','LYN_L', 'KAN_B']
-df_meta = df_meta.loc[~np.isin(df_meta.stid, bad_aws)]
+df_meta = pd.read_csv(path_l3+'../AWS_metadata.csv')
+
+df_meta = df_meta.loc[df_meta.location_type == 'ice sheet']
 aws_ds = xr.open_dataset("./data/CARRA_at_AWS.nc")
 
 df_summary = pd.DataFrame()
@@ -42,6 +41,17 @@ for var in ['t_u', 'rh_u','rh_u_uncor','p_u', 'wspd_u','dlr', 'ulr',  't_surf',
     Msg('# '+var)
 
     for station in df_meta.stid:
+        main_station = []
+        if station == 'CEN2':
+            main_station = 'CEN1'
+        if 'v3' in station:
+            main_station = station
+            main_station=main_station.replace('v3','')
+        if len(main_station)>0:
+            Msg('Skipping '+station+', already used in combination with '+main_station)
+            Msg('')
+            continue
+            
         df_aws = pd.read_csv(path_l3 + station + '/'+station+'_day.csv')
         df_aws.time = pd.to_datetime(df_aws.time, utc=True)
         df_aws=df_aws.set_index('time')
@@ -55,6 +65,28 @@ for var in ['t_u', 'rh_u','rh_u_uncor','p_u', 'wspd_u','dlr', 'ulr',  't_surf',
                                         'rh_l':'rh_l_uncor',
                                         'rh_l_cor':'rh_l',
                                         })
+        sec_station=[]
+        if station == 'CEN1':
+            sec_station = 'CEN2'
+        if (station+'v3' in df_meta.stid):
+            sec_station = station+'v3'
+        if len(sec_station)>0:
+            df_sec = pd.read_csv(path_l3 + sec_station + '/'+sec_station+'_day.csv')
+            df_sec.time = pd.to_datetime(df_sec.time, utc=True)
+            df_sec=df_sec.set_index('time')
+            df_sec = df_sec.rename(columns={
+                                            'dsr':'dsr_uncor', 
+                                            'usr':'usr_uncor', 
+                                            'dsr_cor':'dsr', 
+                                            'usr_cor':'usr',
+                                            'rh_u':'rh_u_uncor',
+                                            'rh_u_cor':'rh_u',
+                                            'rh_l':'rh_l_uncor',
+                                            'rh_l_cor':'rh_l',
+                                            })
+            df_aws = df_aws.combine_first(df_sec)
+            
+        
         try:
             df_carra = aws_ds.where(aws_ds.name==station.replace('v3',''), drop=True).squeeze().to_dataframe()
         
@@ -97,9 +129,9 @@ for var in ['t_u', 'rh_u','rh_u_uncor','p_u', 'wspd_u','dlr', 'ulr',  't_surf',
             tmp = pd.DataFrame()
             tmp['var'] = [var]
             tmp['station'] = station
-            tmp['latitude'] = df_meta.loc[df_meta.stid==station, 'lat'].item()
-            tmp['longitude'] =  df_meta.loc[df_meta.stid==station, 'lon'].item()
-            tmp['elevation_aws'] =  df_meta.loc[df_meta.stid==station, 'alt'].item()
+            tmp['latitude'] = df_meta.loc[df_meta.stid==station, 'lat_installation'].item()
+            tmp['longitude'] =  df_meta.loc[df_meta.stid==station, 'lon_installation'].item()
+            tmp['elevation_aws'] =  df_meta.loc[df_meta.stid==station, 'alt_installation'].item()
             tmp['elevation_CARRA'] =  aws_ds.altitude_mod.where(aws_ds.stid==station, drop=True).item()
             tmp['date_start'] = max(df_aws.index[0], df_carra.index[0])
             tmp['date_end'] = min(df_aws.index[-1], df_carra.index[-1])
@@ -185,7 +217,7 @@ for i, var in enumerate(variables):
 
 plt.xlabel('Station')
 plt.tight_layout()
-fig.savefig('figures/summary_plot.png',dpi=300)
+fig.savefig('figures/summary_plot.png',dpi=200)
 
 data['ME'] = data['ME'].round(2)
 data['RMSE'] = data['RMSE'].round(2)
