@@ -161,7 +161,7 @@ data = pd.read_csv('out/summary_statistics.csv')
 variables = data['var'].unique()
 
 num_vars = len(variables)
-fig, axes = plt.subplots(nrows=num_vars, ncols=1, figsize=(10, num_vars * 4), sharex=True)
+fig, axes = plt.subplots(nrows=num_vars, ncols=1, figsize=(10, num_vars * 4))
 
 for i, var in enumerate(variables):
     ax = axes[i]
