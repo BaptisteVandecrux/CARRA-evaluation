@@ -111,9 +111,11 @@ for var in ['t_u', 'rh_u','rh_u_uncor','p_u', 'wspd_u','dlr', 'ulr',  't_surf',
 
             
             df_carra = df_carra.drop(columns=['name','stid']).resample('D').mean()
-            
             df_carra.index = pd.to_datetime(df_carra.index,utc=True)
             
+            if var == 'albedo':
+                df_carra = df_carra.loc[df_carra.dsr>100,:]
+                df_aws = df_aws.loc[df_aws.dsr>100,:]
             common_idx = df_aws.index.intersection(df_carra.index)
             df_aws = df_aws.loc[common_idx, :]
             df_carra = df_carra.loc[common_idx, :]
