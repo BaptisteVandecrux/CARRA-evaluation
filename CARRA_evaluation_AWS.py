@@ -26,8 +26,8 @@ def Msg(txt):
     f.write(txt + "\n")
 import os
 fig_folder = 'figures/CARRA_vs_AWS/'
-for f in os.listdir(fig_folder):
-    os.remove(fig_folder+f)
+# for f in os.listdir(fig_folder):
+#     os.remove(fig_folder+f)
 df_meta = pd.read_csv(path_l3+'../AWS_metadata.csv')
 
 df_meta = df_meta.loc[df_meta.location_type == 'ice sheet']
@@ -36,8 +36,7 @@ aws_ds = xr.open_dataset("./data/CARRA_at_AWS.nc")
 df_summary = pd.DataFrame()
 
 # station= 'KAN_L'
-for var in ['t_u', 'rh_u','rh_u_uncor','p_u', 'wspd_u','dlr', 'ulr',  't_surf', 
-             'albedo', 'dsr', 'dsr_uncor',  'usr',  'usr_uncor','dlhf_u','dshf_u']:
+for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',  't_surf',  'albedo', 'dsr', 'dsr_uncor',  'usr',  'usr_uncor','dlhf_u','dshf_u']:
     Msg('# '+var)
 
     for station in df_meta.stid:
@@ -96,6 +95,7 @@ for var in ['t_u', 'rh_u','rh_u_uncor','p_u', 'wspd_u','dlr', 'ulr',  't_surf',
                                     'r2': 'rh_u', 
                                     'si10': 'wspd_u', 
                                     'sp': 'p_u', 
+                                    'sh2': 'qh_u',
                                     'ssrd': 'dsr',
                                     'ssru': 'usr',
                                     'strd': 'dlr',
@@ -107,7 +107,8 @@ for var in ['t_u', 'rh_u','rh_u_uncor','p_u', 'wspd_u','dlr', 'ulr',  't_surf',
                                 })
             df_carra['t_surf']  = df_carra.t_surf-273.15
             df_carra['dlhf_u']  = df_carra.dlhf_u/3600  #J m-2 to W m-2
-            df_carra['dshf_u']  = df_carra.dlhf_u/3600  #J m-2 to W m-2
+            df_carra['dshf_u']  = df_carra.dshf_u/3600  #J m-2 to W m-2
+            df_carra['qh_u']  = df_carra.qh_u*1000  #J m-2 to W m-2
 
             
             df_carra = df_carra.drop(columns=['name','stid']).resample('D').mean()
