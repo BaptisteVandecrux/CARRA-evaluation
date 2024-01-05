@@ -10,6 +10,8 @@ tip list:
 from scipy.stats import linregress
 from matplotlib import gridspec
 from lib import load_CARRA_data
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
@@ -150,7 +152,7 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',  't_
             ax2 = plt.subplot(gs[1])
             
             # first plot
-            df_aws[var].plot(ax=ax1, label='AWS')
+            df_aws[var].plot(ax=ax1, label='AWS',marker='.')
             df_carra[var.replace('_uncor', '')].plot(ax=ax1,alpha=0.7, label='CARRA')
             ax1.set_ylabel(var)
             ax1.set_title(station)
@@ -161,8 +163,11 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',  't_
             ax2.set_xlabel('AWS')
             ax2.set_ylabel('CARRA')
             ax2.set_title(var)
+            
+            common_idx = df_aws.loc[df_aws[var].notnull()].index.intersection(df_carra.loc[df_carra[var].notnull()].index)
+
             slope, intercept, r_value, p_value, std_err = linregress(
-                df_aws[var], df_carra[var.replace('_uncor', '')])
+                df_aws.loc[common_idx, var], df_carra.loc[common_idx, var.replace('_uncor', '')])
             max_val = max(df_aws[var].max(), df_carra[var.replace('_uncor', '')].max())
             min_val = min(df_aws[var].min(), df_carra[var.replace('_uncor', '')].min())
             ax2.plot([min_val, max_val], [min_val, max_val], 'k-', label='1:1 Line')
