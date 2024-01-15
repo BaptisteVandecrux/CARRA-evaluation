@@ -37,11 +37,12 @@ aws_ds = xr.open_dataset("./data/CARRA_at_AWS.nc")
 
 df_summary = pd.DataFrame()
 
-# station= 'KAN_L'
 for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',  't_surf',  'albedo', 'dsr', 'dsr_uncor',  'usr',  'usr_uncor','dlhf_u','dshf_u']:
+# for var in ['albedo']:
     Msg('# '+var)
 
     for station in df_meta.stid:
+    # for station in ['QAS_U']:
         main_station = []
         if station == 'CEN2':
             main_station = 'CEN1'
@@ -126,7 +127,7 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',  't_
                 Msg(station+' no overlapping data')
                 continue
        
-            plt.close('all')
+            # plt.close('all')
     
             ME = np.mean(df_carra[var.replace('_uncor', '')] - df_aws[var])
             RMSE = np.sqrt(np.mean((df_carra[var.replace('_uncor', '')] - df_aws[var])**2))
@@ -164,7 +165,7 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',  't_
             ax2.set_ylabel('CARRA')
             ax2.set_title(var)
             
-            common_idx = df_aws.loc[df_aws[var].notnull()].index.intersection(df_carra.loc[df_carra[var].notnull()].index)
+            common_idx = df_aws.loc[df_aws[var].notnull()].index.intersection(df_carra.loc[df_carra[var.replace('_uncor','')].notnull()].index)
 
             slope, intercept, r_value, p_value, std_err = linregress(
                 df_aws.loc[common_idx, var], df_carra.loc[common_idx, var.replace('_uncor', '')])
@@ -202,7 +203,7 @@ variables = data['var'].unique()
 
 num_vars = len(variables)
 fig, axes = plt.subplots(nrows=num_vars, ncols=1, figsize=(10, num_vars * 4))
-
+if num_vars == 1: axes = [axes]
 for i, var in enumerate(variables):
     ax = axes[i]
 
