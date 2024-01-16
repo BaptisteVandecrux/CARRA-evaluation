@@ -142,7 +142,7 @@ aws_ds['Snowfallmweq'] = xr.where(aws_ds.t2m < cut_off_temp,
 aws_ds['Rainfallmweq'] = xr.where(aws_ds.t2m >= cut_off_temp, 
                                   aws_ds.tp,
                                   0)
-                 #%%
+plt.close('all')               
 for station in ['KAN_M', 'QAS_M', 'QAS_U','TAS_A','THU_U2']:
     
     file = '../SUMup/SUMup-2024/data/SMB data/to add/SnowFox_GEUS/SF_'+station+'.txt'
@@ -177,24 +177,36 @@ for station in ['KAN_M', 'QAS_M', 'QAS_U','TAS_A','THU_U2']:
 
     
     fig = plt.figure(figsize=(10,10))
-    
+    print(station)
     for count, ref in enumerate(df_meta_selec.reference_short.unique()):
         # each reference will be plotted in a different color
         label = ref
         for n in df_meta_selec.loc[df_meta_selec.reference_short==ref, 'name'].unique():
             tmp = df_sumup.loc[df_sumup.name==n,:]
-            for start, end, smb in zip(tmp.start_date, tmp.end_date, tmp.smb):
-                if smb>0:
+            for start, end, smb, ref_short in zip(tmp.start_date, tmp.end_date, tmp.smb, tmp.reference_short):
+                if smb>0.5:
                     if end>pd.to_datetime('2018-01-01'):
+                        print('   ',start,end, np.round(smb*1000),ref_short)
                         plt.plot([start, end], [0, smb*1000],
                                   color = cmap(count),
                                   label='_nolegend_',
                                   )
+    start_carra = df_sf.SWE_mweq.first_valid_index()
+    df_sf.SWE_mweq = df_sf.SWE_mweq -  df_sf.loc[ df_sf.SWE_mweq.first_valid_index(), 'SWE_mweq']
+
     df_sf.SWE_mweq.plot(ax=plt.gca(), marker='o', label='SnowFox')
     (aws_ds.where(aws_ds.name==station,drop=True)
-     .isel(station=0)['Snowfallmweq'].to_dataframe()).Snowfallmweq.loc['2018-08-12':'2019-05-01'].cumsum().plot(ax=plt.gca(), c='k', label='CARRA')
-    (aws_ds.where(aws_ds.name==station,drop=True)
-     .isel(station=0)['Snowfallmweq'].to_dataframe()).Snowfallmweq.loc['2019-08-12':'2020-05-01'].cumsum().plot(ax=plt.gca(),c='k', label='CARRA')
+     .isel(station=0)['Snowfallmweq']
+     .to_dataframe()
+     .Snowfallmweq.loc[start_carra:'2019-05-01']
+     .cumsum()).plot(ax=plt.gca(), c='k', label='CARRA')
+    if df_sf.index.year[-1]==2020:
+        (aws_ds.where(aws_ds.name==station,drop=True)
+         .isel(station=0)['Snowfallmweq']
+         .to_dataframe()
+         .Snowfallmweq
+         .loc['2019-08-12':'2020-05-01']
+         .cumsum()).plot(ax=plt.gca(),c='k', label='__nolegend__')
     plt.title(station)
     plt.legend()
 
