@@ -143,8 +143,7 @@ aws_ds['Rainfallmweq'] = xr.where(aws_ds.t2m >= cut_off_temp,
                                   aws_ds.tp,
                                   0)
 plt.close('all')               
-for station in ['KAN_M', 'QAS_M', 'QAS_U','TAS_A','THU_U2']:
-    
+for station in ['KAN_M', 'QAS_M', 'QAS_U','TAS_A','THU_U2']:   
     file = '../SUMup/SUMup-2024/data/SMB data/to add/SnowFox_GEUS/SF_'+station+'.txt'
     
     df_sf = pd.read_csv(file,delim_whitespace=True)
@@ -185,12 +184,18 @@ for station in ['KAN_M', 'QAS_M', 'QAS_U','TAS_A','THU_U2']:
             tmp = df_sumup.loc[df_sumup.name==n,:]
             for start, end, smb, ref_short in zip(tmp.start_date, tmp.end_date, tmp.smb, tmp.reference_short):
                 if smb>0.5:
-                    if end>pd.to_datetime('2018-01-01'):
+                    if end>pd.to_datetime('2018-06-01'):
                         print('   ',start,end, np.round(smb*1000),ref_short)
-                        plt.plot([start, end], [0, smb*1000],
-                                  color = cmap(count),
-                                  label='_nolegend_',
+                        plt.plot([end], [smb*1000],
+                                 marker='o',c='tab:red',
+                                 markerfacecolor='tab:red',
+                                 ls='None',
+                                 label='_nolegend_',
                                   )
+    plt.plot(np.nan,np.nan,
+             marker='o',c='tab:red',
+             markerfacecolor='tab:red',
+             ls='None', label='snowpits')
     start_carra = df_sf.SWE_mweq.first_valid_index()
     df_sf.SWE_mweq = df_sf.SWE_mweq -  df_sf.loc[ df_sf.SWE_mweq.first_valid_index(), 'SWE_mweq']
 
@@ -207,16 +212,12 @@ for station in ['KAN_M', 'QAS_M', 'QAS_U','TAS_A','THU_U2']:
          .Snowfallmweq
          .loc['2019-08-12':'2020-05-01']
          .cumsum()).plot(ax=plt.gca(),c='k', label='__nolegend__')
+    plt.ylabel('Accumulation (mm w.e.)')
     plt.title(station)
     plt.legend()
 
-    plt.title('Observations within '+str(min_dist)+' km of '+ station)
-    # fig.savefig('figures/precipitation/'+  \
-    #             (aws_ds
-    #              .where((aws_ds.latitude==lat_aws) & (aws_ds.longitude==lon_aws), 
-    #                     drop=True)
-    #              .name.values[0])  \
-    #                 +'.png', dpi=120)
+    plt.title(station)
+    fig.savefig('figures/precipitation/0_snowfox_'+station+'.png', dpi=120)
 
 
 
