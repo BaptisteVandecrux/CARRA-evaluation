@@ -10,8 +10,8 @@ tip list:
 from scipy.stats import linregress
 from matplotlib import gridspec
 from lib import load_CARRA_data
-# import matplotlib
-# matplotlib.use('Agg')
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
@@ -71,7 +71,7 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',
             Msg('Skipping '+station+', already used in combination with '+main_station)
             Msg('')
             continue
-
+#%%
         try:
             df_aws = pd.read_csv(path_l3 + station + '/'+station+'_day.csv')
             df_aws.time = pd.to_datetime(df_aws.time, utc=True)
@@ -126,27 +126,27 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',
 
             common_idx = df_aws.loc[df_aws[var].notnull()].index.intersection(df_carra.loc[df_carra[var.replace('_uncor','')].notnull()].index)
 
-            df_carra_filled = df_carra.loc[common_idx].fillna(method='ffill')
-            df_aws_filled = df_aws.loc[common_idx].fillna(method='ffill')
+            df_carra_filled = df_carra.loc[common_idx].resample('D').asfreq().fillna(method='ffill')
+            df_aws_filled = df_aws.loc[common_idx].resample('D').asfreq().fillna(method='ffill')
             correlation = df_carra_filled[var.replace('_uncor', '')].corr(df_aws_filled[var])
             max_corr = 0
             best_shift = 0
             
             for shift in range(-10, 11):
-                df2_shifted = df_aws_filled.shift(freq=str(shift)+'D')
+                df2_shifted = df_aws_filled.shift(shift).copy(deep=True)
                 correlation = df_carra_filled[var.replace('_uncor', '')].corr(df2_shifted[var])
-                
                 if correlation > max_corr:
                     max_corr = correlation
                     best_shift = shift
             
             print("Best Shift:", best_shift)
             
-            df_aws = df_aws.shift(freq=str(shift)+'D')
+            df_aws = df_aws.shift(best_shift)  
             
             if var == 'albedo':
                 df_carra = df_carra.loc[df_carra.dsr>100,:]
                 df_aws = df_aws.loc[df_aws.dsr>100,:]
+                
             common_idx = df_aws.index.intersection(df_carra.index)
             df_aws = df_aws.loc[common_idx, :]
             df_carra = df_carra.loc[common_idx, :]
