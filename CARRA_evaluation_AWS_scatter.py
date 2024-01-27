@@ -15,6 +15,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from plotly.offline import plot
 import numpy as np
+import nead
 
 path_l3 = 'C:/Users/bav/GitHub/PROMICE data/aws-l3-dev/level_3/'
 fig_folder = 'figures/CARRA_vs_AWS/'
@@ -25,9 +26,26 @@ variables = ['t_u', 'rh_u','rh_u_cor', 'qh_u','p_u', 'wspd_u','dlr', 'ulr',
 df_meta = pd.read_csv(path_l3+'../AWS_metadata.csv')
 df_meta = df_meta.loc[df_meta.location_type == 'ice sheet']
 df_aws_all = pd.DataFrame()
-for station in df_meta.stid:
-    df_aws = pd.read_csv(path_l3 + station + '/'+station+'_day.csv')[['time']+variables]
-    df_aws.time = pd.to_datetime(df_aws.time)
+for station in df_meta.stid:    
+    try:
+        df_aws = pd.read_csv(path_l3 + station + '/'+station+'_day.csv')[['time']+variables]
+        df_aws.time = pd.to_datetime(df_aws.time, utc=True)
+        df_aws=df_aws.set_index('time')
+    except:
+        try:
+            path_to_gcnet = 'C:/Users/bav/OneDrive - GEUS/Code/PROMICE/GC-Net-Level-1-data-processing/L1/'
+            df_aws = nead.read(path_to_gcnet+'daily/'+station.replace(' ','')+'_daily.csv').to_dataframe()
+        except:
+            path_to_gcnet = 'C:/Users/bav/OneDrive - Geological Survey of Denmark and Greenland/Code/PROMICE/GC-Net-Level-1-data-processing/L1/'
+            df_aws = nead.read(path_to_gcnet+'daily/'+station.replace(' ','')+'_daily.csv').to_dataframe()
+        df_aws.timestamp = pd.to_datetime(df_aws.timestamp)
+        df_aws = df_aws.set_index('timestamp')
+        df_aws = df_aws.rename(columns={
+                    'ISWR':'dsr',  'OSWR':'usr', 
+                    'RH2':'rh_u_uncor','RH2_cor':'rh_u_cor', 'TA2':'t_u',
+                    'VW2':'wspd_u','P':'p_u','LHF':'dlhf_u',
+                    'Alb':'albedo','Q2':'sh_u','SHF':'dshf_u'
+                                        })[variables]
     df_aws['station'] = station
     df_aws_all = pd.concat((df_aws_all,df_aws))
 # df_aws_all = df_aws_all.set_index(['time','station'])
@@ -93,7 +111,7 @@ for i, var in enumerate(variables):
                                         edgecolor='black', facecolor='white'))
 
 
-fig.savefig('figures/CARRA_vs_AWS/scatter_all.png', dpi=120)
+fig.savefig('figures/scatter_all.png', dpi=120)
 # %%
 fig, ax = plt.subplots(4,4, figsize=(11, 12))
 plt.subplots_adjust(hspace=0.2, wspace=0.2,top=0.95,bottom=0.05, left=0.05,right=0.95)
@@ -134,7 +152,7 @@ for i, var in enumerate(variables):
                                         edgecolor='black', facecolor='white'))
 
 
-fig.savefig('figures/CARRA_vs_AWS/scatter_summer.png', dpi=120)
+fig.savefig('figures/scatter_summer.png', dpi=120)
 
 # %% 
 

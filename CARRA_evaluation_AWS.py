@@ -47,7 +47,7 @@ df_meta = pd.concat((
                       'Northing':'lat_installation',
                       'Easting':'lon_installation',
                       'Elevationm':'alt_installation'})), ignore_index=True)
-df_meta = df_meta.loc[df_meta.source=='GC-Net historical',:]
+# df_meta = df_meta.loc[df_meta.source=='GC-Net historical',:]
 
 aws_ds = xr.open_dataset("./data/CARRA_at_AWS.nc")
 
@@ -120,7 +120,6 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',
             # df_carra['dshf_u']  = df_carra.dshf_u/(3*3600)  #J m-2 to W m-2
             df_carra['qh_u']  = df_carra.qh_u*1000  # kg/kg to g/kg
 
-            
             df_carra = df_carra.drop(columns=['name','stid']).resample('D').mean()
             df_carra.index = pd.to_datetime(df_carra.index,utc=True)
 
@@ -150,11 +149,6 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',
             common_idx = df_aws.index.intersection(df_carra.index)
             df_aws = df_aws.loc[common_idx, :]
             df_carra = df_carra.loc[common_idx, :]
-            # if len(df_carra)==0:
-            #     Msg(station+' no overlapping data')
-            #     continue
-       
-            # plt.close('all')
     
             ME = np.mean(df_carra[var.replace('_uncor', '')] - df_aws[var])
             RMSE = np.sqrt(np.mean((df_carra[var.replace('_uncor', '')] - df_aws[var])**2))
@@ -173,7 +167,6 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',
             tmp['N'] = (df_carra[var.replace('_uncor', '')] * df_aws[var]).notnull().sum()
             df_summary = pd.concat((df_summary, tmp))
             
-        
             fig = plt.figure(figsize=(12, 4))
             gs = gridspec.GridSpec(1, 2, width_ratios=[3, 1]) 
             ax1 = plt.subplot(gs[0])
@@ -192,7 +185,7 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',
             ax2.set_ylabel('CARRA')
             ax2.set_title(var)
             
-
+            common_idx = df_aws.index.intersection(df_carra.index)
             slope, intercept, r_value, p_value, std_err = linregress(
                 df_aws.loc[common_idx, var], df_carra.loc[common_idx, var.replace('_uncor', '')])
             max_val = max(df_aws[var].max(), df_carra[var.replace('_uncor', '')].max())
