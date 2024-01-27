@@ -10,14 +10,14 @@ tip list:
 from scipy.stats import linregress
 from matplotlib import gridspec
 from lib import load_CARRA_data
-import matplotlib
-matplotlib.use('Agg')
+# import matplotlib
+# matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
 import pandas as pd 
 import tocgen
-
+import nead
 path_l3 = 'C:/Users/bav/GitHub/PROMICE data/aws-l3-dev/level_3/'
 
 filename = 'out/compil_plots.md'
@@ -31,13 +31,31 @@ fig_folder = 'figures/CARRA_vs_AWS/'
 # for f in os.listdir(fig_folder):
 #     os.remove(fig_folder+f)
 df_meta = pd.read_csv(path_l3+'../AWS_metadata.csv')
-
 df_meta = df_meta.loc[df_meta.location_type == 'ice sheet']
+df_meta['source'] ='PROMICE/GEUS'
+try:
+    path_to_gcnet = 'C:/Users/bav/OneDrive - GEUS/Code/PROMICE/GC-Net-Level-1-data-processing/L1/'
+    tmp = pd.read_csv(path_to_gcnet+'GC-Net_location.csv', skipinitialspace=True)
+except:
+    path_to_gcnet = 'C:/Users/bav/OneDrive - Geological Survey of Denmark and Greenland/Code/PROMICE/GC-Net-Level-1-data-processing/L1/'
+    tmp = pd.read_csv(path_to_gcnet+'GC-Net_location.csv', skipinitialspace=True)
+tmp['source'] = 'GC-Net historical'
+df_meta = pd.concat((
+    df_meta[['stid','lat_installation','lon_installation','source']],
+    tmp.loc[tmp.Northing>0, ['Name','Northing','Easting','Elevationm','source']
+            ].rename(columns={'Name':'stid',
+                      'Northing':'lat_installation',
+                      'Easting':'lon_installation',
+                      'Elevationm':'alt_installation'})), ignore_index=True)
+df_meta = df_meta.loc[df_meta.source=='GC-Net historical',:]
+
 aws_ds = xr.open_dataset("./data/CARRA_at_AWS.nc")
 
 df_summary = pd.DataFrame()
 
-for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',  't_surf',  'albedo', 'dsr', 'dsr_uncor',  'usr',  'usr_uncor','dlhf_u','dshf_u']:
+for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',
+            't_surf',  'albedo', 'dsr', 'dsr_uncor',  'usr',  'usr_uncor',
+            'dlhf_u','dshf_u']:
 # for var in ['dlhf_u','dshf_u']:
     Msg('# '+var)
 
@@ -53,20 +71,26 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',  't_
             Msg('Skipping '+station+', already used in combination with '+main_station)
             Msg('')
             continue
-            
-        df_aws = pd.read_csv(path_l3 + station + '/'+station+'_day.csv')
-        df_aws.time = pd.to_datetime(df_aws.time, utc=True)
-        df_aws=df_aws.set_index('time')
-        df_aws = df_aws.rename(columns={
-                                        'dsr':'dsr_uncor', 
-                                        'usr':'usr_uncor', 
-                                        'dsr_cor':'dsr', 
-                                        'usr_cor':'usr',
-                                        'rh_u':'rh_u_uncor',
-                                        'rh_u_cor':'rh_u',
-                                        'rh_l':'rh_l_uncor',
-                                        'rh_l_cor':'rh_l',
-                                        })
+
+        try:
+            df_aws = pd.read_csv(path_l3 + station + '/'+station+'_day.csv')
+            df_aws.time = pd.to_datetime(df_aws.time, utc=True)
+            df_aws=df_aws.set_index('time')
+            df_aws = df_aws.rename(columns={
+                'dsr':'dsr_uncor',  'usr':'usr_uncor', 'dsr_cor':'dsr', 'usr_cor':'usr',
+                'rh_u':'rh_u_uncor','rh_u_cor':'rh_u', 'rh_l':'rh_l_uncor','rh_l_cor':'rh_l',
+                                            })
+        except:
+            df_aws = nead.read(path_to_gcnet+'daily/'+station.replace(' ','')+'_daily.csv').to_dataframe()
+            df_aws.timestamp = pd.to_datetime(df_aws.timestamp)
+            df_aws = df_aws.set_index('timestamp')
+            df_aws = df_aws.rename(columns={
+                        'ISWR':'dsr',  'OSWR':'usr', 
+                        'RH2':'rh_u_uncor','RH2_cor':'rh_u_cor', 'TA2':'t_u',
+                        'VW2':'wspd_u','P':'p_u','LHF':'dlhf_u',
+                        'Alb':'albedo','Q2':'sh_u','SHF':'dshf_u'
+                                            })
+        
         sec_station=[]
         if station == 'CEN1':
             sec_station = 'CEN2'
@@ -77,37 +101,20 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',  't_
             df_sec.time = pd.to_datetime(df_sec.time, utc=True)
             df_sec=df_sec.set_index('time')
             df_sec = df_sec.rename(columns={
-                                            'dsr':'dsr_uncor', 
-                                            'usr':'usr_uncor', 
-                                            'dsr_cor':'dsr', 
-                                            'usr_cor':'usr',
-                                            'rh_u':'rh_u_uncor',
-                                            'rh_u_cor':'rh_u',
-                                            'rh_l':'rh_l_uncor',
-                                            'rh_l_cor':'rh_l',
+                'dsr':'dsr_uncor',  'usr':'usr_uncor', 'dsr_cor':'dsr', 'usr_cor':'usr',
+                'rh_u':'rh_u_uncor','rh_u_cor':'rh_u', 'rh_l':'rh_l_uncor','rh_l_cor':'rh_l',
                                             })
             df_aws = df_aws.combine_first(df_sec)
             
-        
         try:
             df_carra = aws_ds.where(aws_ds.name==station.replace('v3',''), drop=True).squeeze().to_dataframe()
         
             # converting to a pandas dataframe and renaming some of the columns
             df_carra = df_carra.rename(columns={
-                                    't2m': 't_u', 
-                                    'r2': 'rh_u', 
-                                    'si10': 'wspd_u', 
-                                    'sp': 'p_u', 
-                                    'sh2': 'qh_u',
-                                    'ssrd': 'dsr',
-                                    'ssru': 'usr',
-                                    'strd': 'dlr',
-                                    'stru': 'ulr',
-                                    'al': 'albedo',
-                                    'skt': 't_surf',
-                                    'slhf': 'dlhf_u',
-                                    'sshf': 'dshf_u',
-                                })
+                't2m': 't_u', 'r2': 'rh_u',  'si10': 'wspd_u', 
+                'sp': 'p_u',  'sh2': 'qh_u', 'ssrd': 'dsr',
+                'ssru': 'usr', 'strd': 'dlr', 'stru': 'ulr','sshf': 'dshf_u',
+                'al': 'albedo', 'skt': 't_surf', 'slhf': 'dlhf_u' })
             # df_carra['t_surf']  = df_carra.t_surf-273.15
             # df_carra['dlhf_u']  = df_carra.dlhf_u/(3*3600)  #J m-2 to W m-2
             # df_carra['dshf_u']  = df_carra.dshf_u/(3*3600)  #J m-2 to W m-2
@@ -116,6 +123,26 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',  't_
             
             df_carra = df_carra.drop(columns=['name','stid']).resample('D').mean()
             df_carra.index = pd.to_datetime(df_carra.index,utc=True)
+
+            common_idx = df_aws.loc[df_aws[var].notnull()].index.intersection(df_carra.loc[df_carra[var.replace('_uncor','')].notnull()].index)
+
+            df_carra_filled = df_carra.loc[common_idx].fillna(method='ffill')
+            df_aws_filled = df_aws.loc[common_idx].fillna(method='ffill')
+            correlation = df_carra_filled[var.replace('_uncor', '')].corr(df_aws_filled[var])
+            max_corr = 0
+            best_shift = 0
+            
+            for shift in range(-10, 11):
+                df2_shifted = df_aws_filled.shift(freq=str(shift)+'D')
+                correlation = df_carra_filled[var.replace('_uncor', '')].corr(df2_shifted[var])
+                
+                if correlation > max_corr:
+                    max_corr = correlation
+                    best_shift = shift
+            
+            print("Best Shift:", best_shift)
+            
+            df_aws = df_aws.shift(freq=str(shift)+'D')
             
             if var == 'albedo':
                 df_carra = df_carra.loc[df_carra.dsr>100,:]
@@ -123,9 +150,9 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',  't_
             common_idx = df_aws.index.intersection(df_carra.index)
             df_aws = df_aws.loc[common_idx, :]
             df_carra = df_carra.loc[common_idx, :]
-            if len(df_carra)==0:
-                Msg(station+' no overlapping data')
-                continue
+            # if len(df_carra)==0:
+            #     Msg(station+' no overlapping data')
+            #     continue
        
             # plt.close('all')
     
@@ -165,7 +192,6 @@ for var in ['t_u', 'rh_u','rh_u_uncor','qh_u','p_u', 'wspd_u','dlr', 'ulr',  't_
             ax2.set_ylabel('CARRA')
             ax2.set_title(var)
             
-            common_idx = df_aws.loc[df_aws[var].notnull()].index.intersection(df_carra.loc[df_carra[var.replace('_uncor','')].notnull()].index)
 
             slope, intercept, r_value, p_value, std_err = linregress(
                 df_aws.loc[common_idx, var], df_carra.loc[common_idx, var.replace('_uncor', '')])

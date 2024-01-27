@@ -76,12 +76,9 @@ for i, var in enumerate(variables):
     # RMSE_JJA = np.sqrt(np.mean((df_carra-df_aws)**2))
     # ME_JJA = (df_carra - df_aws).mean().item()
         
-    ax[i].plot(df_carra[var.replace('_cor', '')],
-             df_aws[var],
-             marker='.', ls='None',
-             markersize=1,
-             color='k',
-             alpha=0.2, label=station)
+    ax[i].plot(df_carra[var.replace('_cor', '')], df_aws[var],
+             marker='.', ls='None', markersize=1,
+             color='k', alpha=0.2, label=station)
     ax[i].set_title(var)
     ax[i].set_xlim(df_carra[var].quantile(0.02).item(),df_carra[var].quantile(0.98).item())
     ax[i].set_ylim(df_aws[var].quantile(0.02).item(),df_aws[var].quantile(0.98).item())
