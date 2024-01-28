@@ -23,33 +23,7 @@ fig_folder = 'figures/CARRA_vs_AWS/'
 variables = ['t_u', 'rh_u','rh_u_cor', 'qh_u','p_u', 'wspd_u','dlr', 'ulr', 
             't_surf',  'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor','dlhf_u','dshf_u']
 
-df_meta = pd.read_csv(path_l3+'../AWS_metadata.csv')
-df_meta = df_meta.loc[df_meta.location_type == 'ice sheet']
-df_aws_all = pd.DataFrame()
-for station in df_meta.stid:    
-    try:
-        df_aws = pd.read_csv(path_l3 + station + '/'+station+'_day.csv')[['time']+variables]
-        df_aws.time = pd.to_datetime(df_aws.time, utc=True)
-        df_aws=df_aws.set_index('time')
-    except:
-        try:
-            path_to_gcnet = 'C:/Users/bav/OneDrive - GEUS/Code/PROMICE/GC-Net-Level-1-data-processing/L1/'
-            df_aws = nead.read(path_to_gcnet+'daily/'+station.replace(' ','')+'_daily.csv').to_dataframe()
-        except:
-            path_to_gcnet = 'C:/Users/bav/OneDrive - Geological Survey of Denmark and Greenland/Code/PROMICE/GC-Net-Level-1-data-processing/L1/'
-            df_aws = nead.read(path_to_gcnet+'daily/'+station.replace(' ','')+'_daily.csv').to_dataframe()
-        df_aws.timestamp = pd.to_datetime(df_aws.timestamp)
-        df_aws = df_aws.set_index('timestamp')
-        df_aws = df_aws.rename(columns={
-                    'ISWR':'dsr',  'OSWR':'usr', 
-                    'RH2':'rh_u_uncor','RH2_cor':'rh_u_cor', 'TA2':'t_u',
-                    'VW2':'wspd_u','P':'p_u','LHF':'dlhf_u',
-                    'Alb':'albedo','Q2':'sh_u','SHF':'dshf_u'
-                                        })[variables]
-    df_aws['station'] = station
-    df_aws_all = pd.concat((df_aws_all,df_aws))
-# df_aws_all = df_aws_all.set_index(['time','station'])
-
+# loading CARRA
 df_carra_all = (xr.open_dataset("./data/CARRA_at_AWS.nc")
                 .drop_vars([ 'x','y','surface','valid_time','spatial_ref',
                             'heightAboveGround','step'])[
@@ -67,12 +41,79 @@ df_carra_all = (xr.open_dataset("./data/CARRA_at_AWS.nc")
                         'sshf': 'dshf_u', }))
 df_carra_all = df_carra_all.groupby('stid').resample('D').mean()
 df_carra_all = df_carra_all.reset_index()
+df_carra_all['time'] = pd.to_datetime(df_carra_all.time, utc=True)
+# %% loading station data
 
+df_meta = pd.read_csv(path_l3+'../AWS_metadata.csv')
+df_meta = df_meta.loc[df_meta.location_type == 'ice sheet']
+df_aws_all = pd.DataFrame()
+for station in df_carra_all.stid.unique():    
+    try:
+        df_aws = pd.read_csv(path_l3 + station + '/'+station+'_day.csv')[['time']+variables]
+        df_aws.time = pd.to_datetime(df_aws.time, utc=True)
+        df_aws=df_aws.set_index('time')
+    except:
+        try:
+            path_to_gcnet = 'C:/Users/bav/OneDrive - GEUS/Code/PROMICE/GC-Net-Level-1-data-processing/L1/'
+            df_aws = nead.read(path_to_gcnet+'daily/'+station.replace(' ','')+'_daily.csv').to_dataframe()
+        except:
+            path_to_gcnet = 'C:/Users/bav/OneDrive - Geological Survey of Denmark and Greenland/Code/PROMICE/GC-Net-Level-1-data-processing/L1/'
+            try:
+                df_aws = nead.read(path_to_gcnet+'daily/'+station.replace(' ','')+'_daily.csv').to_dataframe()
+            except Exception as e:
+                print(station, 'skipped')
+                continue
+        df_aws.timestamp = pd.to_datetime(df_aws.timestamp)
+        df_aws = df_aws.set_index('timestamp')
+        df_aws = df_aws.rename(columns={
+                    'ISWR':'dsr',  'OSWR':'usr', 
+                    'RH2':'rh_u_uncor','RH2_cor':'rh_u_cor', 'TA2':'t_u',
+                    'VW2':'wspd_u','P':'p_u','LHF':'dlhf_u',
+                    'Alb':'albedo','Q2':'sh_u','SHF':'dshf_u'
+                                        })[[v for v in variables if v in df_aws.columns]]
+        for v in variables:
+            if v not in df_aws.columns:
+                df_aws[v] = np.nan
+    df_aws['stid'] = station
+    df_aws.index = pd.to_datetime(df_aws.index,utc=True)
+
+    # converting to a pandas dataframe and renaming some of the columns
+    df_carra = df_carra_all.loc[df_carra_all.stid==station,:].rename(columns={
+        't2m': 't_u', 'r2': 'rh_u',  'si10': 'wspd_u', 
+        'sp': 'p_u',  'sh2': 'qh_u', 'ssrd': 'dsr',
+        'ssru': 'usr', 'strd': 'dlr', 'stru': 'ulr','sshf': 'dshf_u',
+        'al': 'albedo', 'skt': 't_surf', 'slhf': 'dlhf_u' }).set_index('time')
+    df_carra['qh_u']  = df_carra.qh_u*1000  # kg/kg to g/kg
+
+    var = 't_u'
+    common_idx = df_aws.loc[df_aws[var].notnull()].index.intersection(df_carra.loc[df_carra[var.replace('_uncor','')].notnull()].index)
+
+    df_carra_filled = df_carra.loc[common_idx].resample('D').asfreq().fillna(method='ffill')
+    df_aws_filled = df_aws.loc[common_idx].resample('D').asfreq().fillna(method='ffill')
+    correlation = df_carra_filled[var.replace('_uncor', '')].corr(df_aws_filled[var])
+    max_corr = 0
+    best_shift = 0
+    
+    for shift in range(-10, 11):
+        df2_shifted = df_aws_filled.shift(shift).copy(deep=True)
+        correlation = df_carra_filled[var.replace('_uncor', '')].corr(df2_shifted[var])
+        if correlation > max_corr:
+            max_corr = correlation
+            best_shift = shift
+    
+    print(station, ", shift:", best_shift)
+    
+    df_aws = df_aws.shift(best_shift)  
+    
+    df_aws_all = pd.concat((df_aws_all,df_aws))
+df_aws_all = df_aws_all.reset_index().rename(columns={'index':'time'}).set_index(['time','stid'])
+
+# %% 
 station_overview = df_carra_all[['stid','latitude','longitude','altitude','altitude_mod']].drop_duplicates()
 station_overview['altitude_diff'] = station_overview.altitude_mod - station_overview.altitude
 station_overview.to_csv('station_overview.tsv', sep='\t')
 
-# %% 
+# %% Scatter all
 variables = ['t_u', 'rh_u', 'qh_u', 'p_u', 'wspd_u', 'dlr', 'ulr',
  't_surf', 'albedo', 'dsr', 'usr', 'dlhf_u', 'dshf_u']
 fig, ax = plt.subplots(4,4, figsize=(11, 12))
@@ -81,16 +122,17 @@ ax=ax.flatten()
             
 for i, var in enumerate(variables):
     print('# '+var)
-    df_aws = df_aws_all.set_index(['time','station'])[[var]]
+    # df_aws = df_aws_all.set_index(['time','station'])[[var]]
+    df_aws = df_aws_all[[var]]
+    df_aws = df_aws.loc[df_aws[var].notnull()]
     df_carra = df_carra_all.set_index(['time','stid'])[[var]]
     common_idx = df_aws.index.intersection(df_carra.index)
     df_aws = df_aws.loc[common_idx, :]
     df_carra = df_carra.loc[common_idx, :]
 
-    if len(df_carra)==0:
-        continue
     RMSE = np.sqrt(np.mean((df_carra-df_aws)**2))
     ME = (df_carra - df_aws).mean().item()
+    N = (df_carra - df_aws).count().item()
     # RMSE_JJA = np.sqrt(np.mean((df_carra-df_aws)**2))
     # ME_JJA = (df_carra - df_aws).mean().item()
         
@@ -98,13 +140,13 @@ for i, var in enumerate(variables):
              marker='.', ls='None', markersize=1,
              color='k', alpha=0.2, label=station)
     ax[i].set_title(var)
-    ax[i].set_xlim(df_carra[var].quantile(0.02).item(),df_carra[var].quantile(0.98).item())
-    ax[i].set_ylim(df_aws[var].quantile(0.02).item(),df_aws[var].quantile(0.98).item())
+    ax[i].set_xlim(df_carra[var].quantile(0.01).item(),df_carra[var].quantile(0.99).item())
+    ax[i].set_ylim(df_aws[var].quantile(0.01).item(),df_aws[var].quantile(0.99).item())
     ax[i].grid()
     
         
     # Annotate with RMSE and ME
-    ax[i].annotate(f'RMSE: {RMSE:.2f}\nME: {ME:.2f}', 
+    ax[i].annotate(f'RMSE: {RMSE:.2f}\nME: {ME:.2f}\nN: {N:.0f}', 
                   xy=(0.05, 0.95), xycoords='axes fraction', 
                   horizontalalignment='left', verticalalignment='top',
                   fontsize=10, bbox=dict(boxstyle="round,pad=0.3",
@@ -119,7 +161,9 @@ ax=ax.flatten()
             
 for i, var in enumerate(variables):
     print('# '+var)
-    df_aws = df_aws_all.loc[df_aws_all.time.dt.month.isin([6,7,8]),:].set_index(['time','station'])[[var]]
+    time_index = df_aws_all.index.get_level_values('time')
+    df_aws = df_aws_all.loc[time_index.month.isin([6,7,8]),:][[var]]
+    df_aws = df_aws.loc[df_aws[var].notnull()]
     df_carra = df_carra_all.loc[df_carra_all.time.dt.month.isin([6,7,8]),:].set_index(['time','stid'])[[var]]
     common_idx = df_aws.index.intersection(df_carra.index)
     df_aws = df_aws.loc[common_idx, :]
@@ -129,6 +173,7 @@ for i, var in enumerate(variables):
         continue
     RMSE = np.sqrt(np.mean((df_carra-df_aws)**2))
     ME = (df_carra - df_aws).mean().item()
+    N = (df_carra - df_aws).count().item()
     # RMSE_JJA = np.sqrt(np.mean((df_carra-df_aws)**2))
     # ME_JJA = (df_carra - df_aws).mean().item()
         
@@ -145,7 +190,7 @@ for i, var in enumerate(variables):
     
         
     # Annotate with RMSE and ME
-    ax[i].annotate(f'RMSE: {RMSE:.2f}\nME: {ME:.2f}', 
+    ax[i].annotate(f'RMSE: {RMSE:.2f}\nME: {ME:.2f}\nN: {N:.0f}', 
                   xy=(0.05, 0.95), xycoords='axes fraction', 
                   horizontalalignment='left', verticalalignment='top',
                   fontsize=10, bbox=dict(boxstyle="round,pad=0.3",
@@ -246,6 +291,6 @@ for var in var_list.keys():
     plot(fig, filename='figures/'+var_list[var]+'_scatter_plot.html')
 
 for var in var_list.keys():   
-    print('<iframe src="figures/'+var_list[var]+'_scatter_plot.html" width="800" height="600" style="border: 1px solid #ddd;"></iframe>')
-    print('<p>For a full-page view, you can also <a href="figures/'+var_list[var]+'_scatter_plot.html" target="_blank">open the plot in a new tab</a>.</p>')
+    print('<iframe src="figures/html/'+var_list[var]+'_scatter_plot.html" width="800" height="600" style="border: 1px solid #ddd;"></iframe>')
+    print('<p>For a full-page view, you can also <a href="figures/html/'+var_list[var]+'_scatter_plot.html" target="_blank">open the plot in a new tab</a>.</p>')
     print('')
