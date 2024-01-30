@@ -123,8 +123,8 @@ for var in [  'ulr', 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
         df_aws = df_aws.loc[common_idx, :]
         df_carra = df_carra.loc[common_idx, :]
 
-        ME = np.mean(df_carra[var.replace('_cor', '')] - df_aws[var])
-        RMSE = np.sqrt(np.mean((df_carra[var.replace('_cor', '')] - df_aws[var])**2))
+        MD = np.mean(df_carra[var.replace('_cor', '')] - df_aws[var])
+        RMSD = np.sqrt(np.mean((df_carra[var.replace('_cor', '')] - df_aws[var])**2))
         
         tmp = pd.DataFrame()
         tmp['var'] = [var]
@@ -135,8 +135,8 @@ for var in [  'ulr', 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
         tmp['elevation_CARRA'] =  ds_carra.altitude_mod.where(ds_carra.stid==station, drop=True).item()
         tmp['date_start'] = max(df_aws.index[0], df_carra.index[0])
         tmp['date_end'] = min(df_aws.index[-1], df_carra.index[-1])
-        tmp['ME'] = ME
-        tmp['RMSE'] = RMSE
+        tmp['MD'] = MD
+        tmp['RMSD'] = RMSD
         tmp['N'] = (df_carra[var.replace('_cor', '')] * df_aws[var]).notnull().sum()
         df_summary = pd.concat((df_summary, tmp))
         
@@ -170,8 +170,8 @@ for var in [  'ulr', 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
         ax2.legend(loc='lower right')
     
         
-        # Annotate with RMSE and ME
-        ax2.annotate(f'RMSE: {RMSE:.2f}\nME: {ME:.2f}', 
+        # Annotate with RMSD and MD
+        ax2.annotate(f'RMSD: {RMSD:.2f}\nMD: {MD:.2f}', 
                      xy=(0.05, 0.95), xycoords='axes fraction', 
                      horizontalalignment='left', verticalalignment='top',
                      fontsize=10, bbox=dict(boxstyle="round,pad=0.3",
@@ -180,7 +180,7 @@ for var in [  'ulr', 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
         fig.savefig('figures/CARRA_vs_AWS/%s_%s.png'%(station,var))
         Msg('![](../figures/CARRA_vs_AWS/%s_%s.png)'%(station,var))
         Msg(' ')
-df_summary.to_csv('out/summary_statistics.csv',index=None)
+df_summary.rename(columns={'var':'variable'}).to_csv('out/summary_statistics.csv',index=None)
 
 #%%
 
@@ -199,13 +199,13 @@ for i, var in enumerate(variables):
     # Filter data for current variable
     var_data = data[data['var'] == var]
 
-    # Plot ME
-    me_data = var_data[var_data['ME'].notna()]
-    ax.plot(me_data['station'], me_data['ME'], 'bo', label='ME')
+    # Plot MD
+    me_data = var_data[var_data['MD'].notna()]
+    ax.plot(me_data['station'], me_data['MD'], 'bo', label='MD')
 
-    # Plot RMSE
-    rmse_data = var_data[var_data['RMSE'].notna()]
-    ax.plot(rmse_data['station'], rmse_data['RMSE'], 'rx', label='RMSE')
+    # Plot RMSD
+    rmse_data = var_data[var_data['RMSD'].notna()]
+    ax.plot(rmse_data['station'], rmse_data['RMSD'], 'rx', label='RMSD')
 
     ax.set_title('')
     ax.grid()
@@ -217,8 +217,8 @@ plt.xlabel('Station')
 plt.tight_layout()
 fig.savefig('figures/summary_plot.png',dpi=200)
 
-data['ME'] = data['ME'].round(2)
-data['RMSE'] = data['RMSE'].round(2)
+data['MD'] = data['MD'].round(2)
+data['RMSD'] = data['RMSD'].round(2)
 data['date_start'] = pd.to_datetime(data['date_start']).dt.date
 data['date_end'] = pd.to_datetime(data['date_end']).dt.date
 
