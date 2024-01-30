@@ -35,10 +35,10 @@ ds_carra = xr.open_dataset("./data/CARRA_at_AWS_20240125.nc")
 
 df_summary = pd.DataFrame()
 # %% 
-for var in ['p_u', 'wspd_u','dlr', 'ulr',
-            't_surf',  'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
+for var in [  'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
             'dlhf_u','dshf_u','t_u', 'rh_u','rh_u_cor',
-                        'qh_u',]:
+                      'wspd_u','dlr', 'ulr',
+                                  't_surf','p_u',   'qh_u',]:
     Msg('# '+var)
 
     for station in ds_aws.stid.values:
@@ -114,9 +114,10 @@ for var in ['p_u', 'wspd_u','dlr', 'ulr',
         
         df_aws = df_aws.shift(best_shift)  
         
-        if var == 'albedo':
-            df_carra = df_carra.loc[df_carra.dsr>100,:]
-            df_aws = df_aws.loc[df_aws.dsr>100,:]
+        # if var == 'albedo':
+        #     df_carra = df_carra.loc[df_carra.dsr>100,:]
+        #     df_aws = df_aws.loc[df_aws.dsr>100,:]
+            
         df_carra_all = df_carra.copy()
         common_idx = df_aws.index.intersection(df_carra.index)
         df_aws = df_aws.loc[common_idx, :]
