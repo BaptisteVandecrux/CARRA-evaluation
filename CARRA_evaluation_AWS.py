@@ -35,11 +35,10 @@ ds_carra = xr.open_dataset("./data/CARRA_at_AWS_20240130.nc")
 
 df_summary = pd.DataFrame()
 # %% 
-for var in [  'ulr']:
-            # 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
-            # 'dlhf_u','dshf_u','t_u', 'rh_u','rh_u_cor',
-            #           'wspd_u','dlr', 'ulr',
-            #                       't_surf','p_u',   'qh_u',]:
+for var in [  'ulr', 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
+            'dlhf_u','dshf_u','t_u', 'rh_u','rh_u_cor',
+                      'wspd_u','dlr', 'ulr',
+                                  't_surf','p_u',   'qh_u',]:
     Msg('# '+var)
 
     for station in ds_aws.stid.values:
