@@ -87,7 +87,7 @@ for lat_aws, lon_aws in zip(aws_ds.latitude.values, aws_ds.longitude.values):
     query_point = [[lat_aws, lon_aws]] # NGRIP
     all_points = df_meta[['latitude', 'longitude']].values
     df_meta['distance_from_query_point'] = distance.cdist(all_points, query_point, get_distance)
-    min_dist = 5 # in km
+    min_dist = 2 # in km
     df_meta_selec = df_meta.loc[df_meta.distance_from_query_point<min_dist, :]   
        
     # % plotting individual smb records
@@ -164,21 +164,9 @@ for station in ['KAN_M', 'QAS_M', 'QAS_U','TAS_A','THU_U2']:
     
     all_points = df_meta[['latitude', 'longitude']].values
     df_meta['distance_from_query_point'] = distance.cdist(all_points, query_point, get_distance)
-    min_dist = 15 # in km
+    min_dist = 3 # in km
     df_meta_selec = df_meta.loc[df_meta.distance_from_query_point<min_dist, :]   
-    
-    
-    # plotting coordinates
-    # plt.figure()
-    # df_meta[['latitude','longitude']].plot.scatter(ax=plt.gca(),
-    #                                                 x='longitude',y='latitude')
-    # plt.gca().plot(np.array(query_point)[:,1],
-    #             np.array(query_point)[:,0], marker='^', 
-    #             ls='None', label='target',
-    #             color='tab:red')
-    # df_meta_selec.plot(ax=plt.gca(), x='longitude', y='latitude',
-    #               label='closest', marker='d',ls='None', color='tab:orange')
-    # plt.legend()
+
     
     fig = plt.figure(figsize=(10,10))
     print(station)
@@ -189,8 +177,8 @@ for station in ['KAN_M', 'QAS_M', 'QAS_U','TAS_A','THU_U2']:
             tmp = df_sumup.loc[df_sumup.name==n,:]
             for start, end, smb, ref_short in zip(tmp.start_date, tmp.end_date, tmp.smb, tmp.reference_short):
                 if smb>0.5:
-                    if start>pd.to_datetime('2018-01-01'):
-                        print('   ',start,end, np.round(smb*1000),ref_short)
+                    if start>pd.to_datetime('2010-01-01'):
+                        print('   ',start,end, np.round(smb*1000),ref_short, tmp.loc[tmp.smb==smb,'name'].item())
                         plt.plot([end, end], [0, smb*1000],
                                   color = cmap(count),
                                   marker='o',
@@ -200,30 +188,25 @@ for station in ['KAN_M', 'QAS_M', 'QAS_U','TAS_A','THU_U2']:
     df_sf.SWE_mweq = df_sf.SWE_mweq -  df_sf.loc[ df_sf.SWE_mweq.first_valid_index(), 'SWE_mweq']
 
     df_sf.SWE_mweq.plot(ax=plt.gca(), marker='o', label='SnowFox')
-    (aws_ds.where(aws_ds.name==station,drop=True).isel(station=0)['Snowfallmweq']
-     .to_dataframe().Snowfallmweq.loc[start_carra:'2019-05-01']
-     .cumsum()).plot(ax=plt.gca(), c='k', label='CARRA (tp when t2m>0)')
-    (aws_ds.where(aws_ds.name==station,drop=True).isel(station=0)['Snowfallmweq_2']
-     .to_dataframe().Snowfallmweq_2.loc[start_carra:'2019-05-01']
-     .cumsum()).plot(ax=plt.gca(), c='tab:red', label='CARRA (tp-tirf)')
-    if df_sf.index.year[-1]==2020:
-        (aws_ds.where(aws_ds.name==station,drop=True)
-         .isel(station=0)['Snowfallmweq'].to_dataframe()
-         .Snowfallmweq.loc['2019-08-12':'2020-05-01']
-         .cumsum()).plot(ax=plt.gca(),c='k', label='__nolegend__')
-        (aws_ds.where(aws_ds.name==station,drop=True)
-         .isel(station=0)['Snowfallmweq_2'].to_dataframe()
-         .Snowfallmweq_2.loc['2019-08-12':'2020-05-01']
-         .cumsum()).plot(ax=plt.gca(),c='tab:red', label='__nolegend__')
+    for year in range(2010,2024):
+
+        (aws_ds.where(aws_ds.name==station,drop=True).isel(station=0)['Snowfallmweq_2']
+         .to_dataframe().Snowfallmweq_2.loc[str(year)'-05-01']:str(year+1)+'-05-01']
+         .cumsum()).plot(ax=plt.gca(), c='tab:red', 
+                         label='CARRA (tp-tirf)' if year==2010 else '__nolegend__')
+    # if df_sf.index.year[-1]==2020:
+    #     (aws_ds.where(aws_ds.name==station,drop=True)
+    #      .isel(station=0)['Snowfallmweq'].to_dataframe()
+    #      .Snowfallmweq.loc['2019-08-12':'2020-05-01']
+    #      .cumsum()).plot(ax=plt.gca(),c='k', label='__nolegend__')
+    #     (aws_ds.where(aws_ds.name==station,drop=True)
+    #      .isel(station=0)['Snowfallmweq_2'].to_dataframe()
+    #      .Snowfallmweq_2.loc['2019-08-12':'2020-05-01']
+    #      .cumsum()).plot(ax=plt.gca(),c='tab:red', label='__nolegend__')
     plt.title(station)
     plt.legend()
 
-    plt.title('Observations within '+str(min_dist)+' km of '+ station)
-    # fig.savefig('figures/precipitation/'+  \
-    #             (aws_ds
-    #              .where((aws_ds.latitude==lat_aws) & (aws_ds.longitude==lon_aws), 
-    #                     drop=True)
-    #              .name.values[0])  \
-    #                 +'.png', dpi=120)
+    plt.title(station)
+    fig.savefig('figures/precipitation/'+  station +'_snowfox.png', dpi=240)
 
 
