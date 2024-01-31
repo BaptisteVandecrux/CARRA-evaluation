@@ -1,24 +1,24 @@
 import pandas as pd
 import codecs
-# %% updating author list
 import shutil
 shutil.copy('plot_compilation_src/template/plot_compilation.tex',
             'plot_compilation_src/plot_compilation.tex')
 var_list = ['t_u','p_u']
-station_list = ['CEN1','CEN2', 'KAN_U']
+station_list = ['CEN1','CP1', 'KAN_U']
 
 f = open('plot_compilation_src/plot_compilation.tex', 'a', encoding="utf-8")
+f.write("\n")
 for var in var_list:
     var = var.replace('_','\_')
     f.write(f"\n\\section{{{var}}}")
+
+    
     for station in station_list:
         station = station.replace('_','\_')
-        f.write("\n")
         f.write("\\begin{figure}[!htb]")
-        f.write(f"\n\\caption{{Evaluation of {var} at {station}}}")
-        # f.write("\n\\centering")
+        f.write("\n\\hspace{-5cm}")
         f.write(f"\n\\IfFileExists{{../figures/CARRA_vs_AWS/{station}_{var}.png}}{{%")
-        f.write(f"\n\\includegraphics[width=2\\textwidth]{{../figures/CARRA_vs_AWS/{station}_{var}.png}}%")
+        f.write(f"\n\\includegraphics[width=1.8\\textwidth]{{../figures/CARRA_vs_AWS/{station}_{var}.png}}%")
         f.write("\n}{\\textbf{Image not found: ../figures/CARRA\_vs\_AWS/CEN1\_t\_u.png}}")
         f.write("\n\\end{figure}\n")
 f.write("\n\n\\end{document}")
