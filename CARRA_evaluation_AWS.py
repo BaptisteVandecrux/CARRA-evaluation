@@ -177,7 +177,8 @@ for var in [  'ulr', 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
                      fontsize=10, bbox=dict(boxstyle="round,pad=0.3",
                                             edgecolor='black', facecolor='white'))
 
-        fig.savefig('figures/CARRA_vs_AWS/%s_%s.png'%(station,var))
+        fig.savefig('figures/CARRA_vs_AWS/%s_%s.png'%(station,var),
+                    bbox_inches = 'tight', dpi=240)
         Msg('![](../figures/CARRA_vs_AWS/%s_%s.png)'%(station,var))
         Msg(' ')
 df_summary.rename(columns={'var':'variable'}).to_csv('out/summary_statistics.csv',index=None)
