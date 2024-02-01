@@ -1,0 +1,17 @@
+# ulr
+# albedo
+# dsr
+# dsr_cor
+# usr
+# usr_cor
+# dlhf_u
+# dshf_u
+# t_u
+# rh_u
+# rh_u_cor
+# wspd_u
+# dlr
+# ulr
+# t_surf
+# p_u
+# qh_u

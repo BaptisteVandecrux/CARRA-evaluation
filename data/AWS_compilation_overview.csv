@@ -1,5 +1,5 @@
 stid,lat_installation,lon_installation,alt_installation,source,t_u
-Aurora,67.1358,-47.2922,,GC-Net historical,317.0
+Aurora,67.1358,-47.2922,1798.0,GC-Net historical,317.0
 CEN1,77.1826,-61.1127,1886.0,PROMICE/GC-Net,1481.0
 CEN2,77.1826,-61.1127,1886.0,PROMICE/GC-Net,491.0
 CP1,69.8725,-47.0364,1938.9,PROMICE/GC-Net,833.0

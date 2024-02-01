@@ -68,13 +68,7 @@ plot_scatter_regression(df = df, x_var='elevation_aws',
                             x_label='Elevation of AWS (m a.s.l.)',
                             filename='figures/scatter_elevation.png')
 
-df = df.loc[df.station!='SCO_L',:]
-plot_scatter_regression(df = df, x_var='elevation_difference',
-                            x_label='Elevation difference between CARRA and AWS (m a.s.l.)',
-                            filename='figures/scatter_elevation_diff_wo_SCO_L.png')
-plot_scatter_regression(df = df, x_var='elevation_aws',
-                            x_label='Elevation of AWS (m a.s.l.)',
-                            filename='figures/scatter_elevation_wo_SCO_L.png')
+
 #%%
 path_l3 = 'C:/Users/bav/GitHub/PROMICE data/aws-l3-dev/level_3/'
 fig_folder = 'figures/CARRA_vs_AWS/'
@@ -82,30 +76,45 @@ fig_folder = 'figures/CARRA_vs_AWS/'
 variables = ['t_u', 'rh_u','rh_u_cor', 'qh_u','p_u', 'wspd_u','dlr', 'ulr',
             't_surf',  'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor','dlhf_u','dshf_u']
 
-# loading CARRA
-df_carra_all = (xr.open_dataset("./data/CARRA_at_AWS.nc")
-                .drop_vars([ 'x','y','surface','valid_time','spatial_ref',
+ds_carra = xr.open_dataset("./data/CARRA_at_AWS.nc")
+
+ds_aws = xr.open_dataset("./data/AWS_compilation.nc")
+df_aws_all = ds_aws.to_dataframe().reset_index()
+df_aws_all.time = pd.to_datetime(df_aws_all.time, utc=True)
+
+# removing unwanted stations
+unwanted= ['SCO_L', 'KPC_L',  'KPC_Lv3', 'NUK_L',  # ice sheet border, mixed pixel
+           'NUK_K', 'MIT', 'ZAK_A', 'ZAK_L', 'ZAK_Lv3', 'ZAK_U', 'ZAK_Uv3', # local glaciers
+           'LYN_L', 'LYN_T', 'FRE',  # local glaciers
+           'KAN_B', 'NUK_B','WEG_B', # off-ice AWS
+           ]
+good_stations = ds_aws.stid.values[~ds_aws.stid.isin(unwanted) & ds_aws.stid.isin(ds_carra.stid)]
+ds_aws = ds_aws.sel(stid=good_stations)
+good_stations = ds_carra.stid.values[~ds_carra.stid.isin(unwanted) & ds_carra.stid.isin(ds_aws.stid)]
+ds_carra['station'] = ds_carra.stid
+ds_carra = ds_carra.sel(station=good_stations)
+
+df_carra_all = (ds_carra.drop_vars([ 'x','y','surface','valid_time','spatial_ref',
                             'heightAboveGround','step'])[
     ['t2m', 'altitude_mod', 'al', 'ssrd', 'strd', 'sp', 'skt', 'si10',
      'r2', 'tp', 'slhf', 'sshf', 'tirf', 'sh2', 'stid', 'altitude', 'stru',
      'ssru', 'sf', 'rf']]
         .to_dataframe()
         .reset_index('station',drop=True)
-        .rename(columns={'t2m': 't_u', 'r2': 'rh_u',
-                        'si10': 'wspd_u',  'sp': 'p_u',
-                        'sh2': 'qh_u', 'ssrd': 'dsr',
-                        'ssru': 'usr', 'strd': 'dlr',
-                        'stru': 'ulr',  'al': 'albedo',
-                        'skt': 't_surf', 'slhf': 'dlhf_u',
-                        'sshf': 'dshf_u', }))
+        .rename(columns={'t2m': 't_u', 'r2': 'rh_u', 'si10': 'wspd_u',  'sp': 'p_u',
+                'sh2': 'qh_u', 'ssrd': 'dsr', 'ssru': 'usr', 'strd': 'dlr',
+                'stru': 'ulr',  'al': 'albedo', 'skt': 't_surf', 'slhf': 'dlhf_u',
+                'sshf': 'dshf_u', }))
+                                
 df_carra_all = df_carra_all.groupby('stid').resample('D').mean()
 df_carra_all = df_carra_all.reset_index()
 df_carra_all['time'] = pd.to_datetime(df_carra_all.time, utc=True)
 
-ds_aws = xr.open_dataset("./data/AWS_compilation.nc")
-
 
 station_overview = df_carra_all[['stid','latitude','longitude','altitude','altitude_mod']].drop_duplicates()
+station_overview['altitude'] = station_overview.set_index('stid').altitude.combine_first(
+    ds_aws.alt_installation.to_dataframe().rename(columns={'alt_installation': 'altitude'}).altitude
+    ).values
 station_overview['altitude_diff'] = station_overview.altitude_mod - station_overview.altitude
 station_overview.to_csv('station_overview.tsv', sep='\t')
 
@@ -119,7 +128,7 @@ ax=ax.flatten()
 for i, var in enumerate(variables):
     print('# '+var)
     # df_aws = df_aws_all.set_index(['time','station'])[[var]]
-    df_aws = df_aws_all[[var]]
+    df_aws = df_aws_all.set_index(['time','stid'])[[var]]
     df_aws = df_aws.loc[df_aws[var].notnull()]
     df_carra = df_carra_all.set_index(['time','stid'])[[var]]
     common_idx = df_aws.index.intersection(df_carra.index)
@@ -129,24 +138,22 @@ for i, var in enumerate(variables):
     RMSE = np.sqrt(np.mean((df_carra-df_aws)**2))
     ME = (df_carra - df_aws).mean().item()
     N = (df_carra - df_aws).count().item()
-    # RMSE_JJA = np.sqrt(np.mean((df_carra-df_aws)**2))
-    # ME_JJA = (df_carra - df_aws).mean().item()
 
     ax[i].plot(df_carra[var.replace('_cor', '')], df_aws[var],
              marker='.', ls='None', markersize=1,
-             color='k', alpha=0.2, label=station)
+             color='k', alpha=0.2)
     ax[i].set_title(var)
     ax[i].set_xlim(df_carra[var].quantile(0.01).item(),df_carra[var].quantile(0.99).item())
     ax[i].set_ylim(df_aws[var].quantile(0.01).item(),df_aws[var].quantile(0.99).item())
     ax[i].grid()
 
-
     # Annotate with RMSE and ME
     ax[i].annotate(f'RMSE: {RMSE:.2f}\nME: {ME:.2f}\nN: {N:.0f}',
-                  xy=(0.05, 0.95), xycoords='axes fraction',
+                  xy=(0.53, 0.25) if var=='ulr' else (0.05, 0.95),
+                  xycoords='axes fraction',
                   horizontalalignment='left', verticalalignment='top',
                   fontsize=10, bbox=dict(boxstyle="round,pad=0.3",
-                                        edgecolor='black', facecolor='white'))
+                             alpha=0.8, edgecolor='black', facecolor='white'))
 
 
 fig.savefig('figures/scatter_all.png', dpi=120)
@@ -157,8 +164,7 @@ ax=ax.flatten()
 
 for i, var in enumerate(variables):
     print('# '+var)
-    time_index = df_aws_all.index.get_level_values('time')
-    df_aws = df_aws_all.loc[time_index.month.isin([6,7,8]),:][[var]]
+    df_aws = df_aws_all.loc[df_aws_all.time.dt.month.isin([6,7,8]),:].set_index(['time','stid'])[[var]]
     df_aws = df_aws.loc[df_aws[var].notnull()]
     df_carra = df_carra_all.loc[df_carra_all.time.dt.month.isin([6,7,8]),:].set_index(['time','stid'])[[var]]
     common_idx = df_aws.index.intersection(df_carra.index)
@@ -173,120 +179,19 @@ for i, var in enumerate(variables):
     # RMSE_JJA = np.sqrt(np.mean((df_carra-df_aws)**2))
     # ME_JJA = (df_carra - df_aws).mean().item()
 
-    ax[i].plot(df_carra[var.replace('_cor', '')],
-             df_aws[var],
-             marker='.', ls='None',
-             markersize=1,
-             color='tab:red',
-             alpha=0.3, label=station)
+    ax[i].plot(df_carra[var.replace('_cor', '')], df_aws[var],
+             marker='.', ls='None',  markersize=1, color='tab:red',  alpha=0.3)
     ax[i].set_title(var)
     ax[i].set_xlim(df_carra[var].quantile(0.02).item(),df_carra[var].quantile(0.98).item())
     ax[i].set_ylim(df_aws[var].quantile(0.02).item(),df_aws[var].quantile(0.98).item())
     ax[i].grid()
 
-
     # Annotate with RMSE and ME
     ax[i].annotate(f'RMSE: {RMSE:.2f}\nME: {ME:.2f}\nN: {N:.0f}',
-                  xy=(0.05, 0.95), xycoords='axes fraction',
+                  xy=(0.53, 0.25) if var=='ulr' else (0.05, 0.95),
+                  xycoords='axes fraction',
                   horizontalalignment='left', verticalalignment='top',
                   fontsize=10, bbox=dict(boxstyle="round,pad=0.3",
-                                        edgecolor='black', facecolor='white'))
-
+                             alpha=0.5, edgecolor='black', facecolor='white'))
 
 fig.savefig('figures/scatter_summer.png', dpi=120)
-
-# %%
-
-var_list = {'t_u': 'temperature',
-                    'rh_u': 'relative_humidity',
-                    'qh_u': 'specific_humidity',
-                    'p_u': 'pressure',
-                    'wspd_u': 'wind_speed',
-                    'dsr': 'downward_shortwave_radiation',
-                    'usr': 'upward_shortwave_radiation',
-                    'albedo': 'albedo',
-                    'dlr': 'downward_longwave_radiation',
-                    'ulr': 'upward_longwave_radiation',
-                    't_surf': 'surface_temperature',
-                    'dlhf_u':'latent_heat_fluxes',
-                    'dshf_u': 'sensible_heat_fluxes',
-                    }
-
-for var in var_list.keys():
-    df1 = df_aws_all[['time','station',var]]
-    df1['time'] = pd.to_datetime(df1['time']).values
-    df2 = df_carra_all[['time','stid',var]]
-    df2['time'] = pd.to_datetime(df2['time'])
-
-    merged_df = pd.merge(df1,df2,
-                         right_on=['time', 'stid'],
-                         left_on=['time', 'station'])
-
-
-    # Filter points for June, July, and August
-    summer_points = merged_df[(merged_df['time'].dt.month >= 6) & (merged_df['time'].dt.month <= 8)]
-
-    # Calculate mean difference and root mean squared difference for summer points
-    mean_diff_summer = summer_points[var+'_x'].mean() - summer_points[var+'_y'].mean()
-    rmsd_summer = ((summer_points[var+'_x'] - summer_points[var+'_y'])**2).mean()**0.5
-
-    # Calculate mean difference and root mean squared difference for all points
-    mean_diff_all = merged_df[var+'_x'].mean() - merged_df[var+'_y'].mean()
-    rmsd_all = ((merged_df[var+'_x'] - merged_df[var+'_y'])**2).mean()**0.5
-
-
-    # Create a scatter plot for each station
-    scatter_plots = []
-    for station in merged_df['station'].unique():
-        data = merged_df[merged_df['station'] == station].sample(frac=0.1)
-        scatter = go.Scatter(
-            x=data[var+'_x'],
-            y=data[var+'_y'],
-            mode='markers',
-            name=station
-        )
-        scatter_plots.append(scatter)
-
-    # Add a 1:1 line to the plot
-    one_to_one_line = go.Scatter(
-        x=[merged_df[var+'_x'].min(), merged_df[var+'_x'].max()],
-        y=[merged_df[var+'_y'].min(), merged_df[var+'_y'].max()],
-        mode='lines',
-        name='1:1 Line',
-        line=dict(color='black', dash='dash')
-    )
-
-    # Create the layout for the plot
-    layout = go.Layout(
-        title= var_list[var].capitalize()+' scatter plot',
-        xaxis=dict(title=var_list[var]+' CARRA'),
-        yaxis=dict(title=var_list[var]+' AWS'),
-        showlegend=True,
-        annotations=[
-            dict(
-                x=0.05,
-                y=0.9,
-                xref='paper',
-                yref='paper',
-                text=f'Mean Diff (All): {mean_diff_all:.2f}<br>RMSD (All): {rmsd_all:.2f}'
-                     f'<br>Mean Diff (Summer): {mean_diff_summer:.2f}<br>RMSD (Summer): {rmsd_summer:.2f}',
-                showarrow=False,
-                font=dict(size=10)
-            )
-        ]
-    )
-
-    # Create the figure
-    fig = go.Figure(data=scatter_plots + [one_to_one_line], layout=layout)
-
-    # Add a "Select All" option to the legend
-    for scatter in scatter_plots:
-        scatter['legendgroup'] = 'stations'
-
-    # Show the plot
-    plot(fig, filename='figures/'+var_list[var]+'_scatter_plot.html')
-
-for var in var_list.keys():
-    print('<iframe src="figures/html/'+var_list[var]+'_scatter_plot.html" width="800" height="600" style="border: 1px solid #ddd;"></iframe>')
-    print('<p>For a full-page view, you can also <a href="figures/html/'+var_list[var]+'_scatter_plot.html" target="_blank">open the plot in a new tab</a>.</p>')
-    print('')

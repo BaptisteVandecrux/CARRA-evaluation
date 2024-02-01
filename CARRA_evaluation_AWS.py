@@ -33,12 +33,23 @@ fig_folder = 'figures/CARRA_vs_AWS/'
 ds_aws = xr.open_dataset("./data/AWS_compilation.nc")
 ds_carra = xr.open_dataset("./data/CARRA_at_AWS_20240130.nc")
 
+# removing unwanted stations
+unwanted= ['SCO_L', 'KPC_L',  'KPC_Lv3', 'NUK_L',  # ice sheet border, mixed pixel
+           'NUK_K', 'MIT', 'ZAK_A', 'ZAK_L', 'ZAK_Lv3', 'ZAK_U', 'ZAK_Uv3', # local glaciers
+           'LYN_L', 'LYN_T', 'FRE',  # local glaciers
+           'KAN_B', 'NUK_B','WEG_B', # off-ice AWS
+           ]
+good_stations = ds_aws.stid.values[~ds_aws.stid.isin(unwanted) & ds_aws.stid.isin(ds_carra.stid)]
+ds_aws = ds_aws.sel(stid=good_stations)
+good_stations = ds_carra.stid.values[~ds_carra.stid.isin(unwanted) & ds_carra.stid.isin(ds_aws.stid)]
+ds_carra['station'] = ds_carra.stid
+ds_carra = ds_carra.sel(station=good_stations)
+
 df_summary = pd.DataFrame()
 # %% 
 for var in [  'ulr', 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
             'dlhf_u','dshf_u','t_u', 'rh_u','rh_u_cor',
-                      'wspd_u','dlr', 'ulr',
-                                  't_surf','p_u',   'qh_u',]:
+            'wspd_u','dlr', 'ulr',  't_surf','p_u', 'qh_u']:
     Msg('# '+var)
 
     for station in ds_aws.stid.values:
@@ -76,7 +87,7 @@ for var in [  'ulr', 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
             df_sec = df_sec.dropna()
             df_aws = df_aws.combine_first(df_sec)
             
-        df_carra = ds_carra.where(ds_carra.name==station.replace('v3',''), drop=True).squeeze().to_dataframe()
+        df_carra = ds_carra.sel(station=station.replace('v3','')).to_dataframe().drop(columns='station')
     
         # converting to a pandas dataframe and renaming some of the columns
         df_carra = df_carra.rename(columns={
@@ -97,6 +108,7 @@ for var in [  'ulr', 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
         
         if len(common_idx)<100:
             print(station, 'skipped because N<100')
+            continue
         df_carra_filled = df_carra.loc[common_idx].resample('D').asfreq().fillna(method='ffill')
         df_aws_filled = df_aws.loc[common_idx].resample('D').asfreq().fillna(method='ffill')
         correlation = df_carra_filled[var.replace('_cor', '')].corr(df_aws_filled[var])
@@ -125,6 +137,12 @@ for var in [  'ulr', 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
 
         MD = np.mean(df_carra[var.replace('_cor', '')] - df_aws[var])
         RMSD = np.sqrt(np.mean((df_carra[var.replace('_cor', '')] - df_aws[var])**2))
+        MD_jja = np.mean(df_carra.loc[df_carra.index.month.isin([6,7,8]), 
+                                      var.replace('_cor', '')] - df_aws.loc[df_aws.index.month.isin([6,7,8]), 
+                                                                    var])
+        RMSD_jja = np.sqrt(np.mean((df_carra.loc[df_carra.index.month.isin([6,7,8]), 
+                                      var.replace('_cor', '')] - df_aws.loc[df_aws.index.month.isin([6,7,8]), 
+                                                                    var])**2))
         
         tmp = pd.DataFrame()
         tmp['var'] = [var]
@@ -137,7 +155,12 @@ for var in [  'ulr', 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
         tmp['date_end'] = min(df_aws.index[-1], df_carra.index[-1])
         tmp['MD'] = MD
         tmp['RMSD'] = RMSD
+        tmp['MD_jja'] = MD_jja
+        tmp['RMSD_jja'] = RMSD_jja
         tmp['N'] = (df_carra[var.replace('_cor', '')] * df_aws[var]).notnull().sum()
+        tmp['N_jja'] = (df_carra.loc[df_carra.index.month.isin([6,7,8]), 
+                                      var.replace('_cor', '')] - df_aws.loc[df_aws.index.month.isin([6,7,8]), 
+                                                                    var]).count()
         df_summary = pd.concat((df_summary, tmp))
         
         fig = plt.figure(figsize=(12, 4))
