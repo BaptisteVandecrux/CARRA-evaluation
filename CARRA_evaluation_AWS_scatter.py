@@ -76,7 +76,7 @@ fig_folder = 'figures/CARRA_vs_AWS/'
 variables = ['t_u', 'rh_u','rh_u_cor', 'qh_u','p_u', 'wspd_u','dlr', 'ulr',
             't_surf',  'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor','dlhf_u','dshf_u']
 
-ds_carra = xr.open_dataset("./data/CARRA_at_AWS.nc")
+ds_carra = xr.open_dataset("./data/CARRA_at_AWS_20240130.nc")
 
 ds_aws = xr.open_dataset("./data/AWS_compilation.nc")
 df_aws_all = ds_aws.to_dataframe().reset_index()
@@ -154,10 +154,9 @@ for i, var in enumerate(variables):
                   horizontalalignment='left', verticalalignment='top',
                   fontsize=10, bbox=dict(boxstyle="round,pad=0.3",
                              alpha=0.8, edgecolor='black', facecolor='white'))
-
-
 fig.savefig('figures/scatter_all.png', dpi=120)
-# %%
+
+# %% Scatter JJA
 fig, ax = plt.subplots(4,4, figsize=(11, 12))
 plt.subplots_adjust(hspace=0.2, wspace=0.2,top=0.95,bottom=0.05, left=0.05,right=0.95)
 ax=ax.flatten()
@@ -176,8 +175,6 @@ for i, var in enumerate(variables):
     RMSE = np.sqrt(np.mean((df_carra-df_aws)**2))
     ME = (df_carra - df_aws).mean().item()
     N = (df_carra - df_aws).count().item()
-    # RMSE_JJA = np.sqrt(np.mean((df_carra-df_aws)**2))
-    # ME_JJA = (df_carra - df_aws).mean().item()
 
     ax[i].plot(df_carra[var.replace('_cor', '')], df_aws[var],
              marker='.', ls='None',  markersize=1, color='tab:red',  alpha=0.3)
