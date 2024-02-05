@@ -211,9 +211,15 @@ df_summary.rename(columns={'var':'variable'}).to_csv('out/summary_statistics.csv
 
 # Load the dataset
 data = pd.read_csv('out/summary_statistics.csv')
-
-
-variables = data['var'].unique()
+data['order']=0
+for i,var in enumerate(['t_u','p_u','wspd_u','rh_u','rh_u_cor','qh_u',
+                        't_surf','ulr','dlr',
+                        'usr','usr_cor','dsr','dsr_cor','albedo',
+                        'dshf_u','dlhf_u']):
+    data.loc[data.variable==var,'order']=i
+data = data.sort_values(by=['order','elevation_aws'])
+data = data.drop(columns=['order'])
+variables = data['variable'].unique()
 
 num_vars = len(variables)
 fig, axes = plt.subplots(nrows=num_vars, ncols=1, figsize=(10, num_vars * 4))
@@ -222,7 +228,7 @@ for i, var in enumerate(variables):
     ax = axes[i]
 
     # Filter data for current variable
-    var_data = data[data['var'] == var]
+    var_data = data[data['variable'] == var]
 
     # Plot MD
     me_data = var_data[var_data['MD'].notna()]
