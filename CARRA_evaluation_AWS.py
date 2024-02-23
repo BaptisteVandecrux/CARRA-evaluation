@@ -31,7 +31,7 @@ fig_folder = 'figures/CARRA_vs_AWS/'
 # for f in os.listdir(fig_folder):
 #     os.remove(fig_folder+f)
 ds_aws = xr.open_dataset("./data/AWS_compilation.nc")
-ds_carra = xr.open_dataset("./data/CARRA_at_AWS_20240130.nc")
+ds_carra = xr.open_dataset("./data/CARRA_at_AWS.nc")
 
 # removing unwanted stations
 unwanted= ['SCO_L', 'KPC_L',  'KPC_Lv3', 'NUK_L',  # ice sheet border, mixed pixel
@@ -47,10 +47,14 @@ ds_carra = ds_carra.sel(station=good_stations)
 
 df_summary = pd.DataFrame()
 
-# %% Plotting site-specific evaluation
-for var in [  'ulr', 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
+var_list =[  'ulr', 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
             'dlhf_u','dshf_u','t_u', 'rh_u','rh_u_cor',
-            'wspd_u','dlr', 'ulr',  't_surf','p_u', 'qh_u']:
+            'wspd_u','dlr', 'ulr',  't_surf','p_u', 'qh_u']
+
+
+
+# %% Plotting site-specific evaluation
+for var in var_list:
     Msg('# '+var)
 
     for station in ds_aws.stid.values:
@@ -248,14 +252,45 @@ plt.xlabel('Station')
 plt.tight_layout()
 fig.savefig('figures/summary_plot.png',dpi=200)
 
+# %% Producing the variable-wise report
+filename = 'out/compil_plots_by_var.md'
+f = open(filename, "w")
+
+def Msg(txt):
+    f = open(filename, "a")
+    print(txt)
+    f.write(txt + "\n")
+    
+for var in var_list:
+    Msg('# '+var)
+    no_plot = []
+    for station in ds_aws.stid.values:
+        if os.path.isfile('figures/CARRA_vs_AWS/%s_%s.png'%(station,var)):
+            Msg('![](../figures/CARRA_vs_AWS/%s_%s.png)'%(station,var))
+            Msg(' ')
+        else:
+            no_plot.append(station)
+    Msg('No plot for '+var+' at '+', '.join(no_plot))
+    Msg(' ')
+
+# Load the dataset
+data = pd.read_csv('out/summary_statistics.csv')
+data['order']=0
+for i,var in enumerate(['t_u','p_u','wspd_u','rh_u','rh_u_cor','qh_u',
+                        't_surf','ulr','dlr',
+                        'usr','usr_cor','dsr','dsr_cor','albedo',
+                        'dshf_u','dlhf_u']):
+    data.loc[data.variable==var,'order']=i
+data = data.sort_values(by=['order','elevation_aws'])
+data = data.drop(columns=['order'])
+variables = data['variable'].unique()
+
 data['MD'] = data['MD'].round(2)
 data['RMSD'] = data['RMSD'].round(2)
 data['date_start'] = pd.to_datetime(data['date_start']).dt.date
 data['date_end'] = pd.to_datetime(data['date_end']).dt.date
 
-
-text_file_path = 'out/compil_plots.md'
-with open(text_file_path, 'r') as file:
+with open(filename, 'r') as file:
     existing_content = file.read()
 
 new_content = ("# Stats plot\n\n" + '![](../figures/summary_plot.png)\n\n'
@@ -263,8 +298,52 @@ new_content = ("# Stats plot\n\n" + '![](../figures/summary_plot.png)\n\n'
                + "\n\n" + existing_content)
 
 # Write the combined content back to the file
-with open(text_file_path, 'w') as file:
+with open(filename, 'w') as file:
     file.write(new_content)
+    
+tocgen.processFile(filename, filename[:-3]+"_toc.md")
+
+# %% Producing the station-wise report
+filename = 'out/compil_plots_by_station.md'
+f = open(filename, "w")
+
+def Msg(txt):
+    f = open(filename, "a")
+    print(txt)
+    f.write(txt + "\n")
+    
+# Load the summary statistic
+data = pd.read_csv('out/summary_statistics.csv')
+data['MD'] = data['MD'].round(2)
+data['RMSD'] = data['RMSD'].round(2)
+data['date_start'] = pd.to_datetime(data['date_start']).dt.date
+data['date_end'] = pd.to_datetime(data['date_end']).dt.date
+
+with open(filename, 'r') as file:
+    existing_content = file.read()
+
+new_content = ("# Stats plot\n\n" + '![](../figures/summary_plot.png)\n\n'
+               +"# Stats table\n\n" + data.to_markdown(index=None) 
+               + "\n\n" + existing_content)
+
+# Write the combined content back to the file
+with open(filename, 'w') as file:
+    file.write(new_content)
+    
+for station in ds_aws.stid.values:
+    Msg('# '+station)
+    Msg('## Summary table')
+    Msg(data.loc[data.station == station].to_markdown(index=None) )
+    
+    no_plot = []
+    for var in var_list:
+        if os.path.isfile('figures/CARRA_vs_AWS/%s_%s.png'%(station,var)):
+            Msg('![](../figures/CARRA_vs_AWS/%s_%s.png)'%(station,var))
+            Msg(' ')
+        else:
+            no_plot.append(var)
+    Msg('No plot at '+station+' for '+', '.join(no_plot))
+    Msg(' ')
     
 tocgen.processFile(filename, filename[:-3]+"_toc.md")
 

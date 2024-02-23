@@ -46,13 +46,13 @@ except:
     df_meta_gcnet = pd.read_csv(path_to_gcnet+'GC-Net_location.csv', skipinitialspace=True)
     
 df_meta_gcnet['source'] = 'GC-Net historical'
-df_meta_gcnet = df_meta_gcnet.loc[df_meta_gcnet.Northing>0, 
-                        ['Name','Northing','Easting','Elevationm','source']
+df_meta_gcnet = df_meta_gcnet.loc[df_meta_gcnet['Latitude (°N)']>0, 
+                        ['Name','Latitude (°N)', 'Longitude (°E)', 'Elevation (wgs84 m)','source']
                         ].rename(columns={'Name':'stid',
-                              'Northing':'lat_installation',
-                              'Easting':'lon_installation',
-                              'Elevationm':'alt_installation'})
-                              
+                              'Latitude (°N)':'lat_installation',
+                              'Longitude (°E)':'lon_installation',
+                              'Elevation (wgs84 m)':'alt_installation'})
+                                          
 for station in df_meta_gcnet.stid:
     try:
         path_to_gcnet = 'C:/Users/bav/OneDrive - GEUS/Code/PROMICE/GC-Net-Level-1-data-processing/L1/'
