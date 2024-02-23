@@ -862,7 +862,6 @@
 | qh_u       | UPE_U             |    72.8883 |    -53.5715 |           940   |          927.832  | 2009-08-18   | 2023-08-03 |   0.06 |   0.23 |    0.112787    |   0.281626  | 4914 |    1204 |
 
 # Aurora
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |    MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|----------:|-----------:|----:|--------:|
 | dsr        | Aurora    |    67.1358 |    -47.2922 |            1798 |           1738.08 | 2000-06-24   | 2001-05-06 |  -0.43 |  31.15 |  0.839189 |  59.4044   | 316 |      68 |
@@ -872,6 +871,7 @@
 | wspd_u     | Aurora    |    67.1358 |    -47.2922 |            1798 |           1738.08 | 2000-06-24   | 2001-05-06 |   0.34 |   0.96 |  0.461011 |   0.878529 | 315 |      68 |
 | p_u        | Aurora    |    67.1358 |    -47.2922 |            1798 |           1738.08 | 2000-06-25   | 2001-05-06 | -16.4  |  17.17 | -9.58639  |   9.6582   | 315 |      67 |
 | qh_u       | Aurora    |    67.1358 |    -47.2922 |            1798 |           1738.08 | 2000-06-25   | 2001-05-05 |  -0.12 |   0.26 | -0.17469  |   0.303514 | 244 |      67 |
+ 
 ![](../figures/CARRA_vs_AWS/Aurora_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/Aurora_t_u.png)
@@ -889,7 +889,6 @@
 No plot at Aurora for ulr, albedo, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_surf
  
 # CEN1
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | ulr        | CEN1      |    77.1826 |    -61.1127 |            1886 |           1881.31 | 2017-07-24   | 2023-10-31 |  -2.48 |   7.42 |  -3.23411   |  5.69642   | 1905 |     563 |
@@ -909,6 +908,7 @@ No plot at Aurora for ulr, albedo, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, dlr, u
 | t_surf     | CEN1      |    77.1826 |    -61.1127 |            1886 |           1881.31 | 2017-07-24   | 2023-10-31 |  -0.45 |   2.09 |  -0.743637  |  1.3371    | 1905 |     563 |
 | p_u        | CEN1      |    77.1826 |    -61.1127 |            1886 |           1881.31 | 2017-07-24   | 2023-10-31 |   0.42 |   0.83 |   0.0653248 |  0.596608  | 1903 |     561 |
 | qh_u       | CEN1      |    77.1826 |    -61.1127 |            1886 |           1881.31 | 2017-07-24   | 2023-10-31 |   0.08 |   0.17 |   0.0646534 |  0.213793  | 1890 |     558 |
+ 
 ![](../figures/CARRA_vs_AWS/CEN1_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/CEN1_albedo.png)
@@ -946,13 +946,12 @@ No plot at Aurora for ulr, albedo, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, dlr, u
 No plot at CEN1 for 
  
 # CEN2
-## Summary table
 | variable   | station   | latitude   | longitude   | elevation_aws   | elevation_CARRA   | date_start   | date_end   | MD   | RMSD   | MD_jja   | RMSD_jja   | N   | N_jja   |
 |------------|-----------|------------|-------------|-----------------|-------------------|--------------|------------|------|--------|----------|------------|-----|---------|
+ 
 No plot at CEN2 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, t_u, rh_u, rh_u_cor, wspd_u, dlr, ulr, t_surf, p_u, qh_u
  
 # CP1
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|----:|--------:|
 | ulr        | CP1       |    69.8725 |    -47.0364 |          1938.9 |           1949.94 | 2021-06-17   | 2023-10-31 |  -3.9  |   5.7  |  -3.41001   |   5.43045  | 744 |     246 |
@@ -972,6 +971,7 @@ No plot at CEN2 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, t_u
 | t_surf     | CP1       |    69.8725 |    -47.0364 |          1938.9 |           1949.94 | 2021-06-17   | 2023-10-31 |  -0.9  |   1.41 |  -0.654111  |   1.1944   | 744 |     246 |
 | p_u        | CP1       |    69.8725 |    -47.0364 |          1938.9 |           1949.94 | 2021-06-17   | 2023-10-31 |  -0.25 |   1.09 |  -0.396111  |   0.576072 | 738 |     246 |
 | qh_u       | CP1       |    69.8725 |    -47.0364 |          1938.9 |           1949.94 | 2021-06-17   | 2023-10-31 |  -0.05 |   0.18 |  -0.0686144 |   0.231949 | 737 |     246 |
+ 
 ![](../figures/CARRA_vs_AWS/CP1_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/CP1_albedo.png)
@@ -1009,7 +1009,6 @@ No plot at CEN2 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, t_u
 No plot at CP1 for 
  
 # CP2
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | dsr        | CP2       |    69.9133 |    -46.8547 |            1990 |           1962.52 | 1997-05-13   | 2001-05-29 | -19.5  |  40.68 | -43.5725    |  65.4321   | 1451 |     366 |
@@ -1020,6 +1019,7 @@ No plot at CP1 for
 | wspd_u     | CP2       |    69.9133 |    -46.8547 |            1990 |           1962.52 | 1997-05-13   | 2001-05-29 |   0.19 |   1.02 |   0.28793   |   0.872264 | 1459 |     366 |
 | p_u        | CP2       |    69.9133 |    -46.8547 |            1990 |           1962.52 | 1997-05-13   | 2001-05-29 |  -3.65 |   3.73 |  -3.92473   |   3.98015  | 1475 |     366 |
 | qh_u       | CP2       |    69.9133 |    -46.8547 |            1990 |           1962.52 | 1997-05-13   | 2001-05-29 |   0.05 |   0.17 |   0.0373265 |   0.254973 | 1474 |     366 |
+ 
 ![](../figures/CARRA_vs_AWS/CP2_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/CP2_usr.png)
@@ -1039,7 +1039,6 @@ No plot at CP1 for
 No plot at CP2 for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_surf
  
 # Crawford Point 1
-## Summary table
 | variable   | station          |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:-----------------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|------------:|-----------:|-----:|--------:|
 | dsr        | Crawford Point 1 |    69.8742 |    -47.0242 |            2022 |           1949.94 | 1995-05-23   | 2020-07-22 | -4.05 |  38.94 | -13.1961    |  59.7136   | 6016 |    1853 |
@@ -1052,6 +1051,7 @@ No plot at CP2 for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_su
 | wspd_u     | Crawford Point 1 |    69.8742 |    -47.0242 |            2022 |           1949.94 | 1995-05-23   | 2020-07-22 |  0.15 |   1.42 |   0.0312375 |   1.21714  | 7109 |    2110 |
 | p_u        | Crawford Point 1 |    69.8742 |    -47.0242 |            2022 |           1949.94 | 1995-05-25   | 2020-07-22 | -2.76 |   6.2  |  -0.549005  |   3.28441  | 5406 |    1673 |
 | qh_u       | Crawford Point 1 |    69.8742 |    -47.0242 |            2022 |           1949.94 | 1995-05-25   | 2020-07-22 |  0.04 |   0.28 |   0.0657537 |   0.359187 | 4904 |    1603 |
+ 
 ![](../figures/CARRA_vs_AWS/Crawford Point 1_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/Crawford Point 1_usr.png)
@@ -1075,7 +1075,6 @@ No plot at CP2 for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_su
 No plot at Crawford Point 1 for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # DY2
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|----:|--------:|
 | ulr        | DY2       |    66.4823 |    -46.2933 |          2125.1 |           2100.71 | 2022-06-16   | 2023-10-31 |  -3.46 |   6.26 |  -1.97154   |  4.73985   | 503 |     169 |
@@ -1095,6 +1094,7 @@ No plot at Crawford Point 1 for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | t_surf     | DY2       |    66.4823 |    -46.2933 |          2125.1 |           2100.71 | 2022-06-16   | 2023-10-31 |  -0.81 |   1.63 |  -0.310446  |  1.05664   | 503 |     169 |
 | p_u        | DY2       |    66.4823 |    -46.2933 |          2125.1 |           2100.71 | 2022-06-16   | 2023-10-31 |   1.63 |   1.85 |   1.2485    |  1.31856   | 503 |     169 |
 | qh_u       | DY2       |    66.4823 |    -46.2933 |          2125.1 |           2100.71 | 2022-06-16   | 2023-10-31 |  -0.06 |   0.2  |  -0.0833088 |  0.239145  | 503 |     169 |
+ 
 ![](../figures/CARRA_vs_AWS/DY2_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/DY2_albedo.png)
@@ -1132,7 +1132,6 @@ No plot at Crawford Point 1 for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at DY2 for 
  
 # DYE-2
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |     MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|-----------:|-----------:|-----:|--------:|
 | dsr        | DYE-2     |     66.482 |    -46.2908 |            2165 |           2100.71 | 1996-05-24   | 2022-10-06 |  -6.26 |  34.44 | -26.1372   |  56.2294   | 8617 |    2308 |
@@ -1145,6 +1144,7 @@ No plot at DY2 for
 | wspd_u     | DYE-2     |     66.482 |    -46.2908 |            2165 |           2100.71 | 1996-05-24   | 2022-10-07 |  -0.15 |   1.33 |  -0.303574 |   1.16551  | 8647 |    2333 |
 | p_u        | DYE-2     |     66.482 |    -46.2908 |            2165 |           2100.71 | 1996-05-24   | 2022-06-14 |   4.18 |   6.32 |   4.50377  |   8.53039  | 4762 |    1122 |
 | qh_u       | DYE-2     |     66.482 |    -46.2908 |            2165 |           2100.71 | 1996-05-24   | 2021-05-31 |   0.09 |   0.2  |   0.203867 |   0.322141 | 4471 |    1097 |
+ 
 ![](../figures/CARRA_vs_AWS/DYE-2_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/DYE-2_usr.png)
@@ -1168,7 +1168,6 @@ No plot at DY2 for
 No plot at DYE-2 for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # EGP
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |       MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|-------------:|-----------:|-----:|--------:|
 | ulr        | EGP       |       75.6 |       -35.9 |            2700 |           2672.54 | 2016-05-01   | 2023-10-31 |  -4.68 |   8.35 |  -6.26368    |  8.85173   | 2736 |     733 |
@@ -1188,6 +1187,7 @@ No plot at DYE-2 for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | t_surf     | EGP       |       75.6 |       -35.9 |            2700 |           2672.54 | 2016-05-01   | 2023-10-31 |  -1.1  |   2.36 |  -1.41686    |  2.07791   | 2736 |     733 |
 | p_u        | EGP       |       75.6 |       -35.9 |            2700 |           2672.54 | 2016-05-01   | 2023-10-31 |  -0.11 |   0.96 |  -0.0690971  |  0.503748  | 2736 |     733 |
 | qh_u       | EGP       |       75.6 |       -35.9 |            2700 |           2672.54 | 2016-05-01   | 2023-10-31 |   0.02 |   0.17 |   0.00208727 |  0.258383  | 2722 |     730 |
+ 
 ![](../figures/CARRA_vs_AWS/EGP_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/EGP_albedo.png)
@@ -1225,7 +1225,6 @@ No plot at DYE-2 for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at EGP for 
  
 # EastGRIP
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |     MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|-----------:|-----------:|-----:|--------:|
 | dlhf_u     | EastGRIP  |    75.6268 |    -35.9801 |            2653 |           2672.54 | 2014-05-17   | 2021-02-20 | -0.38 |   3.21 | -2.4374    |   4.38412  | 1301 |     183 |
@@ -1236,6 +1235,7 @@ No plot at EGP for
 | wspd_u     | EastGRIP  |    75.6268 |    -35.9801 |            2653 |           2672.54 | 2014-05-17   | 2022-10-07 |  0.55 |   1.33 |  0.148994  |   0.807612 | 3028 |     828 |
 | p_u        | EastGRIP  |    75.6268 |    -35.9801 |            2653 |           2672.54 | 2014-05-17   | 2022-10-07 | -0.36 |   2.45 |  1.09441   |   1.48643  | 1969 |     256 |
 | qh_u       | EastGRIP  |    75.6268 |    -35.9801 |            2653 |           2672.54 | 2014-05-17   | 2022-10-07 |  0.05 |   0.14 |  0.0900443 |   0.281382 | 1957 |     254 |
+ 
 ![](../figures/CARRA_vs_AWS/EastGRIP_dlhf_u.png)
  
 ![](../figures/CARRA_vs_AWS/EastGRIP_dshf_u.png)
@@ -1255,7 +1255,6 @@ No plot at EGP for
 No plot at EastGRIP for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlr, ulr, t_surf
  
 # GITS
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|------------:|-----------:|-----:|--------:|
 | dsr        | GITS      |    77.1378 |    -61.0411 |            1887 |           1871.46 | 1995-06-07   | 2020-08-09 | -8.88 |  45.27 | -31.5296    |  60.1601   | 3928 |    1354 |
@@ -1268,6 +1267,7 @@ No plot at EastGRIP for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlr, ulr, t_sur
 | wspd_u     | GITS      |    77.1378 |    -61.0411 |            1887 |           1871.46 | 1995-06-07   | 2021-08-13 |  0.91 |   1.87 |   0.452568  |   1.3728   | 4381 |    1637 |
 | p_u        | GITS      |    77.1378 |    -61.0411 |            1887 |           1871.46 | 1996-05-01   | 2021-08-13 |  3.18 |   5.13 |   2.35326   |   3.79689  | 2729 |     913 |
 | qh_u       | GITS      |    77.1378 |    -61.0411 |            1887 |           1871.46 | 1996-05-01   | 2020-08-28 |  0.09 |   0.17 |   0.0944544 |   0.206574 | 2375 |     834 |
+ 
 ![](../figures/CARRA_vs_AWS/GITS_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/GITS_usr.png)
@@ -1291,7 +1291,6 @@ No plot at EastGRIP for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlr, ulr, t_sur
 No plot at GITS for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # HUM
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|----:|--------:|
 | ulr        | HUM       |    78.5288 |    -56.8442 |          1969.8 |           1957.15 | 2022-06-19   | 2023-10-31 |  -4.46 |   6.43 |  -4.5484    |  6.50744   | 349 |     137 |
@@ -1311,6 +1310,7 @@ No plot at GITS for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | t_surf     | HUM       |    78.5288 |    -56.8442 |          1969.8 |           1957.15 | 2022-06-19   | 2023-10-31 |  -1.08 |   1.61 |  -0.995717  |  1.43409   | 349 |     137 |
 | p_u        | HUM       |    78.5288 |    -56.8442 |          1969.8 |           1957.15 | 2022-06-19   | 2023-10-31 |  -1.11 |  21.4  |  -0.034304  |  4.28548   | 345 |     135 |
 | qh_u       | HUM       |    78.5288 |    -56.8442 |          1969.8 |           1957.15 | 2022-06-19   | 2023-10-31 |   0.06 |   0.2  |   0.0478773 |  0.261816  | 345 |     135 |
+ 
 ![](../figures/CARRA_vs_AWS/HUM_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/HUM_albedo.png)
@@ -1348,7 +1348,6 @@ No plot at GITS for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at HUM for 
  
 # Humboldt
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |     MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|-----------:|-----------:|-----:|--------:|
 | dsr        | Humboldt  |    78.5283 |    -56.8423 |            1950 |           1957.15 | 1995-06-22   | 2022-06-25 |  1.91 |  24.86 |  -0.587816 |  36.6694   | 6878 |    2197 |
@@ -1361,6 +1360,7 @@ No plot at HUM for
 | wspd_u     | Humboldt  |    78.5283 |    -56.8423 |            1950 |           1957.15 | 1995-06-22   | 2022-06-25 | -0.29 |   1.24 |  -0.253555 |   1.01906  | 6990 |    2186 |
 | p_u        | Humboldt  |    78.5283 |    -56.8423 |            1950 |           1957.15 | 1995-06-22   | 2022-06-25 |  3.27 |   4.37 |   1.92468  |   2.85422  | 7013 |    2181 |
 | qh_u       | Humboldt  |    78.5283 |    -56.8423 |            1950 |           1957.15 | 1995-06-22   | 2022-06-25 |  0.04 |   0.2  |   0.032283 |   0.283684 | 6913 |    2175 |
+ 
 ![](../figures/CARRA_vs_AWS/Humboldt_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/Humboldt_usr.png)
@@ -1384,7 +1384,6 @@ No plot at HUM for
 No plot at Humboldt for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # JAR
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|----:|--------:|
 | ulr        | JAR       |    69.4925 |    -49.7184 |           906.9 |           892.719 | 2021-05-26   | 2023-01-26 |  -2.02 |   4.47 |  -1.62027   |   4.18606  | 268 |     114 |
@@ -1404,6 +1403,7 @@ No plot at Humboldt for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | t_surf     | JAR       |    69.4925 |    -49.7184 |           906.9 |           892.719 | 2021-05-26   | 2023-01-26 |  -0.22 |   1.01 |   0.0488326 |   0.871011 | 268 |     114 |
 | p_u        | JAR       |    69.4925 |    -49.7184 |           906.9 |           892.719 | 2021-05-26   | 2023-01-26 |   1.03 |   1.32 |   1.03912   |   1.2365   | 266 |     113 |
 | qh_u       | JAR       |    69.4925 |    -49.7184 |           906.9 |           892.719 | 2021-05-26   | 2023-01-26 |  -0.13 |   0.24 |  -0.115927  |   0.241351 | 266 |     113 |
+ 
 ![](../figures/CARRA_vs_AWS/JAR_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/JAR_albedo.png)
@@ -1441,7 +1441,6 @@ No plot at Humboldt for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at JAR for 
  
 # JAR1
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |     MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|-----------:|-----------:|-----:|--------:|
 | dsr        | JAR1      |    69.4933 |    -49.7142 |             900 |           892.719 | 1996-06-19   | 2019-09-08 |  -0.57 |  35.1  |   1.60018  |  51.6048   | 6474 |    1977 |
@@ -1454,6 +1453,7 @@ No plot at JAR for
 | wspd_u     | JAR1      |    69.4933 |    -49.7142 |             900 |           892.719 | 1996-06-19   | 2019-08-29 |   0.66 |   1.33 |   0.779481 |   1.38259  | 6651 |    1966 |
 | p_u        | JAR1      |    69.4933 |    -49.7142 |             900 |           892.719 | 1996-06-19   | 2019-09-08 |   3.51 |   3.8  |   3.17843  |   3.50963  | 5175 |    1377 |
 | qh_u       | JAR1      |    69.4933 |    -49.7142 |             900 |           892.719 | 1996-06-19   | 2019-09-08 |  -0.14 |   0.24 |  -0.125584 |   0.271554 | 4530 |    1333 |
+ 
 ![](../figures/CARRA_vs_AWS/JAR1_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/JAR1_usr.png)
@@ -1477,7 +1477,6 @@ No plot at JAR for
 No plot at JAR1 for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # JAR2
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |     MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|-----------:|-----------:|-----:|--------:|
 | dsr        | JAR2      |      69.42 |    -50.0575 |             568 |           489.057 | 1999-06-02   | 2013-05-15 | -11.12 |  48.91 | -27.5436   |  70.357    | 3492 |    1016 |
@@ -1490,6 +1489,7 @@ No plot at JAR1 for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | wspd_u     | JAR2      |      69.42 |    -50.0575 |             568 |           489.057 | 1999-06-02   | 2012-10-04 |   2.08 |   3.1  |   2.49265  |   3.02723  | 3422 |    1003 |
 | p_u        | JAR2      |      69.42 |    -50.0575 |             568 |           489.057 | 1999-06-02   | 2008-05-09 |   3.96 |   6.92 |   3.55256  |   4.64277  | 2427 |     617 |
 | qh_u       | JAR2      |      69.42 |    -50.0575 |             568 |           489.057 | 1999-06-02   | 2008-05-09 |  -0.15 |   0.54 |  -0.356619 |   0.498256 | 2411 |     602 |
+ 
 ![](../figures/CARRA_vs_AWS/JAR2_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/JAR2_usr.png)
@@ -1513,7 +1513,6 @@ No plot at JAR1 for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at JAR2 for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # JAR3
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |    MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|----------:|-----------:|-----:|--------:|
 | dsr        | JAR3      |    69.3944 |      -50.31 |             323 |           302.454 | 2000-05-28   | 2004-05-25 |  1.51 |  27.21 |  9.91334  |  41.8542   | 1457 |     368 |
@@ -1524,6 +1523,7 @@ No plot at JAR2 for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | wspd_u     | JAR3      |    69.3944 |      -50.31 |             323 |           302.454 | 2000-05-28   | 2004-05-25 |  3.36 |   3.9  |  3.59195  |   4.02035  | 1456 |     368 |
 | p_u        | JAR3      |    69.3944 |      -50.31 |             323 |           302.454 | 2000-06-06   | 2004-05-25 | -5.07 |   7.25 | -4.30764  |   5.88386  | 1445 |     361 |
 | qh_u       | JAR3      |    69.3944 |      -50.31 |             323 |           302.454 | 2000-06-06   | 2004-05-25 | -0.29 |   0.41 | -0.562134 |   0.615837 | 1443 |     360 |
+ 
 ![](../figures/CARRA_vs_AWS/JAR3_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/JAR3_usr.png)
@@ -1543,7 +1543,6 @@ No plot at JAR2 for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at JAR3 for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_surf
  
 # JAR_O
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|----:|--------:|
 | ulr        | JAR_O     |    69.4948 |      -49.67 |           925.7 |            947.58 | 2022-08-03   | 2023-10-31 |  -2.49 |   4.63 |  -0.965725  |   2.88917  | 338 |      94 |
@@ -1563,6 +1562,7 @@ No plot at JAR3 for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_s
 | t_surf     | JAR_O     |    69.4948 |      -49.67 |           925.7 |            947.58 | 2022-08-03   | 2023-10-31 |  -0.4  |   1.12 |   0.27381   |   0.721206 | 338 |      94 |
 | p_u        | JAR_O     |    69.4948 |      -49.67 |           925.7 |            947.58 | 2022-08-03   | 2023-10-31 |  -1.73 |   1.92 |  -2.25465   |   2.34277  | 455 |     121 |
 | qh_u       | JAR_O     |    69.4948 |      -49.67 |           925.7 |            947.58 | 2022-08-03   | 2023-10-31 |  -0.1  |   0.21 |  -0.0855068 |   0.213465 | 338 |      94 |
+ 
 ![](../figures/CARRA_vs_AWS/JAR_O_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/JAR_O_albedo.png)
@@ -1600,7 +1600,6 @@ No plot at JAR3 for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_s
 No plot at JAR_O for 
  
 # KAN_L
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | ulr        | KAN_L     |    67.0957 |    -49.9485 |             680 |           660.441 | 2008-09-01   | 2023-10-31 |  -5.29 |   7.68 |  -1.55946   |  3.41002   | 5538 |    1380 |
@@ -1620,6 +1619,7 @@ No plot at JAR_O for
 | t_surf     | KAN_L     |    67.0957 |    -49.9485 |             680 |           660.441 | 2008-09-01   | 2023-10-31 |  -1.02 |   1.94 |   0.490747  |  0.911319  | 5538 |    1380 |
 | p_u        | KAN_L     |    67.0957 |    -49.9485 |             680 |           660.441 | 2008-09-01   | 2023-10-31 |  -0.05 |   2.1  |  -0.13109   |  2.00801   | 5538 |    1380 |
 | qh_u       | KAN_L     |    67.0957 |    -49.9485 |             680 |           660.441 | 2008-09-01   | 2023-10-31 |   0.04 |   0.21 |   0.179383  |  0.30294   | 5175 |    1300 |
+ 
 ![](../figures/CARRA_vs_AWS/KAN_L_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/KAN_L_albedo.png)
@@ -1657,7 +1657,6 @@ No plot at JAR_O for
 No plot at KAN_L for 
  
 # KAN_M
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | ulr        | KAN_M     |    67.0667 |    -48.8327 |            1270 |            1263.8 | 2008-09-02   | 2023-10-31 |  -2.87 |   5.89 |  -1.94805   |   4.10405  | 5365 |    1317 |
@@ -1677,6 +1676,7 @@ No plot at KAN_L for
 | t_surf     | KAN_M     |    67.0667 |    -48.8327 |            1270 |            1263.8 | 2008-09-02   | 2023-10-31 |  -0.54 |   1.45 |  -0.0650583 |   0.721101 | 5364 |    1317 |
 | p_u        | KAN_M     |    67.0667 |    -48.8327 |            1270 |            1263.8 | 2008-09-02   | 2023-10-31 |   0.11 |   0.69 |   0.0760562 |   0.399576 | 5365 |    1317 |
 | qh_u       | KAN_M     |    67.0667 |    -48.8327 |            1270 |            1263.8 | 2008-09-02   | 2023-10-31 |   0.02 |   0.19 |   0.106266  |   0.23929  | 5274 |    1314 |
+ 
 ![](../figures/CARRA_vs_AWS/KAN_M_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/KAN_M_albedo.png)
@@ -1714,7 +1714,6 @@ No plot at KAN_L for
 No plot at KAN_M for 
  
 # KAN_U
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |       MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|-------------:|-----------:|-----:|--------:|
 | ulr        | KAN_U     |    67.0003 |    -47.0243 |            1840 |           1845.64 | 2009-04-04   | 2023-10-31 |  -3.66 |   7.26 |  -2.8523     |  5.47707   | 5178 |    1370 |
@@ -1734,6 +1733,7 @@ No plot at KAN_M for
 | t_surf     | KAN_U     |    67.0003 |    -47.0243 |            1840 |           1845.64 | 2009-04-04   | 2023-10-31 |  -0.84 |   1.9  |  -0.460762   |  1.15574   | 5178 |    1370 |
 | p_u        | KAN_U     |    67.0003 |    -47.0243 |            1840 |           1845.64 | 2009-04-04   | 2023-10-31 |  -0.65 |   1.23 |  -0.751699   |  0.974074  | 5177 |    1369 |
 | qh_u       | KAN_U     |    67.0003 |    -47.0243 |            1840 |           1845.64 | 2009-04-04   | 2023-10-31 |   0.06 |   0.22 |   0.159352   |  0.310537  | 5162 |    1366 |
+ 
 ![](../figures/CARRA_vs_AWS/KAN_U_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/KAN_U_albedo.png)
@@ -1771,7 +1771,6 @@ No plot at KAN_M for
 No plot at KAN_U for 
  
 # KAR
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |      MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|------------:|-----------:|----:|--------:|
 | dsr        | KAR       |    69.6994 |    -33.0006 |            2579 |           2560.92 | 1999-05-17   | 2001-06-07 | -1.45 |  24.73 | -0.316536   |  37.4712   | 753 |     191 |
@@ -1783,6 +1782,7 @@ No plot at KAN_U for
 | wspd_u     | KAR       |    69.6994 |    -33.0006 |            2579 |           2560.92 | 1999-05-17   | 2001-06-07 |  1.23 |   1.7  |  0.73125    |   1.19695  | 751 |     191 |
 | p_u        | KAR       |    69.6994 |    -33.0006 |            2579 |           2560.92 | 1999-05-17   | 2001-06-07 |  0.92 |   1.2  |  0.2587     |   0.523593 | 745 |     189 |
 | qh_u       | KAR       |    69.6994 |    -33.0006 |            2579 |           2560.92 | 1999-05-17   | 2001-06-07 |  0.04 |   0.17 | -0.00547083 |   0.242735 | 744 |     189 |
+ 
 ![](../figures/CARRA_vs_AWS/KAR_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/KAR_usr.png)
@@ -1804,7 +1804,6 @@ No plot at KAN_U for
 No plot at KAR for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dlr, ulr, t_surf
  
 # KPC_U
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |       MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|-------------:|-----------:|-----:|--------:|
 | ulr        | KPC_U     |    79.8345 |    -25.1665 |             870 |           868.038 | 2008-07-17   | 2023-10-31 |  -3.94 |   7.32 |  -5.45989    |   7.23474  | 5580 |    1426 |
@@ -1824,6 +1823,7 @@ No plot at KAR for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dlr, ulr, t_surf
 | t_surf     | KPC_U     |    79.8345 |    -25.1665 |             870 |           868.038 | 2008-07-17   | 2023-10-31 |  -0.79 |   1.83 |  -0.737773   |   1.35612  | 5580 |    1426 |
 | p_u        | KPC_U     |    79.8345 |    -25.1665 |             870 |           868.038 | 2008-07-17   | 2023-10-31 |   0.22 |   1.66 |  -0.078218   |   0.557447 | 5580 |    1426 |
 | qh_u       | KPC_U     |    79.8345 |    -25.1665 |             870 |           868.038 | 2008-07-17   | 2023-10-31 |   0.11 |   0.19 |   0.111361   |   0.252689 | 5565 |    1423 |
+ 
 ![](../figures/CARRA_vs_AWS/KPC_U_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/KPC_U_albedo.png)
@@ -1861,13 +1861,12 @@ No plot at KAR for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dlr, ulr, t_surf
 No plot at KPC_U for 
  
 # KPC_Uv3
-## Summary table
 | variable   | station   | latitude   | longitude   | elevation_aws   | elevation_CARRA   | date_start   | date_end   | MD   | RMSD   | MD_jja   | RMSD_jja   | N   | N_jja   |
 |------------|-----------|------------|-------------|-----------------|-------------------|--------------|------------|------|--------|----------|------------|-----|---------|
+ 
 No plot at KPC_Uv3 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, t_u, rh_u, rh_u_cor, wspd_u, dlr, ulr, t_surf, p_u, qh_u
  
 # KULU
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |     MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|-----------:|-----------:|----:|--------:|
 | dsr        | KULU      |    65.7585 |    -39.6018 |             878 |           943.344 | 1999-06-20   | 2000-09-14 | 51.78 |  80.49 | 108.272    | 126.562    | 343 |     119 |
@@ -1878,6 +1877,7 @@ No plot at KPC_Uv3 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, 
 | wspd_u     | KULU      |    65.7585 |    -39.6018 |             878 |           943.344 | 1999-06-20   | 2000-09-14 |  1.62 |   5.37 |   0.681587 |   1.3549   | 288 |     131 |
 | p_u        | KULU      |    65.7585 |    -39.6018 |             878 |           943.344 | 1999-06-21   | 2000-09-14 | 14.75 |  30.61 |  14.8508   |  25.6645   | 220 |     142 |
 | qh_u       | KULU      |    65.7585 |    -39.6018 |             878 |           943.344 | 1999-06-21   | 2000-09-14 | -0.46 |   0.73 |  -0.618148 |   0.871598 | 216 |     139 |
+ 
 ![](../figures/CARRA_vs_AWS/KULU_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/KULU_usr.png)
@@ -1897,7 +1897,6 @@ No plot at KPC_Uv3 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, 
 No plot at KULU for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_surf
  
 # NAE
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |    RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|------------:|----:|--------:|
 | ulr        | NAE       |    75.0024 |    -29.9806 |          2627.3 |           2603.21 | 2022-05-28   | 2023-10-31 |  -7.42 |  10.74 |  -7.85446   |  11.5651    | 183 |     113 |
@@ -1917,6 +1916,7 @@ No plot at KULU for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_s
 | t_surf     | NAE       |    75.0024 |    -29.9806 |          2627.3 |           2603.21 | 2022-05-28   | 2023-10-31 |  -1.79 |   2.63 |  -1.84824   |   2.76444   | 183 |     113 |
 | p_u        | NAE       |    75.0024 |    -29.9806 |          2627.3 |           2603.21 | 2022-05-28   | 2023-10-31 |   2.02 |   2.13 |   2.01119   |   2.15153   | 183 |     113 |
 | qh_u       | NAE       |    75.0024 |    -29.9806 |          2627.3 |           2603.21 | 2022-05-28   | 2023-10-31 |  -0.07 |   0.27 |  -0.0906738 |   0.305061  | 182 |     112 |
+ 
 ![](../figures/CARRA_vs_AWS/NAE_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/NAE_albedo.png)
@@ -1954,7 +1954,6 @@ No plot at KULU for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_s
 No plot at NAE for 
  
 # NASA-E
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |     MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|-----------:|-----------:|-----:|--------:|
 | dsr        | NASA-E    |    75.0023 |    -29.9838 |            2610 |           2603.21 | 1997-05-03   | 2022-10-06 | 14.35 |  40.31 |  8.22276   |  31.4979   | 8247 |    2208 |
@@ -1967,6 +1966,7 @@ No plot at NAE for
 | wspd_u     | NASA-E    |    75.0023 |    -29.9838 |            2610 |           2603.21 | 1997-05-03   | 2022-10-07 |  0.7  |   1.91 |  0.0421098 |   1.27336  | 7507 |    2146 |
 | p_u        | NASA-E    |    75.0023 |    -29.9838 |            2610 |           2603.21 | 1997-05-03   | 2022-10-07 |  3.87 |   5.54 |  2.23275   |   2.90439  | 8207 |    2195 |
 | qh_u       | NASA-E    |    75.0023 |    -29.9838 |            2610 |           2603.21 | 1997-05-03   | 2022-10-07 |  0.05 |   0.17 |  0.0781577 |   0.242443 | 8167 |    2191 |
+ 
 ![](../figures/CARRA_vs_AWS/NASA-E_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/NASA-E_usr.png)
@@ -1990,7 +1990,6 @@ No plot at NAE for
 No plot at NASA-E for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # NASA-SE
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | dsr        | NASA-SE   |    66.4779 |    -42.4951 |            2360 |           2378.18 | 1998-04-24   | 2019-09-26 | -16.03 |  42.48 | -36.079     |  61.6972   | 6705 |    1855 |
@@ -2003,6 +2002,7 @@ No plot at NASA-E for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | wspd_u     | NASA-SE   |    66.4779 |    -42.4951 |            2360 |           2378.18 | 1998-04-24   | 2019-09-26 |   0.57 |   1.78 |  -0.0300099 |   0.958608 | 6257 |    1881 |
 | p_u        | NASA-SE   |    66.4779 |    -42.4951 |            2360 |           2378.18 | 1998-04-26   | 2019-09-26 |   2.52 |   3.74 |   1.67222   |   2.20877  | 6671 |    1801 |
 | qh_u       | NASA-SE   |    66.4779 |    -42.4951 |            2360 |           2378.18 | 2000-01-02   | 2019-09-26 |   0.09 |   0.26 |   0.130184  |   0.350711 | 5928 |    1615 |
+ 
 ![](../figures/CARRA_vs_AWS/NASA-SE_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/NASA-SE_usr.png)
@@ -2026,7 +2026,6 @@ No plot at NASA-E for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at NASA-SE for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # NASA-U
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | dsr        | NASA-U    |    73.8407 |    -49.5265 |            2369 |           2326.56 | 1995-05-31   | 2022-10-06 | -10.43 |  33    | -25.5076    |  51.2004   | 7845 |    2433 |
@@ -2039,6 +2038,7 @@ No plot at NASA-SE for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | wspd_u     | NASA-U    |    73.8407 |    -49.5265 |            2369 |           2326.56 | 1995-05-31   | 2022-09-23 |  -0.24 |   1.05 |  -0.347344  |   0.905835 | 7905 |    2437 |
 | p_u        | NASA-U    |    73.8407 |    -49.5265 |            2369 |           2326.56 | 1995-06-01   | 2022-10-07 |   2.84 |   7.96 |   5.36085   |   8.49862  | 3833 |    1154 |
 | qh_u       | NASA-U    |    73.8407 |    -49.5265 |            2369 |           2326.56 | 1995-06-01   | 2022-10-07 |   0.04 |   0.17 |   0.0800967 |   0.221937 | 3800 |    1145 |
+ 
 ![](../figures/CARRA_vs_AWS/NASA-U_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/NASA-U_usr.png)
@@ -2062,7 +2062,6 @@ No plot at NASA-SE for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at NASA-U for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # NAU
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |       MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|-------------:|-----------:|----:|--------:|
 | ulr        | NAU       |    73.8406 |    -49.5315 |          2340.4 |           2326.56 | 2021-08-15   | 2023-10-31 |  -4.15 |   6.31 |  -3.61223    |  6.39409   | 662 |     200 |
@@ -2082,6 +2081,7 @@ No plot at NASA-U for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | t_surf     | NAU       |    73.8406 |    -49.5315 |          2340.4 |           2326.56 | 2021-08-15   | 2023-10-31 |  -0.99 |   1.57 |  -0.747066   |  1.27672   | 662 |     200 |
 | p_u        | NAU       |    73.8406 |    -49.5315 |          2340.4 |           2326.56 | 2021-08-15   | 2023-10-22 |   0.26 |   6.3  |   0.286288   |  4.69287   | 625 |     200 |
 | qh_u       | NAU       |    73.8406 |    -49.5315 |          2340.4 |           2326.56 | 2021-08-15   | 2023-10-22 |   0.02 |   0.16 |   0.00559054 |  0.214263  | 625 |     199 |
+ 
 ![](../figures/CARRA_vs_AWS/NAU_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/NAU_albedo.png)
@@ -2119,7 +2119,6 @@ No plot at NASA-U for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at NAU for 
  
 # NEEM
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |    MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|----------:|-----------:|-----:|--------:|
 | dsr        | NEEM      |    77.4413 |    -51.0999 |            2460 |           2447.82 | 2006-03-29   | 2022-10-06 | 11.16 |  32.51 |  9.71652  |  37.4776   | 4775 |    1561 |
@@ -2132,6 +2131,7 @@ No plot at NAU for
 | wspd_u     | NEEM      |    77.4413 |    -51.0999 |            2460 |           2447.82 | 2006-03-29   | 2022-10-07 |  1.13 |   1.85 |  0.562624 |   1.10299  | 4830 |    1561 |
 | p_u        | NEEM      |    77.4413 |    -51.0999 |            2460 |           2447.82 | 2006-04-28   | 2008-11-18 | 36.79 |  41.03 | 48.1096   |  48.5374   |  529 |     276 |
 | qh_u       | NEEM      |    77.4413 |    -51.0999 |            2460 |           2447.82 | 2006-04-28   | 2008-11-18 | -0.05 |   0.21 | -0.101223 |   0.258879 |  529 |     276 |
+ 
 ![](../figures/CARRA_vs_AWS/NEEM_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/NEEM_usr.png)
@@ -2155,7 +2155,6 @@ No plot at NAU for
 No plot at NEEM for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # NEM
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|----:|--------:|
 | ulr        | NEM       |    77.4414 |    -51.0837 |          2453.6 |           2447.82 | 2021-08-13   | 2023-10-31 |  -5.62 |   7.82 |  -4.32225   |  5.96685   | 454 |     184 |
@@ -2175,6 +2174,7 @@ No plot at NEEM for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | t_surf     | NEM       |    77.4414 |    -51.0837 |          2453.6 |           2447.82 | 2021-08-13   | 2023-10-31 |  -1.43 |   2.08 |  -1.01582   |  1.40519   | 454 |     184 |
 | p_u        | NEM       |    77.4414 |    -51.0837 |          2453.6 |           2447.82 | 2021-08-13   | 2023-10-03 |  -2.22 |  24.39 |   0.0563608 |  0.518377  | 416 |     184 |
 | qh_u       | NEM       |    77.4414 |    -51.0837 |          2453.6 |           2447.82 | 2021-08-13   | 2023-10-03 |   0.06 |   0.18 |   0.10391   |  0.209182  | 406 |     184 |
+ 
 ![](../figures/CARRA_vs_AWS/NEM_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/NEM_albedo.png)
@@ -2212,7 +2212,6 @@ No plot at NEEM for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at NEM for 
  
 # NGRIP
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |     MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|-----------:|-----------:|-----:|--------:|
 | dsr        | NGRIP     |    75.0998 |    -42.3326 |            2950 |           2916.79 | 2002-06-09   | 2010-05-08 | 10.39 |  27.09 |  9.46573   |  32.9497   | 2464 |     544 |
@@ -2224,6 +2223,7 @@ No plot at NEM for
 | wspd_u     | NGRIP     |    75.0998 |    -42.3326 |            2950 |           2916.79 | 2002-06-09   | 2010-05-08 |  0.71 |   1.46 |  0.098911  |   0.741762 | 1926 |     544 |
 | p_u        | NGRIP     |    75.0998 |    -42.3326 |            2950 |           2916.79 | 2002-06-09   | 2010-05-08 |  2.62 |   3.29 |  1.22868   |   1.33404  | 2462 |     543 |
 | qh_u       | NGRIP     |    75.0998 |    -42.3326 |            2950 |           2916.79 | 2002-06-09   | 2010-05-08 |  0.03 |   0.17 |  0.0908484 |   0.278956 | 2460 |     542 |
+ 
 ![](../figures/CARRA_vs_AWS/NGRIP_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/NGRIP_usr.png)
@@ -2245,7 +2245,6 @@ No plot at NEM for
 No plot at NGRIP for ulr, albedo, dsr_cor, usr_cor, dshf_u, dlr, ulr, t_surf
  
 # NSE
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|----:|--------:|
 | ulr        | NSE       |    66.4778 |    -42.4937 |          2386.5 |           2378.18 | 2021-06-19   | 2023-10-31 |  -3.92 |   6.66 |  -2.80872   |  5.6959    | 740 |     250 |
@@ -2265,6 +2264,7 @@ No plot at NGRIP for ulr, albedo, dsr_cor, usr_cor, dshf_u, dlr, ulr, t_surf
 | t_surf     | NSE       |    66.4778 |    -42.4937 |          2386.5 |           2378.18 | 2021-06-19   | 2023-10-31 |  -0.96 |   1.73 |  -0.543017  |  1.3017    | 740 |     250 |
 | p_u        | NSE       |    66.4778 |    -42.4937 |          2386.5 |           2378.18 | 2021-06-19   | 2023-10-31 |   0.05 |   2.91 |  -0.0147148 |  0.526493  | 521 |     158 |
 | qh_u       | NSE       |    66.4778 |    -42.4937 |          2386.5 |           2378.18 | 2021-06-19   | 2023-10-31 |   0    |   0.17 |  -0.0254732 |  0.239416  | 497 |     158 |
+ 
 ![](../figures/CARRA_vs_AWS/NSE_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/NSE_albedo.png)
@@ -2302,7 +2302,6 @@ No plot at NGRIP for ulr, albedo, dsr_cor, usr_cor, dshf_u, dlr, ulr, t_surf
 No plot at NSE for 
  
 # NUK_N
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | ulr        | NUK_N     |    64.9452 |     -49.885 |             920 |           915.256 | 2010-07-25   | 2014-07-25 |  -4.22 |  11.42 |  -7.17241   |  16.1298   | 1372 |     330 |
@@ -2322,6 +2321,7 @@ No plot at NSE for
 | t_surf     | NUK_N     |    64.9452 |     -49.885 |             920 |           915.256 | 2010-07-25   | 2014-07-25 |  -0.27 |   2.07 |   0.674703  |   1.33213  | 1372 |     330 |
 | p_u        | NUK_N     |    64.9452 |     -49.885 |             920 |           915.256 | 2010-07-25   | 2014-07-25 |  -0.48 |   2.82 |  -0.562391  |   0.832944 | 1375 |     333 |
 | qh_u       | NUK_N     |    64.9452 |     -49.885 |             920 |           915.256 | 2010-07-25   | 2014-07-25 |   0.12 |   0.35 |   0.348977  |   0.445983 | 1369 |     328 |
+ 
 ![](../figures/CARRA_vs_AWS/NUK_N_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/NUK_N_albedo.png)
@@ -2359,7 +2359,6 @@ No plot at NSE for
 No plot at NUK_N for 
  
 # NUK_U
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | ulr        | NUK_U     |     64.511 |    -49.2663 |            1130 |           1128.81 | 2007-08-20   | 2023-10-31 |  -3.82 |  10.07 |  -2.52577   |   7.39701  | 4511 |    1039 |
@@ -2379,6 +2378,7 @@ No plot at NUK_N for
 | t_surf     | NUK_U     |     64.511 |    -49.2663 |            1130 |           1128.81 | 2007-08-20   | 2023-10-31 |  -0.64 |   2.4  |   0.10852   |   1.54879  | 4511 |    1039 |
 | p_u        | NUK_U     |     64.511 |    -49.2663 |            1130 |           1128.81 | 2007-08-20   | 2023-10-31 |  -1.28 |   3.38 |  -1.23063   |   2.57306  | 4975 |    1221 |
 | qh_u       | NUK_U     |     64.511 |    -49.2663 |            1130 |           1128.81 | 2007-08-20   | 2023-10-31 |  -0.05 |   0.34 |   0.0583394 |   0.372778 | 4493 |    1037 |
+ 
 ![](../figures/CARRA_vs_AWS/NUK_U_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/NUK_U_albedo.png)
@@ -2416,13 +2416,12 @@ No plot at NUK_N for
 No plot at NUK_U for 
  
 # NUK_Uv3
-## Summary table
 | variable   | station   | latitude   | longitude   | elevation_aws   | elevation_CARRA   | date_start   | date_end   | MD   | RMSD   | MD_jja   | RMSD_jja   | N   | N_jja   |
 |------------|-----------|------------|-------------|-----------------|-------------------|--------------|------------|------|--------|----------|------------|-----|---------|
+ 
 No plot at NUK_Uv3 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, t_u, rh_u, rh_u_cor, wspd_u, dlr, ulr, t_surf, p_u, qh_u
  
 # Petermann ELA
-## Summary table
 | variable   | station       |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |     MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:--------------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|-----------:|-----------:|-----:|--------:|
 | dsr        | Petermann ELA |    80.0993 |    -58.1497 |             907 |           940.913 | 2003-05-25   | 2022-03-30 |  2.19 |  26.72 | 7.46661    |  39.5765   | 3193 |    1097 |
@@ -2433,6 +2432,7 @@ No plot at NUK_Uv3 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, 
 | wspd_u     | Petermann ELA |    80.0993 |    -58.1497 |             907 |           940.913 | 2003-05-25   | 2022-03-30 | -0.63 |   1.59 | 0.00442275 |   1.07508  | 3106 |    1098 |
 | p_u        | Petermann ELA |    80.0993 |    -58.1497 |             907 |           940.913 | 2003-05-25   | 2022-03-29 |  1.67 |   3.27 | 1.14175    |   2.75059  | 2856 |     948 |
 | qh_u       | Petermann ELA |    80.0993 |    -58.1497 |             907 |           940.913 | 2012-05-26   | 2022-03-29 |  0.09 |   0.18 | 0.0410119  |   0.213307 | 2390 |     756 |
+ 
 ![](../figures/CARRA_vs_AWS/Petermann ELA_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/Petermann ELA_usr.png)
@@ -2452,7 +2452,6 @@ No plot at NUK_Uv3 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, 
 No plot at Petermann ELA for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_surf
  
 # Petermann Glacier
-## Summary table
 | variable   | station           |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:------------------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | dsr        | Petermann Glacier |    80.6836 |    -60.2931 |              37 |           42.7251 | 2002-06-04   | 2006-05-01 | -62.34 | 114.98 | -129.665    | 186.888    | 1220 |     259 |
@@ -2463,6 +2462,7 @@ No plot at Petermann ELA for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr,
 | wspd_u     | Petermann Glacier |    80.6836 |    -60.2931 |              37 |           42.7251 | 2002-06-04   | 2006-05-01 |   0.86 |   1.65 |    0.791099 |   1.33354  | 1355 |     349 |
 | p_u        | Petermann Glacier |    80.6836 |    -60.2931 |              37 |           42.7251 | 2002-06-05   | 2006-04-13 |   3.79 |   9.8  |    4.70896  |   9.6799   |  158 |      56 |
 | qh_u       | Petermann Glacier |    80.6836 |    -60.2931 |              37 |           42.7251 | 2002-06-05   | 2006-04-13 |  -0.15 |   0.46 |   -0.543985 |   0.765696 |  168 |      56 |
+ 
 ![](../figures/CARRA_vs_AWS/Petermann Glacier_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/Petermann Glacier_usr.png)
@@ -2482,7 +2482,6 @@ No plot at Petermann ELA for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr,
 No plot at Petermann Glacier for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_surf
  
 # QAS_A
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |       MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|-------------:|-----------:|----:|--------:|
 | ulr        | QAS_A     |     61.243 |    -46.7328 |            1000 |           1039.56 | 2012-08-20   | 2015-08-24 |  -5.05 |   6.45 |  -4.91474    |  6.53614   | 547 |     112 |
@@ -2502,6 +2501,7 @@ No plot at Petermann Glacier for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, 
 | t_surf     | QAS_A     |     61.243 |    -46.7328 |            1000 |           1039.56 | 2012-08-20   | 2015-08-24 |  -0.89 |   1.34 |  -0.267189   |  0.888156  | 547 |     112 |
 | p_u        | QAS_A     |     61.243 |    -46.7328 |            1000 |           1039.56 | 2012-08-20   | 2015-08-24 |  -3.46 |   4.11 |  -2.20372    |  4.97168   | 547 |     112 |
 | qh_u       | QAS_A     |     61.243 |    -46.7328 |            1000 |           1039.56 | 2012-08-20   | 2015-08-24 |  -0.07 |   0.27 |   0.0985889  |  0.263195  | 546 |     112 |
+ 
 ![](../figures/CARRA_vs_AWS/QAS_A_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/QAS_A_albedo.png)
@@ -2539,7 +2539,6 @@ No plot at Petermann Glacier for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, 
 No plot at QAS_A for 
  
 # QAS_L
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | ulr        | QAS_L     |    61.0308 |    -46.8488 |             280 |           312.628 | 2007-08-24   | 2023-10-31 |  -1.75 |   5.38 |   0.132869  |   4.20391  | 5799 |    1447 |
@@ -2559,6 +2558,7 @@ No plot at QAS_A for
 | t_surf     | QAS_L     |    61.0308 |    -46.8488 |             280 |           312.628 | 2007-08-24   | 2023-10-31 |   0.09 |   1.33 |   1.07513   |   1.35539  | 5799 |    1447 |
 | p_u        | QAS_L     |    61.0308 |    -46.8488 |             280 |           312.628 | 2007-08-24   | 2023-10-31 |  -4.97 |   5.73 |  -5.02541   |   5.6172   | 5799 |    1447 |
 | qh_u       | QAS_L     |    61.0308 |    -46.8488 |             280 |           312.628 | 2007-08-24   | 2023-10-31 |  -0.08 |   0.28 |   0.0347536 |   0.308165 | 5783 |    1444 |
+ 
 ![](../figures/CARRA_vs_AWS/QAS_L_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/QAS_L_albedo.png)
@@ -2596,13 +2596,12 @@ No plot at QAS_A for
 No plot at QAS_L for 
  
 # QAS_Lv3
-## Summary table
 | variable   | station   | latitude   | longitude   | elevation_aws   | elevation_CARRA   | date_start   | date_end   | MD   | RMSD   | MD_jja   | RMSD_jja   | N   | N_jja   |
 |------------|-----------|------------|-------------|-----------------|-------------------|--------------|------------|------|--------|----------|------------|-----|---------|
+ 
 No plot at QAS_Lv3 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, t_u, rh_u, rh_u_cor, wspd_u, dlr, ulr, t_surf, p_u, qh_u
  
 # QAS_M
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | ulr        | QAS_M     |    61.0999 |    -46.8329 |             626 |           661.174 | 2016-08-11   | 2023-02-20 |  -4.68 |  11.96 |  -1.56375   |   9.56788  | 2197 |     534 |
@@ -2622,6 +2621,7 @@ No plot at QAS_Lv3 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, 
 | t_surf     | QAS_M     |    61.0999 |    -46.8329 |             626 |           661.174 | 2016-08-11   | 2023-02-20 |  -0.66 |   2.83 |   0.732006  |   2.45257  | 2196 |     533 |
 | p_u        | QAS_M     |    61.0999 |    -46.8329 |             626 |           661.174 | 2016-08-11   | 2023-09-01 |  -4.79 |   5.83 |  -4.75059   |   5.77423  | 2505 |     625 |
 | qh_u       | QAS_M     |    61.0999 |    -46.8329 |             626 |           661.174 | 2016-08-11   | 2023-02-20 |  -0.12 |   0.46 |   0.107315  |   0.338403 | 2151 |     506 |
+ 
 ![](../figures/CARRA_vs_AWS/QAS_M_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/QAS_M_albedo.png)
@@ -2659,7 +2659,6 @@ No plot at QAS_Lv3 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, 
 No plot at QAS_M for 
  
 # QAS_U
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | ulr        | QAS_U     |    61.1758 |     -46.819 |             900 |           895.534 | 2008-08-07   | 2023-10-31 |  -2.78 |   9.12 |  -2.83317   |   5.21381  | 5018 |    1262 |
@@ -2679,6 +2678,7 @@ No plot at QAS_M for
 | t_surf     | QAS_U     |    61.1758 |     -46.819 |             900 |           895.534 | 2008-08-07   | 2023-10-31 |  -0.32 |   2    |   0.167367  |   0.757799 | 5017 |    1262 |
 | p_u        | QAS_U     |    61.1758 |     -46.819 |             900 |           895.534 | 2008-08-07   | 2023-10-31 |  -0.44 |   2    |  -0.417915  |   1.27759  | 5033 |    1279 |
 | qh_u       | QAS_U     |    61.1758 |     -46.819 |             900 |           895.534 | 2008-08-07   | 2023-10-31 |  -0.1  |   0.39 |   0.0870032 |   0.287722 | 4326 |    1057 |
+ 
 ![](../figures/CARRA_vs_AWS/QAS_U_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/QAS_U_albedo.png)
@@ -2716,13 +2716,12 @@ No plot at QAS_M for
 No plot at QAS_U for 
  
 # QAS_Uv3
-## Summary table
 | variable   | station   | latitude   | longitude   | elevation_aws   | elevation_CARRA   | date_start   | date_end   | MD   | RMSD   | MD_jja   | RMSD_jja   | N   | N_jja   |
 |------------|-----------|------------|-------------|-----------------|-------------------|--------------|------------|------|--------|----------|------------|-----|---------|
+ 
 No plot at QAS_Uv3 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, t_u, rh_u, rh_u_cor, wspd_u, dlr, ulr, t_surf, p_u, qh_u
  
 # SCO_U
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |     MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|-----------:|-----------:|-----:|--------:|
 | ulr        | SCO_U     |    72.3937 |    -27.2383 |             980 |           1102.83 | 2008-07-21   | 2023-10-31 |  -6.02 |  10.95 |   0.762183 |   6.60082  | 5129 |    1367 |
@@ -2742,6 +2741,7 @@ No plot at QAS_Uv3 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, 
 | t_surf     | SCO_U     |    72.3937 |    -27.2383 |             980 |           1102.83 | 2008-07-21   | 2023-10-31 |  -1.39 |   2.88 |   0.875513 |   1.80925  | 5128 |    1367 |
 | p_u        | SCO_U     |    72.3937 |    -27.2383 |             980 |           1102.83 | 2008-07-21   | 2023-10-31 | -14.61 |  14.7  | -14.0885   |  14.1179   | 5113 |    1367 |
 | qh_u       | SCO_U     |    72.3937 |    -27.2383 |             980 |           1102.83 | 2008-07-21   | 2023-10-31 |   0.08 |   0.25 |   0.134375 |   0.344113 | 5098 |    1364 |
+ 
 ![](../figures/CARRA_vs_AWS/SCO_U_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/SCO_U_albedo.png)
@@ -2779,7 +2779,6 @@ No plot at QAS_Uv3 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, 
 No plot at SCO_U for 
  
 # SDL
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |       MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|-------------:|-----------:|----:|--------:|
 | ulr        | SDL       |    66.0001 |    -44.5026 |          2458.4 |           2454.17 | 2022-06-23   | 2023-10-31 |  -3.56 |   7.97 |  -1.03931    |  4.50097   | 292 |     147 |
@@ -2799,6 +2798,7 @@ No plot at SCO_U for
 | t_surf     | SDL       |    66.0001 |    -44.5026 |          2458.4 |           2454.17 | 2022-06-23   | 2023-10-31 |  -0.82 |   2.09 |  -0.139579   |  1.02528   | 292 |     147 |
 | p_u        | SDL       |    66.0001 |    -44.5026 |          2458.4 |           2454.17 | 2022-06-23   | 2023-10-31 |   0.69 |   0.86 |   0.680325   |  0.812832  | 250 |     147 |
 | qh_u       | SDL       |    66.0001 |    -44.5026 |          2458.4 |           2454.17 | 2022-06-23   | 2023-10-31 |  -0.09 |   0.24 |  -0.0761291  |  0.235969  | 250 |     147 |
+ 
 ![](../figures/CARRA_vs_AWS/SDL_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/SDL_albedo.png)
@@ -2836,7 +2836,6 @@ No plot at SCO_U for
 No plot at SDL for 
  
 # SDM
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|----:|--------:|
 | ulr        | SDM       |     63.149 |    -44.8174 |          2896.1 |           2876.88 | 2021-06-21   | 2023-10-31 |  -5.65 |   8.8  |  -4.94204   |  7.23479   | 863 |     256 |
@@ -2856,6 +2855,7 @@ No plot at SDL for
 | t_surf     | SDM       |     63.149 |    -44.8174 |          2896.1 |           2876.88 | 2021-06-21   | 2023-10-31 |  -1.34 |   2.38 |  -1.00853   |  1.64297   | 863 |     256 |
 | p_u        | SDM       |     63.149 |    -44.8174 |          2896.1 |           2876.88 | 2021-06-21   | 2023-10-31 |  -0.03 |   0.7  |  -0.101398  |  0.53434   | 524 |     224 |
 | qh_u       | SDM       |     63.149 |    -44.8174 |          2896.1 |           2876.88 | 2021-06-21   | 2023-10-31 |  -0.03 |   0.2  |  -0.0473102 |  0.24077   | 523 |     224 |
+ 
 ![](../figures/CARRA_vs_AWS/SDM_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/SDM_albedo.png)
@@ -2893,7 +2893,6 @@ No plot at SDL for
 No plot at SDM for 
  
 # SMS-PET
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |     MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|-----------:|-----------:|----:|--------:|
 | dsr        | SMS-PET   |    80.6033 |    -60.0536 |              54 |           66.8308 | 2002-06-02   | 2004-05-14 | 107.1  | 168.62 | 259.865    |  278.022   | 708 |     183 |
@@ -2902,6 +2901,7 @@ No plot at SDM for
 | rh_u       | SMS-PET   |    80.6033 |    -60.0536 |              54 |           66.8308 | 2002-06-02   | 2004-05-14 |  13.98 |  16.52 |   4.69464  |    7.50126 | 708 |     183 |
 | rh_u_cor   | SMS-PET   |    80.6033 |    -60.0536 |              54 |           66.8308 | 2002-06-02   | 2004-05-14 |   0.92 |   9.44 |   4.48076  |    7.37415 | 708 |     183 |
 | wspd_u     | SMS-PET   |    80.6033 |    -60.0536 |              54 |           66.8308 | 2002-06-02   | 2004-05-14 |   1.04 |   1.69 |   1.46109  |    1.88147 | 689 |     183 |
+ 
 ![](../figures/CARRA_vs_AWS/SMS-PET_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/SMS-PET_usr.png)
@@ -2917,13 +2917,13 @@ No plot at SDM for
 No plot at SMS-PET for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_surf, p_u, qh_u
  
 # SMS1
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |     MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|-----------:|-----------:|-----:|--------:|
 | t_u        | SMS1      |    69.4822 |    -49.8017 |             822 |           836.842 | 2002-01-01   | 2006-01-15 | -0.3  |   3.86 | -0.0910823 |   0.620551 | 1224 |     276 |
 | rh_u       | SMS1      |    69.4822 |    -49.8017 |             822 |           836.842 | 2002-01-01   | 2006-01-15 |  7.52 |  11.79 |  2.00619   |   4.93818  | 1224 |     276 |
 | rh_u_cor   | SMS1      |    69.4822 |    -49.8017 |             822 |           836.842 | 2002-01-01   | 2006-01-15 | -0.18 |   7.7  |  1.72206   |   4.88579  | 1224 |     276 |
 | wspd_u     | SMS1      |    69.4822 |    -49.8017 |             822 |           836.842 | 2002-01-01   | 2006-01-15 |  1.18 |   2.05 |  1.57521   |   1.88037  | 1219 |     276 |
+ 
 ![](../figures/CARRA_vs_AWS/SMS1_t_u.png)
  
 ![](../figures/CARRA_vs_AWS/SMS1_rh_u.png)
@@ -2935,13 +2935,13 @@ No plot at SMS-PET for ulr, albedo, dsr_cor, usr_cor, dlhf_u, dshf_u, dlr, ulr, 
 No plot at SMS1 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_surf, p_u, qh_u
  
 # SMS2
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |   MD |   RMSD |   MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-----:|-------:|---------:|-----------:|-----:|--------:|
 | t_u        | SMS2      |    69.4778 |    -49.8828 |             727 |            710.59 | 2003-04-24   | 2006-05-10 | 0.4  |   1.89 | 0.206717 |   0.605709 | 1110 |     276 |
 | rh_u       | SMS2      |    69.4778 |    -49.8828 |             727 |            710.59 | 2003-04-24   | 2006-05-10 | 8.53 |  11.97 | 3.04871  |   5.59983  | 1102 |     276 |
 | rh_u_cor   | SMS2      |    69.4778 |    -49.8828 |             727 |            710.59 | 2003-04-24   | 2006-05-10 | 1.77 |   7.08 | 2.8995   |   5.51287  | 1102 |     276 |
 | wspd_u     | SMS2      |    69.4778 |    -49.8828 |             727 |            710.59 | 2003-04-24   | 2006-05-10 | 1.65 |   2.12 | 2.00471  |   2.34629  | 1105 |     276 |
+ 
 ![](../figures/CARRA_vs_AWS/SMS2_t_u.png)
  
 ![](../figures/CARRA_vs_AWS/SMS2_rh_u.png)
@@ -2953,13 +2953,13 @@ No plot at SMS1 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, dlr
 No plot at SMS2 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_surf, p_u, qh_u
  
 # SMS3
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |   MD |   RMSD |   MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-----:|-------:|---------:|-----------:|-----:|--------:|
 | t_u        | SMS3      |    69.4403 |    -49.9703 |             605 |           601.138 | 2001-05-22   | 2006-05-10 | 0.11 |   1.47 | 0.230315 |   0.596785 | 1748 |     460 |
 | rh_u       | SMS3      |    69.4403 |    -49.9703 |             605 |           601.138 | 2001-05-22   | 2006-05-10 | 7.12 |  11.3  | 0.998452 |   4.37785  | 1748 |     460 |
 | rh_u_cor   | SMS3      |    69.4403 |    -49.9703 |             605 |           601.138 | 2001-05-22   | 2006-05-10 | 0.99 |   7.51 | 0.876473 |   4.31704  | 1748 |     460 |
 | wspd_u     | SMS3      |    69.4403 |    -49.9703 |             605 |           601.138 | 2001-05-22   | 2006-05-10 | 1.53 |   2    | 1.97395  |   2.26879  | 1746 |     460 |
+ 
 ![](../figures/CARRA_vs_AWS/SMS3_t_u.png)
  
 ![](../figures/CARRA_vs_AWS/SMS3_rh_u.png)
@@ -2971,13 +2971,13 @@ No plot at SMS2 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, dlr
 No plot at SMS3 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_surf, p_u, qh_u
  
 # SMS4
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |   MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|---------:|-----------:|----:|--------:|
 | t_u        | SMS4      |    69.4013 |    -50.2108 |             387 |           327.562 | 2001-05-22   | 2003-04-27 |  0.56 |   0.89 |  0.95145 |    1.11077 | 706 |     184 |
 | rh_u       | SMS4      |    69.4013 |    -50.2108 |             387 |           327.562 | 2001-05-22   | 2003-04-27 |  2.76 |   8.37 | -2.25777 |    3.74519 | 693 |     177 |
 | rh_u_cor   | SMS4      |    69.4013 |    -50.2108 |             387 |           327.562 | 2001-05-22   | 2003-04-27 | -3.11 |   7.9  | -2.36546 |    3.79504 | 693 |     177 |
 | wspd_u     | SMS4      |    69.4013 |    -50.2108 |             387 |           327.562 | 2001-05-22   | 2003-04-27 |  2.22 |   2.61 |  2.42569 |    2.75272 | 706 |     184 |
+ 
 ![](../figures/CARRA_vs_AWS/SMS4_t_u.png)
  
 ![](../figures/CARRA_vs_AWS/SMS4_rh_u.png)
@@ -2989,13 +2989,13 @@ No plot at SMS3 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, dlr
 No plot at SMS4 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_surf, p_u, qh_u
  
 # SMS5
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |   MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|---------:|-----------:|----:|--------:|
 | t_u        | SMS5      |    69.5056 |    -49.9093 |             nan |           698.211 | 2002-09-20   | 2003-04-24 |  0.25 |   0.52 |      nan |        nan | 217 |       0 |
 | rh_u       | SMS5      |    69.5056 |    -49.9093 |             nan |           698.211 | 2002-09-20   | 2003-04-24 | 11.96 |  14.09 |      nan |        nan | 217 |       0 |
 | rh_u_cor   | SMS5      |    69.5056 |    -49.9093 |             nan |           698.211 | 2002-09-20   | 2003-04-24 |  2.89 |   5.82 |      nan |        nan | 217 |       0 |
 | wspd_u     | SMS5      |    69.5056 |    -49.9093 |             nan |           698.211 | 2002-09-20   | 2003-04-24 |  1.21 |   1.56 |      nan |        nan | 217 |       0 |
+ 
 ![](../figures/CARRA_vs_AWS/SMS5_t_u.png)
  
 ![](../figures/CARRA_vs_AWS/SMS5_rh_u.png)
@@ -3007,7 +3007,6 @@ No plot at SMS4 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, dlr
 No plot at SMS5 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, dlr, ulr, t_surf, p_u, qh_u
  
 # SWC
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|----:|--------:|
 | ulr        | SWC       |    69.5542 |    -49.3693 |            1123 |           1108.76 | 2020-08-08   | 2023-02-14 |  -2.67 |   4.46 |  -2.65984   |  4.41087   | 921 |     208 |
@@ -3027,6 +3026,7 @@ No plot at SMS5 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, dlr
 | t_surf     | SWC       |    69.5542 |    -49.3693 |            1123 |           1108.76 | 2020-08-08   | 2023-02-14 |  -0.56 |   1.07 |  -0.305327  |  0.900935  | 921 |     208 |
 | p_u        | SWC       |    69.5542 |    -49.3693 |            1123 |           1108.76 | 2020-08-08   | 2023-02-14 |   2.16 |   2.28 |   1.50272   |  1.5943    | 921 |     208 |
 | qh_u       | SWC       |    69.5542 |    -49.3693 |            1123 |           1108.76 | 2020-08-08   | 2023-02-14 |  -0.08 |   0.18 |  -0.0948316 |  0.224375  | 917 |     207 |
+ 
 ![](../figures/CARRA_vs_AWS/SWC_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/SWC_albedo.png)
@@ -3064,7 +3064,6 @@ No plot at SMS5 for ulr, albedo, dsr, dsr_cor, usr, usr_cor, dlhf_u, dshf_u, dlr
 No plot at SWC for 
  
 # SWC_O
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|----:|--------:|
 | ulr        | SWC_O     |    69.5954 |    -49.2791 |            1167 |           1152.13 | 2022-08-02   | 2023-10-31 |  -2.31 |   3.97 |  -1.02333   |   3.20851  | 456 |     122 |
@@ -3084,6 +3083,7 @@ No plot at SWC for
 | t_surf     | SWC_O     |    69.5954 |    -49.2791 |            1167 |           1152.13 | 2022-08-02   | 2023-10-31 |  -0.45 |   0.94 |   0.0508083 |   0.645765 | 456 |     122 |
 | p_u        | SWC_O     |    69.5954 |    -49.2791 |            1167 |           1152.13 | 2022-08-02   | 2023-10-31 |   1.52 |   1.71 |   0.985073  |   1.14942  | 456 |     122 |
 | qh_u       | SWC_O     |    69.5954 |    -49.2791 |            1167 |           1152.13 | 2022-08-02   | 2023-10-31 |  -0.09 |   0.2  |  -0.119655  |   0.218714 | 456 |     122 |
+ 
 ![](../figures/CARRA_vs_AWS/SWC_O_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/SWC_O_albedo.png)
@@ -3121,7 +3121,6 @@ No plot at SWC for
 No plot at SWC_O for 
  
 # Saddle
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|------------:|-----------:|-----:|--------:|
 | dsr        | Saddle    |    65.9999 |    -44.5026 |            2451 |           2454.17 | 1997-04-20   | 2021-08-12 | -3.62 |  31.74 | -25.3171    |  49.9793   | 8071 |    2025 |
@@ -3134,6 +3133,7 @@ No plot at SWC_O for
 | wspd_u     | Saddle    |    65.9999 |    -44.5026 |            2451 |           2454.17 | 1997-04-20   | 2021-09-21 |  1.39 |   2.46 |   0.656427  |   1.34185  | 7227 |    2024 |
 | p_u        | Saddle    |    65.9999 |    -44.5026 |            2451 |           2454.17 | 1998-04-18   | 2021-10-15 |  1.17 |   1.6  |   0.335841  |   1.33675  | 7723 |    1943 |
 | qh_u       | Saddle    |    65.9999 |    -44.5026 |            2451 |           2454.17 | 1998-04-18   | 2021-06-13 |  0    |   0.22 |  -0.0123337 |   0.33303  | 7671 |    1931 |
+ 
 ![](../figures/CARRA_vs_AWS/Saddle_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/Saddle_usr.png)
@@ -3157,7 +3157,6 @@ No plot at SWC_O for
 No plot at Saddle for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # South Dome
-## Summary table
 | variable   | station    |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:-----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|------------:|-----------:|-----:|--------:|
 | dsr        | South Dome |    63.1489 |    -44.8175 |            2878 |           2876.88 | 1997-04-23   | 2021-06-21 | 20.22 |  41.53 |  22.2489    |  55.1188   | 7254 |    2050 |
@@ -3170,6 +3169,7 @@ No plot at Saddle for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | wspd_u     | South Dome |    63.1489 |    -44.8175 |            2878 |           2876.88 | 1997-04-24   | 2021-05-26 |  1.15 |   2.02 |   0.29067   |   1.02601  | 6787 |    1958 |
 | p_u        | South Dome |    63.1489 |    -44.8175 |            2878 |           2876.88 | 1998-04-20   | 2021-06-21 |  2.09 |   6.7  |   3.43735   |  11.8945   | 3347 |     886 |
 | qh_u       | South Dome |    63.1489 |    -44.8175 |            2878 |           2876.88 | 1998-04-20   | 2021-06-21 |  0.02 |   0.19 |   0.0452298 |   0.290253 | 3312 |     881 |
+ 
 ![](../figures/CARRA_vs_AWS/South Dome_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/South Dome_usr.png)
@@ -3193,7 +3193,6 @@ No plot at Saddle for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at South Dome for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # Summit
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |     MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|-----------:|-----------:|-----:|--------:|
 | dsr        | Summit    |    72.5797 |    -38.5045 |            3254 |           3207.46 | 1996-05-13   | 2022-10-07 |  4.5  |  26.17 |  1.40953   |  34.8919   | 8977 |    2448 |
@@ -3206,6 +3205,7 @@ No plot at South Dome for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | wspd_u     | Summit    |    72.5797 |    -38.5045 |            3254 |           3207.46 | 1996-05-13   | 2022-09-27 |  0.43 |   1.3  | -0.110139  |   0.811827 | 8277 |    2480 |
 | p_u        | Summit    |    72.5797 |    -38.5045 |            3254 |           3207.46 | 1996-05-13   | 2022-09-27 |  1.29 |   4.01 |  0.903618  |   3.92057  | 8459 |    2449 |
 | qh_u       | Summit    |    72.5797 |    -38.5045 |            3254 |           3207.46 | 1996-05-13   | 2022-09-27 |  0.03 |   0.15 |  0.0747241 |   0.234366 | 8138 |    2348 |
+ 
 ![](../figures/CARRA_vs_AWS/Summit_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/Summit_usr.png)
@@ -3229,7 +3229,6 @@ No plot at South Dome for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at Summit for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # Swiss Camp
-## Summary table
 | variable   | station    |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:-----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | dsr        | Swiss Camp |    69.5556 |    -49.3647 |            1138 |           1108.76 | 1995-01-01   | 2022-08-03 |  -3.88 |  32.36 | -13.7597    |  51.9859   | 7572 |    2061 |
@@ -3242,6 +3241,7 @@ No plot at Summit for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | wspd_u     | Swiss Camp |    69.5556 |    -49.3647 |            1138 |           1108.76 | 1995-01-01   | 2022-08-03 |   0.17 |   1.15 |   0.336511  |   1.00279  | 7374 |    2074 |
 | p_u        | Swiss Camp |    69.5556 |    -49.3647 |            1138 |           1108.76 | 1997-01-01   | 2022-03-13 |  -0.36 |   1.84 |  -0.591703  |   1.5514   | 6651 |    1688 |
 | qh_u       | Swiss Camp |    69.5556 |    -49.3647 |            1138 |           1108.76 | 1997-01-01   | 2022-03-13 |  -0.13 |   0.27 |  -0.262315  |   0.357568 | 6447 |    1678 |
+ 
 ![](../figures/CARRA_vs_AWS/Swiss Camp_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/Swiss Camp_usr.png)
@@ -3265,7 +3265,6 @@ No plot at Summit for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at Swiss Camp for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # Swiss Camp 10m
-## Summary table
 | variable   | station        |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |       MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:---------------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|-------------:|-----------:|-----:|--------:|
 | dsr        | Swiss Camp 10m |    69.5556 |    -49.3647 |            1138 |           1108.76 | 1993-06-17   | 2019-05-04 |  -0.54 |  35.51 |  -5.92847    |  56.7496   | 8527 |    2219 |
@@ -3278,6 +3277,7 @@ No plot at Swiss Camp for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | wspd_u     | Swiss Camp 10m |    69.5556 |    -49.3647 |            1138 |           1108.76 | 1990-09-01   | 2019-05-04 |  -0.69 |   1.56 |  -0.446896   |   1.18668  | 9439 |    2491 |
 | p_u        | Swiss Camp 10m |    69.5556 |    -49.3647 |            1138 |           1108.76 | 1990-09-01   | 2019-05-04 |  -0.64 |   1.93 |  -0.255581   |   2.16267  | 1852 |     549 |
 | qh_u       | Swiss Camp 10m |    69.5556 |    -49.3647 |            1138 |           1108.76 | 1991-05-12   | 2019-05-04 |   0.18 |   0.28 |   0.371504   |   0.438879 | 1837 |     549 |
+ 
 ![](../figures/CARRA_vs_AWS/Swiss Camp 10m_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/Swiss Camp 10m_usr.png)
@@ -3301,7 +3301,6 @@ No plot at Swiss Camp for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at Swiss Camp 10m for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # TAS_A
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | ulr        | TAS_A     |    65.7797 |    -38.9008 |             890 |           854.375 | 2013-08-28   | 2023-10-09 |  -0.26 |   9.64 |  -1.21925   |   5.5753   | 2455 |     585 |
@@ -3321,6 +3320,7 @@ No plot at Swiss Camp 10m for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | t_surf     | TAS_A     |    65.7797 |    -38.9008 |             890 |           854.375 | 2013-08-28   | 2023-10-09 |   0.26 |   2.39 |   0.531597  |   1.2207   | 2455 |     585 |
 | p_u        | TAS_A     |    65.7797 |    -38.9008 |             890 |           854.375 | 2013-08-28   | 2023-10-09 |   3.99 |   4.22 |   3.77024   |   3.94146  | 3084 |     719 |
 | qh_u       | TAS_A     |    65.7797 |    -38.9008 |             890 |           854.375 | 2013-08-28   | 2023-10-09 |  -0.01 |   0.28 |   0.157586  |   0.32458  | 2446 |     583 |
+ 
 ![](../figures/CARRA_vs_AWS/TAS_A_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/TAS_A_albedo.png)
@@ -3358,7 +3358,6 @@ No plot at Swiss Camp 10m for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at TAS_A for 
  
 # TAS_L
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | ulr        | TAS_L     |    65.6403 |    -38.8987 |             260 |           282.096 | 2007-08-23   | 2023-10-31 |   2.29 |  16.81 |   5.06894   |  23.1258   | 3519 |     942 |
@@ -3378,6 +3377,7 @@ No plot at TAS_A for
 | t_surf     | TAS_L     |    65.6403 |    -38.8987 |             260 |           282.096 | 2007-08-23   | 2023-10-31 |   0.97 |   4.55 |   1.86618   |   6.07196  | 3517 |     940 |
 | p_u        | TAS_L     |    65.6403 |    -38.8987 |             260 |           282.096 | 2007-08-23   | 2023-10-31 |  -3.65 |   4.51 |  -3.71966   |   3.97366  | 3962 |    1105 |
 | qh_u       | TAS_L     |    65.6403 |    -38.8987 |             260 |           282.096 | 2007-08-23   | 2023-10-31 |  -0.01 |   0.34 |   0.175734  |   0.344194 | 3165 |     836 |
+ 
 ![](../figures/CARRA_vs_AWS/TAS_L_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/TAS_L_albedo.png)
@@ -3415,7 +3415,6 @@ No plot at TAS_A for
 No plot at TAS_L for 
  
 # TAS_U
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |       MD_jja |    RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|-------------:|------------:|-----:|--------:|
 | ulr        | TAS_U     |    65.6978 |    -38.8668 |             570 |           485.667 | 2008-03-11   | 2015-08-13 |   2.48 |   5.48 |   2.22687    |   4.15366   | 2102 |     554 |
@@ -3435,6 +3434,7 @@ No plot at TAS_L for
 | t_surf     | TAS_U     |    65.6978 |    -38.8668 |             570 |           485.667 | 2008-03-11   | 2015-08-13 |   0.88 |   1.46 |   1.10326    |   1.34907   | 2102 |     554 |
 | p_u        | TAS_U     |    65.6978 |    -38.8668 |             570 |           485.667 | 2008-03-11   | 2015-08-13 |  10.52 |  10.55 |  10.1105     |  10.128     | 2348 |     626 |
 | qh_u       | TAS_U     |    65.6978 |    -38.8668 |             570 |           485.667 | 2008-03-11   | 2015-08-13 |   0.06 |   0.25 |   0.205037   |   0.314271  | 2100 |     554 |
+ 
 ![](../figures/CARRA_vs_AWS/TAS_U_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/TAS_U_albedo.png)
@@ -3472,7 +3472,6 @@ No plot at TAS_L for
 No plot at TAS_U for 
  
 # THU_L
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | ulr        | THU_L     |    76.3998 |    -68.2662 |             570 |           540.319 | 2010-08-09   | 2023-10-31 |  -2.05 |   7.6  |  -3.08865   |   4.96629  | 4000 |    1045 |
@@ -3492,6 +3491,7 @@ No plot at TAS_U for
 | t_surf     | THU_L     |    76.3998 |    -68.2662 |             570 |           540.319 | 2010-08-09   | 2023-10-31 |  -0.17 |   1.77 |   0.0340411 |   0.957138 | 4000 |    1045 |
 | p_u        | THU_L     |    76.3998 |    -68.2662 |             570 |           540.319 | 2010-08-09   | 2023-10-31 |   0.89 |   2.52 |   1.11379   |   1.68221  | 3997 |    1043 |
 | qh_u       | THU_L     |    76.3998 |    -68.2662 |             570 |           540.319 | 2010-08-09   | 2023-10-31 |   0.05 |   0.22 |   0.0178986 |   0.269385 | 3982 |    1040 |
+ 
 ![](../figures/CARRA_vs_AWS/THU_L_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/THU_L_albedo.png)
@@ -3529,7 +3529,6 @@ No plot at TAS_U for
 No plot at THU_L for 
  
 # THU_L2
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|----:|--------:|
 | ulr        | THU_L2    |    76.3998 |    -68.2662 |             570 |           540.319 | 2022-05-16   | 2023-10-31 |  -1.79 |   5.74 |  -3.08588   |   4.45401  | 533 |     184 |
@@ -3549,6 +3548,7 @@ No plot at THU_L for
 | t_surf     | THU_L2    |    76.3998 |    -68.2662 |             570 |           540.319 | 2022-05-16   | 2023-10-31 |  -0.12 |   1.41 |  -0.166516  |   0.866879 | 533 |     184 |
 | p_u        | THU_L2    |    76.3998 |    -68.2662 |             570 |           540.319 | 2022-05-16   | 2023-10-30 |   3.35 |   3.46 |   3.21839   |   3.32295  | 523 |     183 |
 | qh_u       | THU_L2    |    76.3998 |    -68.2662 |             570 |           540.319 | 2022-05-16   | 2023-10-30 |   0.11 |   0.24 |   0.151135  |   0.305479 | 522 |     182 |
+ 
 ![](../figures/CARRA_vs_AWS/THU_L2_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/THU_L2_albedo.png)
@@ -3586,7 +3586,6 @@ No plot at THU_L for
 No plot at THU_L2 for 
  
 # THU_U2
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | ulr        | THU_U2    |    76.4197 |     -68.146 |             770 |            781.66 | 2018-05-22   | 2023-08-15 |  -2.65 |   7.5  |  -4.11986   |   6.06326  | 1905 |     530 |
@@ -3606,6 +3605,7 @@ No plot at THU_L2 for
 | t_surf     | THU_U2    |    76.4197 |     -68.146 |             770 |            781.66 | 2018-05-22   | 2023-08-15 |  -0.41 |   1.9  |  -0.51449   |   1.14827  | 1905 |     530 |
 | p_u        | THU_U2    |    76.4197 |     -68.146 |             770 |            781.66 | 2018-05-22   | 2023-08-14 |  -5.33 |   5.92 |  -4.95629   |   5.87192  | 1899 |     524 |
 | qh_u       | THU_U2    |    76.4197 |     -68.146 |             770 |            781.66 | 2018-05-22   | 2023-08-14 |   0.04 |   0.23 |  -0.0556867 |   0.288286 | 1885 |     517 |
+ 
 ![](../figures/CARRA_vs_AWS/THU_U2_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/THU_U2_albedo.png)
@@ -3643,7 +3643,6 @@ No plot at THU_L2 for
 No plot at THU_U2 for 
  
 # TUN
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |        MD_jja |   RMSD_jja |   N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|--------------:|-----------:|----:|--------:|
 | ulr        | TUN       |    78.0191 |     -33.963 |            2080 |           2067.86 | 2022-05-27   | 2023-10-31 |  -4.22 |   6.66 |  -5.19504     |  7.3121    | 440 |     184 |
@@ -3663,6 +3662,7 @@ No plot at THU_U2 for
 | t_surf     | TUN       |    78.0191 |     -33.963 |            2080 |           2067.86 | 2022-05-27   | 2023-10-31 |  -1.03 |   1.68 |  -1.16018     |  1.68642   | 440 |     184 |
 | p_u        | TUN       |    78.0191 |     -33.963 |            2080 |           2067.86 | 2022-05-27   | 2023-10-31 |   0.54 |   3.81 |   0.546754    |  0.807663  | 438 |     184 |
 | qh_u       | TUN       |    78.0191 |     -33.963 |            2080 |           2067.86 | 2022-05-27   | 2023-10-31 |   0.02 |   0.18 |   0.00668783  |  0.225784  | 437 |     183 |
+ 
 ![](../figures/CARRA_vs_AWS/TUN_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/TUN_albedo.png)
@@ -3700,7 +3700,6 @@ No plot at THU_U2 for
 No plot at TUN for 
  
 # Tunu-N
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |    MD |   RMSD |     MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|------:|-------:|-----------:|-----------:|-----:|--------:|
 | dsr        | Tunu-N    |    78.0188 |    -33.9668 |            2113 |           2067.86 | 1996-05-16   | 2022-05-27 |  2.64 |  18.8  |  7.34451   |  31.6027   | 8086 |    2208 |
@@ -3713,6 +3712,7 @@ No plot at TUN for
 | wspd_u     | Tunu-N    |    78.0188 |    -33.9668 |            2113 |           2067.86 | 1996-05-16   | 2022-05-27 |  0.31 |   0.98 |  0.29447   |   0.884192 | 8642 |    2208 |
 | p_u        | Tunu-N    |    78.0188 |    -33.9668 |            2113 |           2067.86 | 1996-05-16   | 2022-05-27 | -2.48 |   3.19 | -4.35342   |   4.64322  | 8453 |    2110 |
 | qh_u       | Tunu-N    |    78.0188 |    -33.9668 |            2113 |           2067.86 | 1996-05-16   | 2022-05-27 |  0.03 |   0.14 | -0.0106161 |   0.210389 | 7759 |    1925 |
+ 
 ![](../figures/CARRA_vs_AWS/Tunu-N_dsr.png)
  
 ![](../figures/CARRA_vs_AWS/Tunu-N_usr.png)
@@ -3736,7 +3736,6 @@ No plot at TUN for
 No plot at Tunu-N for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
  
 # UPE_L
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |     MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|-----------:|-----------:|-----:|--------:|
 | ulr        | UPE_L     |    72.8932 |    -54.2953 |             220 |           150.918 | 2009-08-17   | 2023-10-31 |   0.5  |   7.15 |  -1.06667  |  3.7049    | 5177 |    1303 |
@@ -3756,6 +3755,7 @@ No plot at Tunu-N for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 | t_surf     | UPE_L     |    72.8932 |    -54.2953 |             220 |           150.918 | 2009-08-17   | 2023-10-31 |   0.61 |   1.93 |   0.86615  |  1.25094   | 5176 |    1303 |
 | p_u        | UPE_L     |    72.8932 |    -54.2953 |             220 |           150.918 | 2009-08-17   | 2023-10-31 |   7.67 |   7.86 |   7.4038   |  7.52703   | 5173 |    1303 |
 | qh_u       | UPE_L     |    72.8932 |    -54.2953 |             220 |           150.918 | 2009-08-17   | 2023-10-31 |   0.04 |   0.23 |   0.110014 |  0.308934  | 5157 |    1300 |
+ 
 ![](../figures/CARRA_vs_AWS/UPE_L_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/UPE_L_albedo.png)
@@ -3793,7 +3793,6 @@ No plot at Tunu-N for ulr, albedo, dsr_cor, usr_cor, dlr, ulr, t_surf
 No plot at UPE_L for 
  
 # UPE_U
-## Summary table
 | variable   | station   |   latitude |   longitude |   elevation_aws |   elevation_CARRA | date_start   | date_end   |     MD |   RMSD |      MD_jja |   RMSD_jja |    N |   N_jja |
 |:-----------|:----------|-----------:|------------:|----------------:|------------------:|:-------------|:-----------|-------:|-------:|------------:|-----------:|-----:|--------:|
 | ulr        | UPE_U     |    72.8883 |    -53.5715 |             940 |           927.832 | 2009-08-18   | 2023-08-07 |  -0.29 |   6.55 |  -1.56117   |  3.93292   | 5077 |    1278 |
@@ -3813,6 +3812,7 @@ No plot at UPE_L for
 | t_surf     | UPE_U     |    72.8883 |    -53.5715 |             940 |           927.832 | 2009-08-18   | 2023-08-07 |   0.26 |   1.87 |   0.137834  |  1.11808   | 4928 |    1206 |
 | p_u        | UPE_U     |    72.8883 |    -53.5715 |             940 |           927.832 | 2009-08-18   | 2023-10-31 |   1.68 |   3.56 |   1.30615   |  2.94073   | 5160 |    1302 |
 | qh_u       | UPE_U     |    72.8883 |    -53.5715 |             940 |           927.832 | 2009-08-18   | 2023-08-03 |   0.06 |   0.23 |   0.112787  |  0.281626  | 4914 |    1204 |
+ 
 ![](../figures/CARRA_vs_AWS/UPE_U_ulr.png)
  
 ![](../figures/CARRA_vs_AWS/UPE_U_albedo.png)

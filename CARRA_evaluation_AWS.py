@@ -332,8 +332,9 @@ with open(filename, 'w') as file:
     
 for station in ds_aws.stid.values:
     Msg('# '+station)
-    Msg('## Summary table')
+
     Msg(data.loc[data.station == station].to_markdown(index=None) )
+    Msg(' ')
     
     no_plot = []
     for var in var_list:
