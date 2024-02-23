@@ -319,32 +319,31 @@ data['RMSD'] = data['RMSD'].round(2)
 data['date_start'] = pd.to_datetime(data['date_start']).dt.date
 data['date_end'] = pd.to_datetime(data['date_end']).dt.date
 
-with open(filename, 'r') as file:
-    existing_content = file.read()
-
-new_content = ("# Stats plot\n\n" + '![](../figures/summary_plot.png)\n\n'
-               +"# Stats table\n\n" + data.to_markdown(index=None) 
-               + "\n\n" + existing_content)
-
 # Write the combined content back to the file
 with open(filename, 'w') as file:
     file.write(new_content)
     
 for station in ds_aws.stid.values:
     Msg('# '+station)
-
-    Msg(data.loc[data.station == station].to_markdown(index=None) )
-    Msg(' ')
-    
-    no_plot = []
-    for var in var_list:
-        if os.path.isfile('figures/CARRA_vs_AWS/%s_%s.png'%(station,var)):
-            Msg('![](../figures/CARRA_vs_AWS/%s_%s.png)'%(station,var))
-            Msg(' ')
-        else:
-            no_plot.append(var)
-    Msg('No plot at '+station+' for '+', '.join(no_plot))
-    Msg(' ')
+    if len(data.loc[data.station == station, ['latitude', 'longitude', 'elevation_aws',
+           'elevation_CARRA', 'date_start', 'date_end']])>0:
+        Msg(data.loc[data.station == station, ['latitude', 'longitude', 'elevation_aws',
+               'elevation_CARRA', 'date_start', 'date_end']].iloc[[0],:].to_markdown(index=None) )
+        Msg(' ')
+        
+        Msg(data.loc[data.station == station, ['variable', 'MD', 'RMSD', 'MD_jja',
+        'RMSD_jja', 'N', 'N_jja']].to_markdown(index=None) )
+        Msg(' ')
+        
+        no_plot = []
+        for var in var_list:
+            if os.path.isfile('figures/CARRA_vs_AWS/%s_%s.png'%(station,var)):
+                Msg('![](../figures/CARRA_vs_AWS/%s_%s.png)'%(station,var))
+                Msg(' ')
+            else:
+                no_plot.append(var)
+        Msg('No plot at '+station+' for '+', '.join(no_plot))
+        Msg(' ')
     
 tocgen.processFile(filename, filename[:-3]+"_toc.md")
 
