@@ -31,7 +31,7 @@ fig_folder = 'figures/CARRA_vs_AWS/'
 # for f in os.listdir(fig_folder):
 #     os.remove(fig_folder+f)
 ds_aws = xr.open_dataset("./data/AWS_compilation.nc")
-ds_carra = xr.open_dataset("./data/CARRA_at_AWS.nc")
+ds_carra = xr.open_dataset("./data/CARRA_at_AWS_20240306.nc")
 
 # removing unwanted stations
 unwanted= ['SCO_L', 'KPC_L',  'KPC_Lv3', 'NUK_L',  # ice sheet border, mixed pixel
