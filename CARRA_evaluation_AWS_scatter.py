@@ -76,7 +76,7 @@ fig_folder = 'figures/CARRA_vs_AWS/'
 variables = ['t_u', 'rh_u','rh_u_cor', 'qh_u','p_u', 'wspd_u','dlr', 'ulr',
             't_surf',  'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor','dlhf_u','dshf_u']
 
-ds_carra = xr.open_dataset("./data/CARRA_at_AWS_20240130.nc")
+ds_carra = xr.open_dataset("./data/CARRA_at_AWS_20240306.nc")
 
 ds_aws = xr.open_dataset("./data/AWS_compilation.nc")
 df_aws_all = ds_aws.to_dataframe().reset_index()
