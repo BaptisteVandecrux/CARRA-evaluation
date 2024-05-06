@@ -27,10 +27,20 @@ for i,var in enumerate(['t_u','p_u','wspd_u','rh_u','rh_u_cor','qh_u',
     df.loc[df.variable==var,'order']=i
 df = df.sort_values(by='order')
 df['elevation_difference'] = df.elevation_CARRA - df.elevation_aws
-
+unwanted= ['SCO_L', 'KPC_L',  'KPC_Lv3', 'NUK_L',  # ice sheet border, mixed pixel
+           'NUK_K', 'MIT', 'ZAK_A', 'ZAK_L', 'ZAK_Lv3', 'ZAK_U', 'ZAK_Uv3', # local glaciers
+           'LYN_L', 'LYN_T', 'FRE',  # local glaciers
+           'KAN_B', 'NUK_B','WEG_B', # off-ice AWS
+           ]
+df = df.loc[~np.isin(df.station, unwanted)]
 
 # %%
-def plot_scatter_regression(df, x_var,  x_label, filename):
+def plot_scatter_regression(df, x_var,  x_label, filename, jja=False):
+    tag = ''
+    scale_marker = 1
+    if jja: 
+        tag ='_jja'
+        scale_marker = 3
 
     fig,ax = plt.subplots(4,4,sharex=True, figsize=(10,15))
     plt.subplots_adjust(bottom=0.08,top=0.93,left=0.08,right=0.99,
@@ -39,9 +49,9 @@ def plot_scatter_regression(df, x_var,  x_label, filename):
     for i,var in enumerate(df.variable.unique()):
         ax[i].axhline(0,color='k')
         x = df.loc[(df.variable == var), x_var]
-        y = df.loc[(df.variable == var), 'MD']
-        sc = ax[i].scatter(x, y, df.loc[(df.variable == var), 'N']/100,
-            marker='o', label='MD',ls='None')
+        y = df.loc[(df.variable == var), 'MD'+tag]
+        sc = ax[i].scatter(x, y, df.loc[(df.variable == var), 'N'+tag]/100*scale_marker,
+            marker='o', label='MD'+tag,ls='None')
         slope, intercept, r_value, p_value, std_err = linregress(x[~np.isnan(x+y)],
                                                                  y[~np.isnan(x+y)])
 
@@ -49,10 +59,10 @@ def plot_scatter_regression(df, x_var,  x_label, filename):
         regression_line = slope * min_max + intercept
         ax[i].plot(min_max,  regression_line, color='tab:blue', ls='--', label='_nolegend_')
 
-        y = df.loc[(df.variable == var), 'RMSD']
+        y = df.loc[(df.variable == var), 'RMSD'+tag]
 
-        ax[i].scatter(x,y, df.loc[(df.variable == var), 'N']/100,
-            marker='^', label='RMSD',ls='None')
+        ax[i].scatter(x,y, df.loc[(df.variable == var), 'N'+tag]/100*scale_marker,
+            marker='^', label='RMSD'+tag,ls='None')
         ax[i].set_title(abc[i]+') '+var, y=1.0, pad=-14,fontweight='bold')
         ax[i].grid()
     ax[3].legend(*sc.legend_elements("sizes", num=6),ncol=5,
@@ -61,12 +71,17 @@ def plot_scatter_regression(df, x_var,  x_label, filename):
     fig.text(0.5, 0.04, x_label, ha='center')
     fig.savefig(filename,dpi=240)
 
-plot_scatter_regression(df = df, x_var='elevation_difference',
-                            x_label='Elevation difference between CARRA and AWS (m a.s.l.)',
-                            filename='figures/scatter_elevation_diff.png')
+# plot_scatter_regression(df = df, x_var='elevation_difference',
+#                             x_label='Elevation difference between CARRA and AWS (m a.s.l.)',
+#                             filename='figures/scatter_elevation_diff.png')
+# plot_scatter_regression(df = df, x_var='elevation_aws',
+#                             x_label='Elevation of AWS (m a.s.l.)',
+#                             filename='figures/scatter_elevation.png')
+
 plot_scatter_regression(df = df, x_var='elevation_aws',
                             x_label='Elevation of AWS (m a.s.l.)',
-                            filename='figures/scatter_elevation.png')
+                            filename='figures/scatter_elevation_JJA.png',
+                            jja=True)
 
 
 #%%
