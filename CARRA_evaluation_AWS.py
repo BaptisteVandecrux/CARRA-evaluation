@@ -10,8 +10,8 @@ tip list:
 from scipy.stats import linregress
 from matplotlib import gridspec
 from lib import load_CARRA_data
-import matplotlib
-matplotlib.use('Agg')
+# import matplotlib
+# matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
@@ -30,7 +30,7 @@ import os
 fig_folder = 'figures/CARRA_vs_AWS/'
 # for f in os.listdir(fig_folder):
 #     os.remove(fig_folder+f)
-ds_aws = xr.open_dataset("./data/AWS_compilation.nc")
+ds_aws = xr.open_dataset("./data/AWS_compilation_hourly.nc")
 ds_carra = xr.open_dataset("./data/CARRA_at_AWS_20240306.nc")
 
 # removing unwanted stations
@@ -47,17 +47,16 @@ ds_carra = ds_carra.sel(station=good_stations)
 
 df_summary = pd.DataFrame()
 
-var_list =[  'ulr', 'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor',
+var_list =[ 'dsr',  'ulr', 'albedo', 'dsr_cor',  'usr',  'usr_cor',
             'dlhf_u','dshf_u','t_u', 'rh_u','rh_u_cor',
             'wspd_u','dlr', 'ulr',  't_surf','p_u', 'qh_u']
-
-
 
 # %% Plotting site-specific evaluation
 for var in var_list:
     Msg('# '+var)
 
-    for station in ds_aws.stid.values:
+    # for station in ds_aws.stid.values:
+    for station in ['SIGMA-A']: # , 's5','s6','s9']:
         if station not in ds_carra.stid.values:
             print(station, 'not in CARRA file')
             continue
@@ -103,34 +102,35 @@ for var in var_list:
 
         df_carra['qh_u']  = df_carra.qh_u*1000  # kg/kg to g/kg
 
-        df_carra = df_carra.drop(columns=['name','stid']).resample('D').mean()
-
-        common_idx = (df_aws
-                      .loc[df_aws[var].notnull()]
-                      .index.intersection(
-                          df_carra.loc[df_carra[var.replace('_cor','')]
-                                       .notnull()].index))
+        df_carra = df_carra.drop(columns=['name','stid']) #.resample('D').mean()
         
-        if len(common_idx)<100:
-            print(station, 'skipped because N<100')
-            continue
-        df_carra_filled = df_carra.loc[common_idx].resample('D').asfreq().fillna(method='ffill')
-        df_aws_filled = df_aws.loc[common_idx].resample('D').asfreq().fillna(method='ffill')
-        correlation = df_carra_filled[var.replace('_cor', '')].corr(df_aws_filled[var])
-        max_corr = 0
-        best_shift = 0
-        
-        for shift in range(-10, 11):
-            df2_shifted = df_aws_filled.shift(shift).copy(deep=True)
-            correlation = df_carra_filled[var.replace('_cor', '')].corr(df2_shifted[var])
-            if correlation > max_corr:
-                max_corr = correlation
-                best_shift = shift
-        
+        if var == 'dsr':
+            common_idx = (df_aws
+                          .loc[df_aws[var].notnull()]
+                          .index.intersection(
+                              df_carra.loc[df_carra[var.replace('_cor','')]
+                                           .notnull()].index))
+            
+            if len(common_idx)<100:
+                print(station, 'skipped because N<100')
+                continue
+            df_carra_filled = df_carra.loc[common_idx].fillna(method='ffill')
+            df_aws_filled = df_aws.loc[common_idx].fillna(method='ffill')
+            correlation = df_carra_filled[var.replace('_cor', '')].corr(df_aws_filled[var])
+            max_corr = 0
+            best_shift = 0
+            
+            for shift in range(-10, 11):
+                df2_shifted = df_aws_filled.shift(shift).copy(deep=True)
+                correlation = df_carra_filled[var.replace('_cor', '')].corr(df2_shifted[var])
+                if correlation > max_corr:
+                    max_corr = correlation
+                    best_shift = shift
+            
         print("Best Shift:", best_shift)
-        
+    
         df_aws = df_aws.shift(best_shift)  
-        
+        df_aws = df_aws.resample('3H').mean()
         # if var == 'albedo':
         #     df_carra = df_carra.loc[df_carra.dsr>100,:]
         #     df_aws = df_aws.loc[df_aws.dsr>100,:]
@@ -152,9 +152,9 @@ for var in var_list:
         tmp = pd.DataFrame()
         tmp['var'] = [var]
         tmp['station'] = station
-        tmp['latitude'] = ds_aws.where(ds_aws.stid==station, drop=True)['lat_installation'].item()
-        tmp['longitude'] =  ds_aws.where(ds_aws.stid==station, drop=True)['lon_installation'].item()
-        tmp['elevation_aws'] =  ds_aws.where(ds_aws.stid==station, drop=True)['alt_installation'].item()
+        tmp['latitude'] = ds_aws.where(ds_aws.stid==station, drop=True)['lat'].item()
+        tmp['longitude'] =  ds_aws.where(ds_aws.stid==station, drop=True)['lon'].item()
+        tmp['elevation_aws'] =  ds_aws.where(ds_aws.stid==station, drop=True)['alt'].item()
         tmp['elevation_CARRA'] =  ds_carra.altitude_mod.where(ds_carra.stid==station, drop=True).item()
         tmp['date_start'] = max(df_aws.index[0], df_carra.index[0])
         tmp['date_end'] = min(df_aws.index[-1], df_carra.index[-1])
@@ -174,7 +174,7 @@ for var in var_list:
         ax2 = plt.subplot(gs[1])
         
         # first plot
-        df_aws[var].resample('D').asfreq().plot(ax=ax1, label='AWS',marker='.')
+        df_aws[var].plot(ax=ax1, label='AWS',marker='.')
         df_carra_all[var.replace('_cor', '')].plot(ax=ax1,alpha=0.7, label='CARRA')
         ax1.set_ylabel(var)
         ax1.set_xlim(df_aws[var].dropna().index[[0,-1]])
