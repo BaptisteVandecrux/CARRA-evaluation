@@ -53,10 +53,12 @@ var_list =[ 'dsr',  'ulr', 'albedo', 'dsr_cor',  'usr',  'usr_cor',
 
 # %% Plotting site-specific evaluation
 for var in var_list:
+# plt.close('all')
+# for var in ['dsr','usr','dlr','ulr']:
     Msg('# '+var)
 
-    # for station in ds_aws.stid.values:
-    for station in ['SIGMA-A']: # , 's5','s6','s9']:
+    for station in ds_aws.stid.values:
+    # for station in ['Aurora']: # , 's5','s6','s9']:
         if station not in ds_carra.stid.values:
             print(station, 'not in CARRA file')
             continue
@@ -120,7 +122,7 @@ for var in var_list:
             max_corr = 0
             best_shift = 0
             
-            for shift in range(-10, 11):
+            for shift in range(-7, 7):
                 df2_shifted = df_aws_filled.shift(shift).copy(deep=True)
                 correlation = df_carra_filled[var.replace('_cor', '')].corr(df2_shifted[var])
                 if correlation > max_corr:
@@ -129,8 +131,8 @@ for var in var_list:
             
         print("Best Shift:", best_shift)
     
-        df_aws = df_aws.shift(best_shift)  
-        df_aws = df_aws.resample('3H').mean()
+        # df_aws = df_aws.shift(-best_shift)  
+        # df_aws = df_aws.resample('3H').mean()
         # if var == 'albedo':
         #     df_carra = df_carra.loc[df_carra.dsr>100,:]
         #     df_aws = df_aws.loc[df_aws.dsr>100,:]
@@ -175,7 +177,7 @@ for var in var_list:
         
         # first plot
         df_aws[var].plot(ax=ax1, label='AWS',marker='.')
-        df_carra_all[var.replace('_cor', '')].plot(ax=ax1,alpha=0.7, label='CARRA')
+        df_carra_all[var.replace('_cor', '')].plot(ax=ax1,alpha=0.9, label='CARRA')
         ax1.set_ylabel(var)
         ax1.set_xlim(df_aws[var].dropna().index[[0,-1]])
         ax1.set_title(station)
