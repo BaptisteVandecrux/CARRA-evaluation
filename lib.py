@@ -5,33 +5,20 @@ import pandas as pd
 DEFAULT_VARS = ['time','stid','t_u', 'rh_u','rh_u_cor', 'qh_u','p_u', 'wspd_u','dlr', 'ulr',
             't_surf',  'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor','dlhf_u','dshf_u']
 
-def load_CARRA_data(*args):
-    if len(args) == 1:
-        c = args[0]
-        surface_input_path = c.surface_input_path
-        station = c.station
-    elif len(args) == 2:
-        surface_input_path, station = args
+def load_CARRA_data(stid, var_list=DEFAULT_VARS):
+    ds_carra = xr.open_dataset(f"./data/CARRA_20250212/{stid}.nc").isel(station=0)
+    df_carra = ds_carra.to_dataframe().rename(columns={
+        't2m': 't_u', 'r2': 'rh_u',  'si10': 'wspd_u',
+        'sp': 'p_u',  'sh2': 'qh_u', 'ssrd': 'dsr',
+        'ssru': 'usr', 'strd': 'dlr', 'stru': 'ulr','sshf': 'dshf_u',
+        'al': 'albedo', 'skt': 't_surf', 'slhf': 'dlhf_u' })
 
-    aws_ds = xr.open_dataset(surface_input_path)
+    df_carra['qh_u']  = df_carra.qh_u*1000  # kg/kg to g/kg
 
-    df_carra = aws_ds.where(aws_ds.stid==station, drop=True).squeeze().to_dataframe()
+    if 'albedo' in df_carra:
+        df_carra['albedo'] = df_carra.loc[df_carra.dsr>100,'albedo']
 
-    # converting to a pandas dataframe and renaming some of the columns
-    df_carra = df_carra.rename(columns={
-                            't2m': 't_u',
-                            'r2': 'rh_u',
-                            'si10': 'wspd_u',
-                            'sp': 'p_u',
-                            'ssrd': 'dsr',
-                            'ssru': 'usr',
-                            'strd': 'dlr',
-                            'stru': 'ulr',
-                            'al': 'albedo',
-                            'skt': 't_surf'
-                        })
-    df_carra['t_surf']  = df_carra.t_surf-273.15
-    return df_carra
+    return df_carra[[v for v in var_list if v in df_carra.columns]]
 
 def load_promice_data(station,res,data_type, variables = DEFAULT_VARS):
     path_l3 = 'C:/Users/bav/GitHub/PROMICE data/thredds-data/'
@@ -43,8 +30,8 @@ def load_promice_data(station,res,data_type, variables = DEFAULT_VARS):
 
     df_aws.time = pd.to_datetime(df_aws.time).dt.tz_localize(None)
     df_aws=df_aws.set_index('time')
-    df_aws['stid'] = station
-    df_aws['stid'] = station
+    if 'albedo' in df_aws:
+        df_aws['albedo'] = df_aws.loc[df_aws.dsr>100,'albedo']
     return df_aws[[v for v in variables if v in df_aws.columns]]
 
 # %% shift

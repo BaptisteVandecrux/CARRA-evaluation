@@ -31,80 +31,53 @@ def Msg(txt):
 fig_folder = f'figures/CARRA_vs_AWS_{res}/'
 # for f in os.listdir(fig_folder):
 #     os.remove(fig_folder+f)
-ds_carra = xr.open_dataset("./data/CARRA_at_AWS_20240306.nc")
-ds_carra = ds_carra.assign_coords(station=ds_carra["name"].values)
-ds_carra = ds_carra.drop_vars("stid")
-ds_carra = ds_carra.rename({"station": "stid"})
-if res == 'day':
-    ds_carra = ds_carra.resample(time ='D').mean()
-
 
 df_summary = pd.DataFrame()
 
 var_list =[ 'dsr',  'usr', 'albedo', 'dsr_cor',  'usr_cor',
             'dlhf_u','dshf_u','t_u', 'rh_u','rh_u_cor',
-            'wspd_u','dlr', 'ulr',  't_surf','p_u', 'qh_u']
+            'wspd_u','dlr', 't_surf','p_u', 'qh_u']
 # var_list =['rh_u','rh_u_cor','t_u']
 station_list = [
     'CEN1', 'CEN2', 'CP1', 'DY2',
         'EGP',  'HUM','JAR', 'JAR_O', 'KAN_L', 'KAN_Lv3',
        'KAN_M', 'KAN_U', 'KPC_U', 'KPC_Uv3', 'NAE',
-       'NAU',  'NEM', 'NSE', 'NUK_N', 'NUK_U', 'NUK_Uv3', 'QAS_A',
-       'QAS_L', 'QAS_Lv3', 'QAS_M', 'QAS_Mv3', 'QAS_U', 'QAS_Uv3', 'SCO_U',
+       'NAU',  'NEM', 'NSE', 'NUK_N','NUK_U', 'NUK_Uv3', 'QAS_A',
+       'QAS_L', 'QAS_Lv3', 'QAS_M', 'QAS_Mv3', 'QAS_U', 'QAS_Uv3', 'SCO_U', 'SCO_Uv3',
+       'SCO_L','SCO_Lv3',
        'SDL', 'SDM',  'SWC', 'SWC_O',
-       'TAS_A', 'TAS_L', 'TAS_U', 'THU_L', 'THU_L2', 'THU_U2', 'TUN',
-       'UPE_L', 'UPE_U', 'WEG_L',]
+       'TAS_A', 'TAS_L', 'TAS_U', 'THU_L', 'THU_L2', 'THU_U2','THU_U2v3', 'TUN',
+       'UPE_L', 'UPE_U',
+       'FRE','WEG_L','RED_Lv3','NUK_K', 'ZAC_A', 'ZAC_A','ZAC_L']
 
 
-# %% Plotting site-specific evaluation
+# % Plotting site-specific evaluation
 
 for stid in station_list:
-# for stid in ['DY2']:
-    for var in var_list:
-    # for var in ['dsr','usr','dsr_cor','usr_cor','dlr','ulr']:
-    # for var in ['dsr', 'dlr']:
-        Msg('# '+var)
-        if stid not in ds_carra.stid.values:
-            print(stid, 'not in CARRA file')
-            continue
-        df_aws = lib.load_promice_data(stid, res, data_type, var_list)
-        df_aws = df_aws
+# for stid in ['CEN1']:
+    Msg('# '+stid)
+    df_aws = lib.load_promice_data(stid, res, data_type)
 
-        if len(df_aws)==0:
-            print('no',var,'at',stid)
-            continue
-
-        df_carra = ds_carra.sel(
-            stid=stid.replace('v3','')
-            ).to_dataframe().drop(columns='stid')
-
-        # converting to a pandas dataframe and renaming some of the columns
-        df_carra = df_carra.rename(columns={
-            't2m': 't_u', 'r2': 'rh_u',  'si10': 'wspd_u',
-            'sp': 'p_u',  'sh2': 'qh_u', 'ssrd': 'dsr',
-            'ssru': 'usr', 'strd': 'dlr', 'stru': 'ulr','sshf': 'dshf_u',
-            'al': 'albedo', 'skt': 't_surf', 'slhf': 'dlhf_u' })
-
-        df_carra['qh_u']  = df_carra.qh_u*1000  # kg/kg to g/kg
-
-        if var == 'albedo':
-            df_carra = df_carra.loc[df_carra.dsr>100,:]
-            df_aws = df_aws.loc[df_aws.dsr>100,:]
-
+    df_carra = lib.load_CARRA_data(stid)
+    if res == 'day':
+        df_carra = df_carra.resample('D').mean()
+    else:
         df_aws = df_aws.resample('3h').mean()
 
-        df_carra_all = df_carra.copy()
-        common_idx = df_aws.index.intersection(df_carra.index)
-        df_aws = df_aws.loc[common_idx, :]
-        df_carra = df_carra.loc[common_idx, :]
+    common_idx = df_aws.index.intersection(df_carra.index)
 
-        MD = np.mean(df_carra[var.replace('_cor', '')] - df_aws[var])
-        RMSD = np.sqrt(np.mean((df_carra[var.replace('_cor', '')] - df_aws[var])**2))
+    df_aws = df_aws.loc[slice(common_idx[0], common_idx[-1]), :]
+    df_carra = df_carra.loc[slice(common_idx[0], common_idx[-1]), :]
+    df_carra_all = df_carra.copy()
 
-        fig = plt.figure(figsize=(12, 4))
+    # for var in var_list:
+    for var in ["dlr", "dsr", "dsr_cor", "usr","usr_cor"]:
+        Msg('## '+var)
+        fig = plt.figure(figsize=(15, 7))
         gs = gridspec.GridSpec(1, 2, width_ratios=[2.5, 1])
         ax1 = plt.subplot(gs[0])
         ax2 = plt.subplot(gs[1])
+        plt.subplots_adjust(top =0.9,bottom=0.1,left=0.05, right=0.99)
 
         # first plot
         df_aws[var].plot(ax=ax1, label='AWS',marker='.', ls='None')
@@ -113,46 +86,93 @@ for stid in station_list:
         ax1.set_ylabel(var)
         ax1.set_xlim(df_aws[var].dropna().index[[0,-1]])
         ax1.set_title(stid); ax1.legend()
-        # if var in ["dlr", "dsr"]:
-        #     ax1b = ax1.twinx()
-        #     net = (df_aws["dlr"] - df_aws["ulr"]).dropna()
 
-        #     net.plot(ax=ax1b, color="k", alpha=0.4, marker='.', ls='-', label="Net LW")
-        #     ax1b.set_ylabel("Net LW (dlr - ulr)", color="grey")
-        #     ax1b.set_xlim(ax1.get_xlim())
-        #     ax1b.set_zorder(3)
-        #     ax1.set_zorder(2)
-        #     ax1.patch.set_visible(False)
-        #     ax1b.legend(loc="upper right")
 
         # second plot
-        ax2.plot(df_aws[var], df_carra[var.replace('_cor', '')], marker='.',ls='None')
+        ax2.plot(df_aws[var],
+                 df_carra[var.replace('_cor', '')],
+                 marker='.',ls='None', label='all measurements')
+
+
+        MD = np.mean(df_carra.loc[common_idx, var.replace('_cor', '')] - df_aws.loc[common_idx, var])
+        RMSD = np.sqrt(np.mean((df_carra.loc[common_idx, var.replace('_cor', '')] - df_aws.loc[common_idx,var])**2))
+        # Annotate with RMSD and MD
+        if var in ["dlr", "dsr", "dsr_cor", "usr","usr_cor"]:
+            ax1b = ax1.twinx()
+            # Compute net longwave and daily means
+            net_lw = (df_aws["dlr"] - df_aws["ulr"]).dropna()
+            net_lw_daily = net_lw.resample("D").mean()
+            low_net_weeks = net_lw_daily[net_lw_daily > -4]
+
+            bias = (df_aws["dlr"] - df_carra["dlr"]).dropna()
+            bias_daily = bias.resample("D").mean()
+
+            # Add shaded backgrounds to ax1 for these periods
+            for t in low_net_weeks.index:
+                ax1.axvspan(t, t + pd.Timedelta(days=1), color="tab:pink", alpha=0.2)
+
+            # net_lw.plot(ax=ax1b, color="k", alpha=0.4, marker='.', ls='-', label="Net LW")
+            net_lw_daily.plot(ax=ax1b, drawstyle='steps-post', color="k", alpha=0.4)
+            ax1b.set_ylabel("Net LW (dlr - ulr)", color="grey")
+            ax1b.set_xlim(ax1.get_xlim())
+            ax1.patch.set_visible(False)
+            # ax1b.legend(loc="upper right")
+
+            # days meeting both conditions
+            bad_days = net_lw_daily.index[
+                (net_lw_daily > -4) & (bias_daily.abs() > 25)
+            ]
+
+            # select 3‑hourly timestamps inside these days
+            df_bad = df_aws[df_aws.index.normalize().isin(bad_days)].copy()
+
+            # removing bad data
+            # df_aws.loc[df_bad.index, var] = np.nan
+
+            # plotting filtering process
+            df_bad[var].plot(marker='x',ls='None', color='tab:red', alpha=0.5,ax=ax1)
+
+            ax2.plot(df_aws.loc[df_bad.index,var],
+                     df_carra.loc[df_bad.index,var.replace('_cor', '')],
+                     marker='.',ls='None',label='Frost-affected', color='tab:red')
+            common_idx = [t for t in common_idx if t not in df_bad.index]
+            MDf = np.mean(df_carra.loc[common_idx, var.replace('_cor', '')] - df_aws.loc[common_idx, var])
+            RMSDf = np.sqrt(np.mean((df_carra.loc[common_idx, var.replace('_cor', '')] - df_aws.loc[common_idx,var])**2))
+            # Annotate with RMSD and MD
+            ax2.annotate(f'All measurements:\nRMSD: {RMSD:.2f}\nMD: {MD:.2f}' + \
+                         f'\n\nFiltered:\nRMSD: {RMSDf:.2f}\nMD: {MDf:.2f}',
+                         xy=(0.05, 0.95), xycoords='axes fraction',
+                         horizontalalignment='left', verticalalignment='top',
+                         fontsize=10, bbox=dict(boxstyle="round,pad=0.3",
+                                                edgecolor='black', facecolor='white'))
+        else:
+
+            ax2.annotate(f'All measurements:\nRMSD: {RMSD:.2f}\nMD: {MD:.2f}',
+                         xy=(0.05, 0.95), xycoords='axes fraction',
+                         horizontalalignment='left', verticalalignment='top',
+                         fontsize=10, bbox=dict(boxstyle="round,pad=0.3",
+                                                edgecolor='black', facecolor='white'))
+
+
         ax2.set_xlabel('AWS')
         ax2.set_ylabel('CARRA')
         ax2.set_title(var)
 
-        common_idx = df_aws.index.intersection(df_carra.index)
-        slope, intercept, r_value, p_value, std_err = linregress(
-            df_aws.loc[common_idx, var], df_carra.loc[common_idx, var.replace('_cor', '')])
+        # slope, intercept, r_value, p_value, std_err = linregress(
+        #     df_aws.loc[common_idx, var], df_carra.loc[common_idx, var.replace('_cor', '')])
         max_val = max(df_aws[var].max(), df_carra[var.replace('_cor', '')].max())
         min_val = min(df_aws[var].min(), df_carra[var.replace('_cor', '')].min())
         ax2.plot([min_val, max_val], [min_val, max_val], 'k-', label='1:1 Line')
-        regression_line = slope * df_aws[var] + intercept
-        ax2.plot(df_aws[var], regression_line, 'r-', label='Linear Regression')
+        # regression_line = slope * df_aws[var] + intercept
+        # ax2.plot(df_aws[var], regression_line, 'r-', label='Linear Regression')
         ax2.legend(loc='lower right')
 
 
-        # Annotate with RMSD and MD
-        ax2.annotate(f'RMSD: {RMSD:.2f}\nMD: {MD:.2f}',
-                     xy=(0.05, 0.95), xycoords='axes fraction',
-                     horizontalalignment='left', verticalalignment='top',
-                     fontsize=10, bbox=dict(boxstyle="round,pad=0.3",
-                                            edgecolor='black', facecolor='white'))
 
         fig.savefig(f'{fig_folder}/{stid}_{var}.png', bbox_inches = 'tight', dpi=240)
         Msg(f'![](../{fig_folder}/{stid}_{var}.png)')
         Msg(' ')
-        plt.show()
+        plt.close(fig)
 
 # %%  site-specific statistics
 plt.close('all')
