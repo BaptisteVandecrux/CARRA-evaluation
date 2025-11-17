@@ -15,7 +15,7 @@ from lib import load_CARRA_data
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
-import pandas as pd 
+import pandas as pd
 import tocgen
 import nead
 path_l3 = 'C:/Users/bav/GitHub/PROMICE data/aws-l3-dev/level_3/'
@@ -50,14 +50,71 @@ df_summary = pd.DataFrame()
 var_list =[ 'dsr',  'ulr', 'albedo', 'dsr_cor',  'usr',  'usr_cor',
             'dlhf_u','dshf_u','t_u', 'rh_u','rh_u_cor',
             'wspd_u','dlr', 'ulr',  't_surf','p_u', 'qh_u']
+var_list =['rh_u','rh_u_cor','t_u']
+
+ds_aws = ds_aws[var_list+['lat','lon','alt']].sel(stid=[
+    'CEN1', 'CEN2', 'CP1', 'DY2',
+        'EGP',  'HUM','JAR', 'JAR_O', 'KAN_L', 'KAN_Lv3',
+       'KAN_M', 'KAN_U', 'KPC_U', 'KPC_Uv3', 'NAE',
+       'NAU',  'NEM', 'NSE', 'NUK_N', 'NUK_U', 'NUK_Uv3', 'QAS_A',
+       'QAS_L', 'QAS_Lv3', 'QAS_M', 'QAS_Mv3', 'QAS_U', 'QAS_Uv3', 'SCO_U',
+       'SDL', 'SDM',  'SWC', 'SWC_O',
+       'TAS_A', 'TAS_L', 'TAS_U', 'THU_L', 'THU_L2', 'THU_U2', 'TUN',
+       'UPE_L', 'UPE_U', 'WEG_L',])
 
 # %% Plotting site-specific evaluation
-for var in var_list:
-# plt.close('all')
-# for var in ['dsr','usr','dlr','ulr']:
-    Msg('# '+var)
+plt.close('all')
+# fig,ax=plt.subplots(2,1)
+import matplotlib.pyplot as plt
+import numpy as np
 
-    for station in ds_aws.stid.values:
+plt.close('all')
+for station in ds_aws.stid.values:
+    print(station)
+    fig, ax = plt.subplots(2, 1, figsize=(10,10), sharex=True,sharey=True)
+
+    # Color code by year
+    years = ds_aws.sel(stid=station).time.dt.year.values
+    sc = ax[0].scatter(ds_aws.sel(stid=station).t_u,
+                       ds_aws.sel(stid=station).rh_u,
+                       c=years, cmap='viridis', s=0.5, marker='.')
+    sc2 = ax[1].scatter(ds_aws.sel(stid=station).t_u,
+                        ds_aws.sel(stid=station).rh_u_cor,
+                        c=years, cmap='viridis', s=0.5, marker='.')
+
+    # Calculate 0.99 percentile for each 1-degree temperature bin
+    temp_bins = np.arange(-70, 11, 1)
+    binned_data = ds_aws.sel(stid=station).groupby_bins("t_u", temp_bins)
+
+    temp_bin_centers = []
+    rh_u_cor_percentiles = []
+    for bin_center, group in binned_data:
+        if len(group.rh_u_cor) > 0:  # Only process non-empty bins
+            temp_bin_centers.append(bin_center.mid)  # Center of the temperature bin
+            rh_u_cor_percentiles.append(np.percentile(group.rh_u_cor, 95))
+
+    # Plot 0.99 percentile line on rh_u_cor plot
+    ax[1].plot(temp_bin_centers, rh_u_cor_percentiles, color='red', lw=3,
+               label="0.95 Percentile")
+
+    # Set plot limits
+    ax[0].set_ylim(0, 120)
+    ax[0].set_xlim(-70, 10)
+    ax[0].grid()
+    ax[1].grid()
+
+    # Add colorbars and titles
+    fig.colorbar(sc, ax=ax[0], label="Year")
+    fig.colorbar(sc2, ax=ax[1], label="Year")
+    fig.suptitle(station)
+    ax[1].legend()
+    fig.savefig(station+'_rh.png',dpi=300)
+
+    # %%
+    for var in var_list:
+    # plt.close('all')
+    # for var in ['dsr','usr','dlr','ulr']:
+        Msg('# '+var)
     # for station in ['Aurora']: # , 's5','s6','s9']:
         if station not in ds_carra.stid.values:
             print(station, 'not in CARRA file')
@@ -80,7 +137,7 @@ for var in var_list:
         if len(df_aws)==0:
             print('no',var,'at',station)
             continue
-        
+
         sec_station=[]
         if station == 'CEN1':
             sec_station = 'CEN2'
@@ -92,12 +149,14 @@ for var in var_list:
                       .reset_index('stid',drop=True))
             df_sec = df_sec.dropna()
             df_aws = df_aws.combine_first(df_sec)
-            
-        df_carra = ds_carra.sel(station=station.replace('v3','')).to_dataframe().drop(columns='station')
-    
+
+        df_carra = ds_carra.sel(
+            station=station.replace('v3','')
+            ).to_dataframe().drop(columns='station')
+
         # converting to a pandas dataframe and renaming some of the columns
         df_carra = df_carra.rename(columns={
-            't2m': 't_u', 'r2': 'rh_u',  'si10': 'wspd_u', 
+            't2m': 't_u', 'r2': 'rh_u',  'si10': 'wspd_u',
             'sp': 'p_u',  'sh2': 'qh_u', 'ssrd': 'dsr',
             'ssru': 'usr', 'strd': 'dlr', 'stru': 'ulr','sshf': 'dshf_u',
             'al': 'albedo', 'skt': 't_surf', 'slhf': 'dlhf_u' })
@@ -105,14 +164,14 @@ for var in var_list:
         df_carra['qh_u']  = df_carra.qh_u*1000  # kg/kg to g/kg
 
         df_carra = df_carra.drop(columns=['name','stid']) #.resample('D').mean()
-        
+
         if var == 'dsr':
             common_idx = (df_aws
                           .loc[df_aws[var].notnull()]
                           .index.intersection(
                               df_carra.loc[df_carra[var.replace('_cor','')]
                                            .notnull()].index))
-            
+
             if len(common_idx)<100:
                 print(station, 'skipped because N<100')
                 continue
@@ -121,22 +180,22 @@ for var in var_list:
             correlation = df_carra_filled[var.replace('_cor', '')].corr(df_aws_filled[var])
             max_corr = 0
             best_shift = 0
-            
+
             for shift in range(-7, 7):
                 df2_shifted = df_aws_filled.shift(shift).copy(deep=True)
                 correlation = df_carra_filled[var.replace('_cor', '')].corr(df2_shifted[var])
                 if correlation > max_corr:
                     max_corr = correlation
                     best_shift = shift
-            
-        print("Best Shift:", best_shift)
-    
-        # df_aws = df_aws.shift(-best_shift)  
+
+        # print("Best Shift:", best_shift)
+
+        # df_aws = df_aws.shift(-best_shift)
         # df_aws = df_aws.resample('3H').mean()
         # if var == 'albedo':
         #     df_carra = df_carra.loc[df_carra.dsr>100,:]
         #     df_aws = df_aws.loc[df_aws.dsr>100,:]
-            
+
         df_carra_all = df_carra.copy()
         common_idx = df_aws.index.intersection(df_carra.index)
         df_aws = df_aws.loc[common_idx, :]
@@ -144,13 +203,13 @@ for var in var_list:
 
         MD = np.mean(df_carra[var.replace('_cor', '')] - df_aws[var])
         RMSD = np.sqrt(np.mean((df_carra[var.replace('_cor', '')] - df_aws[var])**2))
-        MD_jja = np.mean(df_carra.loc[df_carra.index.month.isin([6,7,8]), 
-                                      var.replace('_cor', '')] - df_aws.loc[df_aws.index.month.isin([6,7,8]), 
+        MD_jja = np.mean(df_carra.loc[df_carra.index.month.isin([6,7,8]),
+                                      var.replace('_cor', '')] - df_aws.loc[df_aws.index.month.isin([6,7,8]),
                                                                     var])
-        RMSD_jja = np.sqrt(np.mean((df_carra.loc[df_carra.index.month.isin([6,7,8]), 
-                                      var.replace('_cor', '')] - df_aws.loc[df_aws.index.month.isin([6,7,8]), 
+        RMSD_jja = np.sqrt(np.mean((df_carra.loc[df_carra.index.month.isin([6,7,8]),
+                                      var.replace('_cor', '')] - df_aws.loc[df_aws.index.month.isin([6,7,8]),
                                                                     var])**2))
-        
+
         tmp = pd.DataFrame()
         tmp['var'] = [var]
         tmp['station'] = station
@@ -165,30 +224,51 @@ for var in var_list:
         tmp['MD_jja'] = MD_jja
         tmp['RMSD_jja'] = RMSD_jja
         tmp['N'] = (df_carra[var.replace('_cor', '')] * df_aws[var]).notnull().sum()
-        tmp['N_jja'] = (df_carra.loc[df_carra.index.month.isin([6,7,8]), 
-                                      var.replace('_cor', '')] - df_aws.loc[df_aws.index.month.isin([6,7,8]), 
+        tmp['N_jja'] = (df_carra.loc[df_carra.index.month.isin([6,7,8]),
+                                      var.replace('_cor', '')] - df_aws.loc[df_aws.index.month.isin([6,7,8]),
                                                                     var]).count()
         df_summary = pd.concat((df_summary, tmp))
-        
+
         fig = plt.figure(figsize=(12, 4))
-        gs = gridspec.GridSpec(1, 2, width_ratios=[3, 1]) 
+        gs = gridspec.GridSpec(1, 2, width_ratios=[3, 1])
         ax1 = plt.subplot(gs[0])
         ax2 = plt.subplot(gs[1])
-        
+
         # first plot
         df_aws[var].plot(ax=ax1, label='AWS',marker='.')
         df_carra_all[var.replace('_cor', '')].plot(ax=ax1,alpha=0.9, label='CARRA')
+        if var == "rh_u":
+            try:
+                df_list=[]
+                st = station
+
+                for y in range(1980,2016):
+                        tmp= pd.read_csv(f'HIRHAM RH/{station}_{y}_relhum.txt',
+                                         header = None)
+                        tmp.columns=['RH']
+                        tmp['time'] = pd.date_range(start=f'{y}-01-01 00:00',
+                                                    periods=len(tmp), freq='3h')
+                        tmp = tmp.set_index('time')
+                        df_list.append(tmp)
+                df_hh = pd.concat(df_list)
+                df_hh['RH']=df_hh['RH']*100
+
+                df_hh['RH'].plot(ax=ax1, label='HIRHAM',marker='.', alpha = 0.5)
+            except:
+                # plt.close(fig)
+                pass
         ax1.set_ylabel(var)
         ax1.set_xlim(df_aws[var].dropna().index[[0,-1]])
+        ax1.set_ylim([20, 120])
         ax1.set_title(station)
         ax1.legend()
-    
+
         # second plot
         ax2.plot(df_aws[var], df_carra[var.replace('_cor', '')], marker='.',ls='None')
         ax2.set_xlabel('AWS')
         ax2.set_ylabel('CARRA')
         ax2.set_title(var)
-        
+
         common_idx = df_aws.index.intersection(df_carra.index)
         slope, intercept, r_value, p_value, std_err = linregress(
             df_aws.loc[common_idx, var], df_carra.loc[common_idx, var.replace('_cor', '')])
@@ -198,11 +278,11 @@ for var in var_list:
         regression_line = slope * df_aws[var] + intercept
         ax2.plot(df_aws[var], regression_line, 'r-', label='Linear Regression')
         ax2.legend(loc='lower right')
-    
-        
+
+
         # Annotate with RMSD and MD
-        ax2.annotate(f'RMSD: {RMSD:.2f}\nMD: {MD:.2f}', 
-                     xy=(0.05, 0.95), xycoords='axes fraction', 
+        ax2.annotate(f'RMSD: {RMSD:.2f}\nMD: {MD:.2f}',
+                     xy=(0.05, 0.95), xycoords='axes fraction',
                      horizontalalignment='left', verticalalignment='top',
                      fontsize=10, bbox=dict(boxstyle="round,pad=0.3",
                                             edgecolor='black', facecolor='white'))
@@ -211,6 +291,7 @@ for var in var_list:
                     bbox_inches = 'tight', dpi=240)
         Msg('![](../figures/CARRA_vs_AWS/%s_%s.png)'%(station,var))
         Msg(' ')
+        plt.show()
 df_summary.rename(columns={'var':'variable'}).to_csv('out/summary_statistics.csv',index=None)
 
 #%% Summary plots from summary statistics
@@ -262,7 +343,7 @@ def Msg(txt):
     f = open(filename, "a")
     print(txt)
     f.write(txt + "\n")
-    
+
 for var in var_list:
     Msg('# '+var)
     no_plot = []
@@ -296,13 +377,13 @@ with open(filename, 'r') as file:
     existing_content = file.read()
 
 new_content = ("# Stats plot\n\n" + '![](../figures/summary_plot.png)\n\n'
-               +"# Stats table\n\n" + data.to_markdown(index=None) 
+               +"# Stats table\n\n" + data.to_markdown(index=None)
                + "\n\n" + existing_content)
 
 # Write the combined content back to the file
 with open(filename, 'w') as file:
     file.write(new_content)
-    
+
 tocgen.processFile(filename, filename[:-3]+"_toc.md")
 
 # %% Producing the station-wise report
@@ -313,7 +394,7 @@ def Msg(txt):
     f = open(filename, "a")
     print(txt)
     f.write(txt + "\n")
-    
+
 # Load the summary statistic
 data = pd.read_csv('out/summary_statistics.csv')
 data['MD'] = data['MD'].round(2)
@@ -324,7 +405,7 @@ data['date_end'] = pd.to_datetime(data['date_end']).dt.date
 # Write the combined content back to the file
 with open(filename, 'w') as file:
     file.write(new_content)
-    
+
 for station in ds_aws.stid.values:
     Msg('# '+station)
     if len(data.loc[data.station == station, ['latitude', 'longitude', 'elevation_aws',
@@ -332,11 +413,11 @@ for station in ds_aws.stid.values:
         Msg(data.loc[data.station == station, ['latitude', 'longitude', 'elevation_aws',
                'elevation_CARRA', 'date_start', 'date_end']].iloc[[0],:].to_markdown(index=None) )
         Msg(' ')
-        
+
         Msg(data.loc[data.station == station, ['variable', 'MD', 'RMSD', 'MD_jja',
         'RMSD_jja', 'N', 'N_jja']].to_markdown(index=None) )
         Msg(' ')
-        
+
         no_plot = []
         for var in var_list:
             if os.path.isfile('figures/CARRA_vs_AWS/%s_%s.png'%(station,var)):
@@ -346,7 +427,7 @@ for station in ds_aws.stid.values:
                 no_plot.append(var)
         Msg('No plot at '+station+' for '+', '.join(no_plot))
         Msg(' ')
-    
+
 tocgen.processFile(filename, filename[:-3]+"_toc.md")
 
 # %% compiling all plots in pdf
@@ -358,11 +439,11 @@ import xarray as xr
 
 shutil.copy('plot_compilation_src/template/plot_compilation.tex',
             'plot_compilation_src/plot_compilation.tex')
-var_list = ['t_u', 'rh_u','rh_u_cor', 'qh_u','p_u', 'wspd_u','dlr', 'ulr', 
+var_list = ['t_u', 'rh_u','rh_u_cor', 'qh_u','p_u', 'wspd_u','dlr', 'ulr',
             't_surf',  'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor','dlhf_u','dshf_u']
 long_var_list = ['Near surface air temperature', 'Relative humidity','Relative humidity (w.r.t. ice)',
                  'Specific humidity','Surface pressure', 'Wind speed',
-                 'Downward longwave radiation', 'Upward longwave radiation', 
+                 'Downward longwave radiation', 'Upward longwave radiation',
             'Surface temperature',  'Albedo', 'Downward shortwave radiation',
             'Downward shortwave radiation (tilt corrected)',
             'Upward shortwave radiation',
@@ -376,7 +457,7 @@ f = open('plot_compilation_src/plot_compilation.tex', 'a', encoding="utf-8")
 f.write("\n")
 for var,var_long in zip(var_list, long_var_list):
     var = var.replace('_','\_')
-    f.write(f"\n\\section{{{var_long}}}") 
+    f.write(f"\n\\section{{{var_long}}}")
     count = 0
     for station in station_list:
         station = station.replace('_','\_')
@@ -397,7 +478,7 @@ f.close()
 
 #  compiling latex file
 import os
-import shutil  
+import shutil
 os.chdir('plot_compilation_src/')
 os.system("pdflatex plot_compilation.tex")
 os.system("pdflatex plot_compilation.tex") # needs to run twice for the toc
