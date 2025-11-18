@@ -7,21 +7,18 @@ tip list:
     %matplotlib qt
     import pdb; pdb.set_trace()
 """
-from scipy.stats import linregress
 from matplotlib import gridspec
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import xarray as xr
 import pandas as pd
 import tocgen
-import os
 import lib
 
 res = 'hour'
 data_type = 'stations'
-filename = f'out/compil_plots_{res}.md'
+filename = 'out/frost_rime_overview.md'
 
 f = open(filename, "w")
 def Msg(txt):
@@ -77,7 +74,6 @@ for stid in station_list:
     # for var in var_list:
     # for var in ["dlr", "dsr", "dsr_cor", "usr","usr_cor"]:
     for var in ["dlr", "dsr"]:
-        Msg('## '+var)
         fig = plt.figure(figsize=(15, 7))
         gs = gridspec.GridSpec(1, 2, width_ratios=[2.5, 1])
         ax1 = plt.subplot(gs[0])
@@ -138,6 +134,8 @@ for stid in station_list:
             # select 3‑hourly timestamps inside these days
             df_bad = df_aws[df_aws.index.normalize().isin(bad_days)]
 
+            print(len(df_bad.index)/len(df_aws.index)*100)
+
             # removing bad data
             # df_aws.loc[df_bad.index, var] = np.nan
 
@@ -186,4 +184,5 @@ for stid in station_list:
         fig.savefig(f'{fig_folder}/{stid}_{var}.png', bbox_inches = 'tight', dpi=240)
         Msg(f'![](../{fig_folder}/{stid}_{var}.png)')
         Msg(' ')
-        # plt.close(fig)
+        plt.close(fig)
+tocgen.processFile(filename, filename[:-3]+"_toc.md")
