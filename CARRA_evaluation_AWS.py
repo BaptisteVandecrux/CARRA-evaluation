@@ -21,7 +21,7 @@ import lib
 
 res = 'hour'
 data_type = 'stations'
-filename = 'out/compil_plots_{res}.md'
+filename = f'out/compil_plots_{res}.md'
 f = open(filename, "w")
 def Msg(txt):
     f = open(filename, "a")

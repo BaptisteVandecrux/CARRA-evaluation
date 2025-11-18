@@ -2,11 +2,18 @@ import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
 import pandas as pd
-DEFAULT_VARS = ['time','stid','t_u', 'rh_u','rh_u_cor', 'qh_u','p_u', 'wspd_u','dlr', 'ulr',
+import os
+DEFAULT_VARS = ['time','stid','t_u', 'rh_u','rh_u_wrt_ice_or_water', 'qh_u','p_u', 'wspd_u','dlr', 'ulr',
             't_surf',  'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor','dlhf_u','dshf_u']
 
 def load_CARRA_data(stid, var_list=DEFAULT_VARS):
-    ds_carra = xr.open_dataset(f"./data/CARRA_20250212/{stid}.nc").isel(station=0)
+
+    if os.path.exists(f"./data/CARRA_20250212/{stid}.nc"):
+        ds_carra = xr.open_dataset(f"./data/CARRA_20250212/{stid}.nc")
+    else:
+        ds_carra = xr.open_dataset(f"./data/CARRA_20250212/{stid.replace('v3','')}.nc")
+    ds_carra=ds_carra.isel(station=0)
+
     df_carra = ds_carra.to_dataframe().rename(columns={
         't2m': 't_u', 'r2': 'rh_u',  'si10': 'wspd_u',
         'sp': 'p_u',  'sh2': 'qh_u', 'ssrd': 'dsr',

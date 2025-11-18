@@ -15,18 +15,19 @@ import numpy as np
 import pandas as pd
 import tocgen
 import lib
+from datetime import timedelta
 
 res = 'hour'
 data_type = 'stations'
 filename = 'out/frost_rime_overview.md'
 
-f = open(filename, "w")
+# f = open(filename, "w")
 def Msg(txt):
     f = open(filename, "a")
     print(txt)
     f.write(txt + "\n")
 
-fig_folder = f'figures/CARRA_vs_AWS_{res}/'
+fig_folder = f'figures/rime and frost/'
 # for f in os.listdir(fig_folder):
 #     os.remove(fig_folder+f)
 
@@ -53,19 +54,26 @@ station_list = df_stations.station_id
 
 
 # % Plotting site-specific evaluation
-
-for stid in station_list:
+# stat = []
+for stid in station_list[44:]:
 # for stid in ['CEN1']:
     Msg('# '+stid)
     df_aws = lib.load_promice_data(stid, res, data_type)
 
-    df_carra = lib.load_CARRA_data(stid)
+    try:
+        df_carra = lib.load_CARRA_data(stid)
+    except Exception as e:
+        print(e)
+        continue
     if res == 'day':
         df_carra = df_carra.resample('D').mean()
     else:
         df_aws = df_aws.resample('3h').mean()
 
     common_idx = df_aws.index.intersection(df_carra.index)
+    if len(common_idx) == 0:
+        Msg("no temporal overlap with CARRA data")
+        continue
 
     df_aws = df_aws.loc[slice(common_idx[0], common_idx[-1]), :]
     df_carra = df_carra.loc[slice(common_idx[0], common_idx[-1]), :]
@@ -102,26 +110,34 @@ for stid in station_list:
         # Annotate with RMSD and MD
         if var in ["dlr", "dsr", "dsr_cor", "usr","usr_cor"]:
             # Compute net longwave and daily means
-            net_lw = (df_aws["dlr"] - df_aws["ulr"]).dropna()
+            net_lw = (df_aws["dlr"] - df_aws["ulr"])
             net_lw_daily = net_lw.resample("D").mean()
             low_net_weeks = net_lw_daily[net_lw_daily > -4]
 
-            bias = (df_aws["dlr"] - df_carra["dlr"]).dropna()
+            bias = (df_aws["dlr"] - df_carra["dlr"])
             bias_daily = bias.resample("D").mean()
 
+            mask = (bias_daily+net_lw_daily).notnull()
+            bias_daily=bias_daily.loc[mask]
+            net_lw_daily=net_lw_daily.loc[mask]
+
+
+
             # Add shaded backgrounds to ax1 for these periods
-            for t in low_net_weeks.index[:-1]:
-                ax1.axvspan(t, t + pd.Timedelta(days=1), color="tab:pink", alpha=0.2)
-            t = low_net_weeks.index[-1]
-            ax1.axvspan(t, t + pd.Timedelta(days=1), color="tab:pink", alpha=0.2,
-                        label='days with frost or rime')
-            if True:
-                ax1b = ax1.twinx()
-                # net_lw.plot(ax=ax1b, color="k", alpha=0.4, marker='.', ls='-', label="Net LW")
+            if len(low_net_weeks)>0:
+                for t in low_net_weeks.index[:-1]:
+                    ax1.axvspan(t, t + pd.Timedelta(days=1), color="tab:pink", alpha=0.2)
+                t = low_net_weeks.index[-1]
+                ax1.axvspan(t, t + pd.Timedelta(days=1), color="tab:pink", alpha=0.2,
+                            label='days with frost or rime')
+
+            ax1b = ax1.twinx()
+            # net_lw.plot(ax=ax1b, color="k", alpha=0.4, marker='.', ls='-', label="Net LW")
+            if len(net_lw_daily)>0:
                 net_lw_daily.plot(ax=ax1b, drawstyle='steps-post', color="k", alpha=0.4)
-                ax1b.set_ylabel("Net LW (dlr - ulr)", color="grey")
-                ax1b.set_xlim(ax1.get_xlim())
-                ax1b.tick_params(axis='y', colors='grey')
+            ax1b.set_ylabel("Net LW (dlr - ulr)", color="grey")
+            ax1b.set_xlim(ax1.get_xlim())
+            ax1b.tick_params(axis='y', colors='grey')
 
             ax1.patch.set_visible(False)
             # ax1b.legend(loc="upper right")
@@ -134,18 +150,50 @@ for stid in station_list:
             # select 3‑hourly timestamps inside these days
             df_bad = df_aws[df_aws.index.normalize().isin(bad_days)]
 
-            print(len(df_bad.index)/len(df_aws.index)*100)
+            stat.append([stid,(len(df_bad.index)/len(df_aws.index)*100)])
 
-            # removing bad data
-            # df_aws.loc[df_bad.index, var] = np.nan
+            # extracting periods with rime
+            # 1) Create bad_daily boolean Series
+            bad = bad_days
+            if len(bad)>0:
+                bad_daily = pd.Series(False, index=pd.date_range(bad.min(), bad.max(), freq="D"))
+                bad_daily.loc[bad] = True
 
-            # plotting filtering process
-            df_bad[var].plot(marker='x',ls='None', color='tab:red', alpha=0.5,
-                             label='frost or rime-affected measurements', ax=ax1)
+                # 2) Inflate bad_daily
+                bad_daily_inflate = bad_daily.copy()
+                bad_daily_inflate |= bad_daily.shift(1, fill_value=False)
+                bad_daily_inflate |= bad_daily.shift(-1, fill_value=False)
 
-            ax2.plot(df_aws.loc[df_bad.index,var],
-                     df_carra.loc[df_bad.index,var.replace('_cor', '')],
-                     marker='.',ls='None',label='frost or rime-affected measurments', color='tab:red')
+                # 3) Deflate inflated version
+                bad_daily_inflate_deflate = bad_daily_inflate.copy()
+                bad_daily_inflate_deflate &= bad_daily_inflate.shift(1, fill_value=True)
+                bad_daily_inflate_deflate &= bad_daily_inflate.shift(-1, fill_value=True)
+
+                # 4) Extract contiguous periods
+                from itertools import groupby
+                from operator import itemgetter
+
+                true_days = bad_daily_inflate_deflate[bad_daily_inflate_deflate].index
+                groups = []
+                for k, g in groupby(enumerate(true_days), lambda x: x[0] - x[1].toordinal()):
+                    g = list(map(itemgetter(1), g))
+                    groups.append([g[0], g[-1]])
+
+                table = pd.DataFrame(groups, columns=["t0", "t1"])
+                table['t1'] = table['t1']+pd.to_timedelta('1D')
+                table['variable'] = 'dlr ulr dsr usr'
+                table['comment'] = 'automatically detected as rime-affected (bav)'
+                table['URL_graphic'] = 'https://github.com/GEUS-Glaciology-and-Climate/PROMICE-AWS-data-issues/issues/61'
+                table.to_csv(f'flags/{stid}.csv', index=None)
+
+                # plotting filtering process
+                df_bad[var].plot(marker='x',ls='None', color='tab:red', alpha=0.5,
+                                 label='frost or rime-affected measurements', ax=ax1)
+
+                ax2.plot(df_aws.loc[df_bad.index,var],
+                         df_carra.loc[df_bad.index,var.replace('_cor', '')],
+                         marker='.',ls='None',
+                         label='frost or rime-affected measurments', color='tab:red')
             common_idx = [t for t in common_idx if t not in df_bad.index]
             MDf = np.mean(df_carra.loc[common_idx, var.replace('_cor', '')] - df_aws.loc[common_idx, var])
             RMSDf = np.sqrt(np.mean((df_carra.loc[common_idx, var.replace('_cor', '')] - df_aws.loc[common_idx,var])**2))
@@ -185,4 +233,5 @@ for stid in station_list:
         Msg(f'![](../{fig_folder}/{stid}_{var}.png)')
         Msg(' ')
         plt.close(fig)
+stat_df = pd.DataFrame(stat).drop_duplicates() #, name=['stid','% with rime'])
 tocgen.processFile(filename, filename[:-3]+"_toc.md")
