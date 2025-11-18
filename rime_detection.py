@@ -21,7 +21,7 @@ res = 'hour'
 data_type = 'stations'
 filename = 'out/frost_rime_overview.md'
 
-# f = open(filename, "w")
+f = open(filename, "w")
 def Msg(txt):
     f = open(filename, "a")
     print(txt)
@@ -54,8 +54,8 @@ station_list = df_stations.station_id
 
 
 # % Plotting site-specific evaluation
-# stat = []
-for stid in station_list[44:]:
+stat = []
+for stid in station_list:
 # for stid in ['CEN1']:
     Msg('# '+stid)
     df_aws = lib.load_promice_data(stid, res, data_type)
@@ -180,6 +180,7 @@ for stid in station_list[44:]:
                     groups.append([g[0], g[-1]])
 
                 table = pd.DataFrame(groups, columns=["t0", "t1"])
+                table=table.loc[table.t1!=table.t0]
                 table['t1'] = table['t1']+pd.to_timedelta('1D')
                 table['variable'] = 'dlr ulr dsr usr'
                 table['comment'] = 'automatically detected as rime-affected (bav)'
@@ -233,5 +234,6 @@ for stid in station_list[44:]:
         Msg(f'![](../{fig_folder}/{stid}_{var}.png)')
         Msg(' ')
         plt.close(fig)
-stat_df = pd.DataFrame(stat).drop_duplicates() #, name=['stid','% with rime'])
+stat_df = pd.DataFrame(stat, columns=['station','incidence_%']).drop_duplicates()
+stat_df.to_csv('stat.csv', sep='\t', index=None, float_format='%.2f')
 tocgen.processFile(filename, filename[:-3]+"_toc.md")
