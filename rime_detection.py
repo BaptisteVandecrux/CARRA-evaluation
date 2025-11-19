@@ -21,7 +21,7 @@ res = 'hour'
 data_type = 'stations'
 filename = 'out/frost_rime_overview.md'
 
-f = open(filename, "w")
+# f = open(filename, "w")
 def Msg(txt):
     f = open(filename, "a")
     print(txt)
@@ -54,14 +54,18 @@ station_list = df_stations.station_id
 
 
 # % Plotting site-specific evaluation
-stat = []
+# stat = []
 for stid in station_list:
-# for stid in ['CEN1']:
+# for stid in ['THU_U']:
     Msg('# '+stid)
     df_aws = lib.load_promice_data(stid, res, data_type)
 
     try:
-        df_carra = lib.load_CARRA_data(stid)
+        stid_carra = stid.replace('ZAC','ZAK')
+        if stid_carra=="THU_U":
+            stid_carra += "2"
+
+        df_carra = lib.load_CARRA_data(stid_carra)
     except Exception as e:
         print(e)
         continue
@@ -182,10 +186,13 @@ for stid in station_list:
                 table = pd.DataFrame(groups, columns=["t0", "t1"])
                 table=table.loc[table.t1!=table.t0]
                 table['t1'] = table['t1']+pd.to_timedelta('1D')
+                table["t0"] = table["t0"].dt.strftime("%Y-%m-%dT%H:%M:%S+00:00")
+                table["t1"] = table["t1"].dt.strftime("%Y-%m-%dT%H:%M:%S+00:00")
+                table['flag'] = 'RIME'
                 table['variable'] = 'dlr ulr dsr usr'
                 table['comment'] = 'automatically detected as rime-affected (bav)'
                 table['URL_graphic'] = 'https://github.com/GEUS-Glaciology-and-Climate/PROMICE-AWS-data-issues/issues/61'
-                table.to_csv(f'flags/{stid}.csv', index=None)
+                table.to_csv(f'flags_rime/{stid}.csv', index=None)
 
                 # plotting filtering process
                 df_bad[var].plot(marker='x',ls='None', color='tab:red', alpha=0.5,

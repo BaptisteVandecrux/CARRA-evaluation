@@ -1,9 +1,531 @@
-variable,station,latitude,longitude,elevation_aws,elevation_CARRA,date_start,date_end,MD,RMSD,MD_jja,RMSD_jja,N,N_jja
-rh_u,EGP,75.627443,-35.968725,2663.4,2672.539306640625,2016-05-01 15:00:00,2023-12-28 00:00:00,12.559377752032685,16.136170945360114,10.443224946324536,12.311889844001296,21895,5850
-rh_u_cor,EGP,75.627443,-35.968725,2663.4,2672.539306640625,2016-05-01 15:00:00,2023-12-28 00:00:00,-10.114264709716576,17.083747892321618,0.0568876642732539,7.20353354785482,21895,5850
-rh_u,CEN1,77.181783,-61.11583,1888.8,1881.30859375,2017-07-24 18:00:00,2023-12-28 21:00:00,10.568298985438789,12.74655283812137,6.998331823741373,8.48542227425564,15664,4478
-rh_u_cor,CEN1,77.181783,-61.11583,1888.8,1881.30859375,2017-07-24 18:00:00,2023-12-28 21:00:00,-6.8977441133865405,11.537749648297318,0.8408418505390503,4.834066564595604,15664,4478
-rh_u,NAU,73.840583,-49.534727,2332.4,2326.557373046875,2021-08-17 18:00:00,2023-12-28 21:00:00,10.887590413753545,13.150966028276226,6.008606781110358,7.628913675854099,5650,1577
-rh_u_cor,NAU,73.840583,-49.534727,2332.4,2326.557373046875,2021-08-17 18:00:00,2023-12-28 21:00:00,-6.274379993326104,9.673074046635403,-1.4955097058902758,3.5634302723629263,5650,1577
-rh_u,NAU,73.840583,-49.534727,2332.4,2326.557373046875,2021-08-17 18:00:00,2023-12-28 21:00:00,10.887590413753545,13.150966028276226,6.008606781110358,7.628913675854099,5650,1577
-rh_u_cor,NAU,73.840583,-49.534727,2332.4,2326.557373046875,2021-08-17 18:00:00,2023-12-28 21:00:00,-6.274379993326104,9.673074046635403,-1.4955097058902758,3.5634302723629263,5650,1577
+variable,stid,latitude,longitude,elevation_aws,elevation_CARRA,date_start,date_end,MD,RMSD,MD_jja,RMSD_jja,N,N_jja
+dsr,CEN1,"<xarray.DataArray 'latitude' ()> Size: 8B
+array(77.181783)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'longitude' ()> Size: 8B
+array(-61.11583)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height",2017-07-24 18:00:00,2021-08-12 18:00:00,-63.98238739424193,107.3485510172073,-64.05625599873657,106.8003104452426,2080,1509
+dsr,CEN1,"<xarray.DataArray 'latitude' ()> Size: 8B
+array(77.181783)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'longitude' ()> Size: 8B
+array(-61.11583)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height",2017-07-24 18:00:00,2021-08-12 18:00:00,-63.98238739424193,107.3485510172073,-64.05625599873657,106.8003104452426,2080,1509
+dsr,CEN1,"<xarray.DataArray 'latitude' ()> Size: 8B
+array(77.181783)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'longitude' ()> Size: 8B
+array(-61.11583)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height",2017-07-24 18:00:00,2021-08-12 18:00:00,-4.29547510909309,59.43889674495472,-25.931497613695786,82.3475726695352,11704,3097
+dsr,CEN1,"<xarray.DataArray 'latitude' ()> Size: 8B
+array(77.181783)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'longitude' ()> Size: 8B
+array(-61.11583)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height",2017-07-24 18:00:00,2021-08-12 18:00:00,-4.29547510909309,59.43889674495472,-25.931497613695786,82.3475726695352,11704,3097
+dsr,CEN1,"<xarray.DataArray 'latitude' ()> Size: 8B
+array(77.181783)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'longitude' ()> Size: 8B
+array(-61.11583)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height",2017-07-24 18:00:00,2021-08-12 18:00:00,-4.29547510909309,59.43889674495472,-25.931497613695786,82.3475726695352,11704,3097
+usr,CEN1,"<xarray.DataArray 'latitude' ()> Size: 8B
+array(77.181783)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'longitude' ()> Size: 8B
+array(-61.11583)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height",2017-07-24 18:00:00,2021-08-12 18:00:00,-6.410673755813353,39.30940194881273,-24.878412214981726,63.87718576994184,11704,3097
+dsr_cor,CEN1,"<xarray.DataArray 'latitude' ()> Size: 8B
+array(77.181783)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'longitude' ()> Size: 8B
+array(-61.11583)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height",2017-07-24 18:00:00,2021-08-12 18:00:00,-5.820944933805794,58.1365068263622,-27.840120522962824,80.25808041207705,11701,3097
+usr_cor,CEN1,"<xarray.DataArray 'latitude' ()> Size: 8B
+array(77.181783)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'longitude' ()> Size: 8B
+array(-61.11583)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height",2017-07-24 18:00:00,2021-08-12 18:00:00,-6.3917057346122705,39.311676542301015,-24.872317585770663,63.864753509864414,11701,3097
+dlr,CEN1,"<xarray.DataArray 'latitude' ()> Size: 8B
+array(77.181783)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'longitude' ()> Size: 8B
+array(-61.11583)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height",2017-07-24 18:00:00,2021-08-12 18:00:00,-22.765460306933623,36.78271115533685,-4.637620797462451,23.76381170018692,11841,3097
+dlr,CEN1,"<xarray.DataArray 'latitude' ()> Size: 8B
+array(77.181783)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'longitude' ()> Size: 8B
+array(-61.11583)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height","<xarray.DataArray 'altitude_mod' ()> Size: 4B
+array(1881.3086, dtype=float32)
+Coordinates:
+    step               timedelta64[ns] 8B 00:00:00
+    heightAboveGround  float64 8B 2.0
+    spatial_ref        int64 8B 0
+    surface            float64 8B 0.0
+Attributes: (12/33)
+    GRIB_paramId:                             228002
+    GRIB_dataType:                            an
+    GRIB_numberOfPoints:                      1356561
+    GRIB_typeOfLevel:                         surface
+    GRIB_stepUnits:                           1
+    GRIB_stepType:                            instant
+    ...                                       ...
+    GRIB_name:                                Orography
+    GRIB_shortName:                           orog
+    GRIB_units:                               m
+    long_name:                                Orography
+    units:                                    m
+    standard_name:                            geopotential_height",2017-07-24 18:00:00,2021-08-12 18:00:00,-22.765460306933623,36.78271115533685,-4.637620797462451,23.76381170018692,11841,3097
