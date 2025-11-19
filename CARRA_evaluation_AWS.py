@@ -9,8 +9,8 @@ tip list:
 """
 from scipy.stats import linregress
 from matplotlib import gridspec
-import matplotlib
-matplotlib.use('Agg')
+# import matplotlib
+# matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
@@ -54,12 +54,13 @@ station_list = df_stations.station_id
 
 # % Plotting site-specific evaluation
 
-for stid in station_list:
-# for stid in ['CEN1']:
+# for stid in station_list:
+for stid in ['DY2']:
     Msg('# '+stid)
     df_aws = lib.load_promice_data(stid, res, data_type)
 
     df_carra = lib.load_CARRA_data(stid)
+    df_aws.index = df_aws.index#+pd.to_timedelta('2h')
     if res == 'day':
         df_carra = df_carra.resample('D').mean()
     else:
@@ -71,9 +72,9 @@ for stid in station_list:
     df_carra = df_carra.loc[slice(common_idx[0], common_idx[-1]), :]
     df_carra_all = df_carra.copy()
 
-    for var in var_list:
+    # for var in var_list:
     # for var in ["dlr", "dsr", "dsr_cor", "usr","usr_cor"]:
-    # for var in ["dlr", "dsr"]:
+    for var in [ "dsr","t_u"]:
         Msg('## '+var)
         fig = plt.figure(figsize=(15, 7))
         gs = gridspec.GridSpec(1, 2, width_ratios=[2.5, 1])
@@ -83,7 +84,7 @@ for stid in station_list:
 
         # first plot
         df_aws[var].plot(ax=ax1, label='all measurements',marker='.', ls='None')
-        # df_carra_all[var.replace('_cor', '')].plot(ax=ax1,alpha=0.9, label='CARRA')
+        df_carra_all[var.replace('_cor', '')].plot(ax=ax1,alpha=0.9, label='CARRA')
 
         ax1.set_ylabel(var)
         if len(df_aws[var].dropna())>0:

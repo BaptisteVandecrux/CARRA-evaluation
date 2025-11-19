@@ -1,2 +1,2 @@
-t0,t1,flag,variable,comment,URL_graphic
-2022-11-06T00:00:00+00:00,2022-11-09T00:00:00+00:00,RIME,dlr ulr dsr usr,automatically detected as rime-affected (bav),https://github.com/GEUS-Glaciology-and-Climate/PROMICE-AWS-data-issues/issues/61
+t0,t1,variable,flag,comment,URL_graphic
+2022-11-06T00:00:00+00:00,2022-11-09T00:00:00+00:00,dlr ulr dsr usr,RIME,automatically detected as rime-affected (bav),https://github.com/GEUS-Glaciology-and-Climate/PROMICE-AWS-data-issues/issues/61
