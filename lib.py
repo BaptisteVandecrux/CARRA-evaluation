@@ -3,10 +3,8 @@ import numpy as np
 import xarray as xr
 import pandas as pd
 import os
-DEFAULT_VARS = ['time','stid','t_u', 'rh_u','rh_u_wrt_ice_or_water', 'qh_u','p_u', 'wspd_u','dlr', 'ulr',
-            't_surf',  'albedo', 'dsr', 'dsr_cor',  'usr',  'usr_cor','dlhf_u','dshf_u']
 
-def load_CARRA_data(stid, var_list=DEFAULT_VARS):
+def load_CARRA_data(stid):
 
     if os.path.exists(f"./data/CARRA_20250212/{stid}.nc"):
         ds_carra = xr.open_dataset(f"./data/CARRA_20250212/{stid}.nc")
@@ -25,9 +23,9 @@ def load_CARRA_data(stid, var_list=DEFAULT_VARS):
     if 'albedo' in df_carra:
         df_carra['albedo'] = df_carra.loc[df_carra.dsr>100,'albedo']
 
-    return df_carra[[v for v in var_list if v in df_carra.columns]]
+    return df_carra
 
-def load_promice_data(station,res,data_type, variables = DEFAULT_VARS):
+def load_promice_data(station,res,data_type):
     path_l3 = 'C:/Users/bav/GitHub/PROMICE data/thredds-data/'
 
     if data_type=='stations': folder = 'level_2_stations'
@@ -39,7 +37,7 @@ def load_promice_data(station,res,data_type, variables = DEFAULT_VARS):
     df_aws=df_aws.set_index('time')
     if 'albedo' in df_aws:
         df_aws['albedo'] = df_aws.loc[df_aws.dsr>100,'albedo']
-    return df_aws[[v for v in variables if v in df_aws.columns]]
+    return df_aws
 
 # %% shift
         # if var == 'dsr':

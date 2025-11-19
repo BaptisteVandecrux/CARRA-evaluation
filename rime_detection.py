@@ -8,8 +8,8 @@ tip list:
     import pdb; pdb.set_trace()
 """
 from matplotlib import gridspec
-# import matplotlib
-# matplotlib.use('Agg')
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -35,12 +35,12 @@ df_summary = pd.DataFrame()
 
 var_list =[ 'dsr',  'usr', 'albedo', 'dsr_cor',  'usr_cor',
             'dlhf_u','dshf_u','t_u', 'rh_u','rh_u_cor',
-            'wspd_u','dlr', 't_surf','p_u', 'qh_u']
+            'wspd_u','dlr', 't_surf','p_u', 'qh_u', 't_rad']
 # var_list =['rh_u','rh_u_cor','t_u']
 df_stations = pd.read_csv('../PROMICE data/thredds-data/metadata/AWS_stations_metadata.csv')
 station_list = df_stations.station_id
 
-plot = False
+plot = True
 stat = []
 for stid in station_list:
 # for stid in ['THU_U']:
@@ -87,13 +87,17 @@ for stid in station_list:
         bias = (df_aws["dlr"] - df_carra["dlr"])
         bias_daily = bias.resample("D").mean()
 
-        mask = (bias_daily+net_lw_daily).notnull()
+        t_rad_daily = df_aws.t_rad.resample("D").mean()
+
+        mask = (bias_daily+net_lw_daily+t_rad_daily).notnull()
         bias_daily=bias_daily.loc[mask]
         net_lw_daily=net_lw_daily.loc[mask]
+        t_rad_daily=t_rad_daily[mask]
 
         # days meeting both conditions
         bad_days = net_lw_daily.index[
-            (net_lw_daily > -4) & (bias_daily.abs() > 25)
+            (net_lw_daily > -4) & (bias_daily.abs() > 25)\
+                & (t_rad_daily<= 0)
         ]
 
         # select 3‑hourly timestamps inside these days
@@ -153,7 +157,7 @@ for stid in station_list:
 
             # first plot
             df_aws[var].plot(ax=ax1, label='all measurements',marker='.', ls='None')
-            df_carra_all[var.replace('_cor', '')].plot(ax=ax1,alpha=0.9, label='CARRA')
+            # df_carra_all[var.replace('_cor', '')].plot(ax=ax1,alpha=0.9, label='CARRA')
 
             ax1.set_ylabel(var)
             ax1.set_xlim(df_aws[var].dropna().index[[0,-1]])
@@ -173,7 +177,7 @@ for stid in station_list:
                             label='days with frost or rime')
 
             ax1b = ax1.twinx()
-            df_aws.rh_u_wrt_ice_or_water.plot(ax=ax1b, color="k", alpha=0.4, marker='.', ls='-', label="Net LW")
+            # df_aws.rh_u_wrt_ice_or_water.plot(ax=ax1b, color="k", alpha=0.4, marker='.', ls='-', label="Net LW")
             if len(net_lw_daily)>0:
                 net_lw_daily.plot(ax=ax1b, drawstyle='steps-post', color="k", alpha=0.4)
             ax1b.set_ylabel("Net LW (dlr - ulr)", color="grey")
@@ -221,7 +225,7 @@ for stid in station_list:
             fig.savefig(f'{fig_folder}/{stid}_{var}.png', bbox_inches = 'tight', dpi=240)
             Msg(f'![](../{fig_folder}/{stid}_{var}.png)')
             Msg(' ')
-            # plt.close(fig)
+            plt.close(fig)
 stat_df = pd.DataFrame(stat, columns=['station','incidence_%']).drop_duplicates()
 stat_df.to_csv('stat.csv', sep='\t', index=None, float_format='%.2f')
 tocgen.processFile(filename, filename[:-3]+"_toc.md")
