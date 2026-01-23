@@ -6,8 +6,8 @@ import os
 
 def load_CARRA_data(stid):
 
-    if os.path.exists(f"./data/CARRA_20250212/{stid}.nc"):
-        ds_carra = xr.open_dataset(f"./data/CARRA_20250212/{stid}.nc")
+    if os.path.exists(f"./data/CARRA_at_AWS/{stid}.nc"):
+        ds_carra = xr.open_dataset(f"./data/CARRA_at_AWS/{stid}.nc")
     else:
         ds_carra = xr.open_dataset(f"./data/CARRA_20250212/{stid.replace('v3','')}.nc")
     ds_carra=ds_carra.isel(station=0)

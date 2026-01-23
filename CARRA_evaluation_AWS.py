@@ -9,8 +9,8 @@ tip list:
 """
 from scipy.stats import linregress
 from matplotlib import gridspec
-# import matplotlib
-# matplotlib.use('Agg')
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
@@ -21,25 +21,27 @@ import lib
 
 res = 'hour'
 data_type = 'stations'
-filename = f'out/compil_plots_{res}.md'
+filename = f'out/compil_plots_{data_type}_{res}.md'
 f = open(filename, "w")
 def Msg(txt):
     f = open(filename, "a")
     print(txt)
     f.write(txt + "\n")
 
-fig_folder = f'figures/CARRA_vs_AWS_{res}/'
-# for f in os.listdir(fig_folder):
-#     os.remove(fig_folder+f)
+fig_folder = f'figures/CARRA_vs_AWS_{data_type}_{res}/'
+os.makedirs(fig_folder, exist_ok=True)
+for f in os.listdir(fig_folder):
+    os.remove(fig_folder+f)
 
 df_summary = pd.DataFrame()
 
 var_list =[ 'dsr',  'usr', 'albedo', 'dsr_cor',  'usr_cor',
-            'dlhf_u','dshf_u','t_u', 'rh_u','rh_u_cor',
+            'dlhf_u','dshf_u','t_u', 'rh_u','rh_u_wrt_ice_or_water',
             'wspd_u','dlr', 't_surf','p_u', 'qh_u']
 # var_list =['rh_u','rh_u_cor','t_u']
-df_stations = pd.read_csv('../PROMICE data/thredds-data/metadata/AWS_stations_metadata.csv')
-station_list = [
+df_meta = pd.read_csv(f'../PROMICE data/thredds-data/metadata/AWS_{data_type}_metadata.csv')
+if data_type == 'stations':
+    station_list = [
     'CEN1', 'CEN2', 'CP1', 'DY2',
         'EGP',  'HUM','JAR', 'JAR_O', 'KAN_L', 'KAN_Lv3',
        'KAN_M', 'KAN_U', 'KPC_U', 'KPC_Uv3', 'NAE',
@@ -47,15 +49,25 @@ station_list = [
        'QAS_L', 'QAS_Lv3', 'QAS_M', 'QAS_Mv3', 'QAS_U', 'QAS_Uv3', 'SCO_U', 'SCO_Uv3',
        'SCO_L','SCO_Lv3', 'SDL', 'SDM',  'SWC', 'SWC_O',       'UPE_L', 'UPE_U',
        'TAS_A', 'TAS_L', 'TAS_U', 'THU_L', 'THU_L2', 'THU_U2','THU_U2v3', 'TUN',
-       'FRE','WEG_L','RED_Lv3','NUK_K', 'ZAC_A', 'ZAC_A','ZAC_L']
+       'FRE','WEG_L','RED_Lv3','NUK_K', 'ZAC_A', 'ZAC_Uv3','ZAC_L']
+else:
+    station_list = [
+    'CEN', 'CP1', 'DY2',
+        'EGP',  'HUM','JAR', 'JAR_O', 'KAN_L',
+       'KAN_M', 'KAN_U', 'KPC_U', 'NAE',
+       'NAU',  'NEM', 'NSE', 'NUK_N','NUK_U', 'QAS_A',
+       'QAS_L', 'QAS_M', 'QAS_U',  'SCO_U', 
+       'SCO_L', 'SDL', 'SDM',  'SWC', 'SWC_O',       'UPE_L', 'UPE_U',
+       'TAS_A', 'TAS_L', 'TAS_U', 'THU_L', 'THU_L2', 'THU_U2', 'TUN',
+       'FRE','WEG_L','RED_L','NUK_K', 'ZAC_A', 'ZAC_U','ZAC_L']
 
-station_list = df_stations.station_id
+# station_list = df_meta.station_id
 
 
 # % Plotting site-specific evaluation
 
-# for stid in station_list:
-for stid in ['DY2']:
+for stid in station_list:
+# for stid in ['NSE']:
     Msg('# '+stid)
     df_aws = lib.load_promice_data(stid, res, data_type)
 
@@ -69,13 +81,17 @@ for stid in ['DY2']:
     common_idx = df_aws.index.intersection(df_carra.index)
 
     df_aws = df_aws.loc[slice(common_idx[0], common_idx[-1]), :]
+    df_aws.loc[df_aws.dsr_cor==np.nan, 'albedo']=np.nan
     df_carra = df_carra.loc[slice(common_idx[0], common_idx[-1]), :]
     df_carra_all = df_carra.copy()
 
-    # for var in var_list:
+    for var in var_list:
     # for var in ["dlr", "dsr", "dsr_cor", "usr","usr_cor"]:
-    for var in [ "dsr","t_u"]:
+    # for var in [ "dsr","t_u"]:
         Msg('## '+var)
+        if var not in df_aws.columns:
+            Msg(f'no {var} in {res} {data_type} data')
+            continue
         fig = plt.figure(figsize=(15, 7))
         gs = gridspec.GridSpec(1, 2, width_ratios=[2.5, 1])
         ax1 = plt.subplot(gs[0])
@@ -84,7 +100,7 @@ for stid in ['DY2']:
 
         # first plot
         df_aws[var].plot(ax=ax1, label='all measurements',marker='.', ls='None')
-        df_carra_all[var.replace('_cor', '')].plot(ax=ax1,alpha=0.9, label='CARRA')
+        df_carra_all[var.replace('_cor', '').replace('_wrt_ice_or_water','')].plot(ax=ax1,alpha=0.9, label='CARRA')
 
         ax1.set_ylabel(var)
         if len(df_aws[var].dropna())>0:
@@ -128,7 +144,7 @@ for stid in ['DY2']:
         fig.savefig(f'{fig_folder}/{stid}_{var}.png', bbox_inches = 'tight', dpi=240)
         Msg(f'![](../{fig_folder}/{stid}_{var}.png)')
         Msg(' ')
-        # plt.close(fig)
+        plt.close(fig)
 
 # %%  site-specific statistics
 plt.close('all')
