@@ -30,8 +30,8 @@ def Msg(txt):
 
 fig_folder = f'figures/CARRA_vs_AWS_{data_type}_{res}/'
 os.makedirs(fig_folder, exist_ok=True)
-for f in os.listdir(fig_folder):
-    os.remove(fig_folder+f)
+# for f in os.listdir(fig_folder):
+#     os.remove(fig_folder+f)
 
 df_summary = pd.DataFrame()
 
@@ -85,9 +85,9 @@ for stid in station_list:
     df_carra = df_carra.loc[slice(common_idx[0], common_idx[-1]), :]
     df_carra_all = df_carra.copy()
 
-    for var in var_list:
+    # for var in var_list:
     # for var in ["dlr", "dsr", "dsr_cor", "usr","usr_cor"]:
-    # for var in [ "dsr","t_u"]:
+    for var in [ "rh_u","rh_wrt_ice_or_water","t_u"]:
         Msg('## '+var)
         if var not in df_aws.columns:
             Msg(f'no {var} in {res} {data_type} data')
