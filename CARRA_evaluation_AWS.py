@@ -20,7 +20,7 @@ import os
 import lib
 
 res = 'hour'
-data_type = 'stations'
+data_type = 'sites'
 filename = f'out/compil_plots_{data_type}_{res}.md'
 f = open(filename, "w")
 def Msg(txt):
@@ -62,22 +62,26 @@ else:
        'FRE','WEG_L','RED_L','NUK_K', 'ZAC_A', 'ZAC_U','ZAC_L']
 
 # station_list = df_meta.station_id
-
-
+site_alias = {'CEN':'CEN2', 'CP1':'Crawford Point 1', 'DY2':'DYE-2',
+              'EGP':'EastGRIP','HUM':'Humboldt','NAE':'NASA-E','NAU':'NASA-U',
+              'NSE':'NASA-SE', 'NEM':'NEEM', 'JAR':'JAR1'}
 # % Plotting site-specific evaluation
 
-for stid in station_list:
+for stid in station_list[5:]:
 # for stid in ['NSE']:
     Msg('# '+stid)
     df_aws = lib.load_promice_data(stid, res, data_type)
 
-    df_carra = lib.load_CARRA_data(stid)
+    if data_type == 'sites':
+        df_carra = lib.load_CARRA_data(site_alias[stid])
+    else:
+        df_carra = lib.load_CARRA_data(stid)
     df_aws.index = df_aws.index#+pd.to_timedelta('2h')
     if res == 'day':
         df_carra = df_carra.resample('D').mean()
     else:
         df_aws = df_aws.resample('3h').mean()
-
+    df_aws = df_aws.loc['2017':,:]
     common_idx = df_aws.index.intersection(df_carra.index)
 
     df_aws = df_aws.loc[slice(common_idx[0], common_idx[-1]), :]
@@ -87,7 +91,8 @@ for stid in station_list:
 
     # for var in var_list:
     # for var in ["dlr", "dsr", "dsr_cor", "usr","usr_cor"]:
-    for var in [ "rh_u","rh_wrt_ice_or_water","t_u"]:
+    for var in [ "rh_u","rh_u_wrt_ice_or_water"]:
+        var_carra =var.replace('_cor', '').replace('_wrt_ice_or_water','')
         Msg('## '+var)
         if var not in df_aws.columns:
             Msg(f'no {var} in {res} {data_type} data')
@@ -100,7 +105,7 @@ for stid in station_list:
 
         # first plot
         df_aws[var].plot(ax=ax1, label='all measurements',marker='.', ls='None')
-        df_carra_all[var.replace('_cor', '').replace('_wrt_ice_or_water','')].plot(ax=ax1,alpha=0.9, label='CARRA')
+        df_carra_all[var_carra].plot(ax=ax1,alpha=0.9, label='CARRA')
 
         ax1.set_ylabel(var)
         if len(df_aws[var].dropna())>0:
@@ -112,11 +117,11 @@ for stid in station_list:
 
         # second plot
         ax2.plot(df_aws[var],
-                 df_carra[var.replace('_cor', '')],
+                 df_carra[var_carra],
                  marker='.',ls='None', label='all measurements')
 
-        MD = np.mean(df_carra.loc[common_idx, var.replace('_cor', '')] - df_aws.loc[common_idx, var])
-        RMSD = np.sqrt(np.mean((df_carra.loc[common_idx, var.replace('_cor', '')] - df_aws.loc[common_idx,var])**2))
+        MD = np.mean(df_carra.loc[common_idx, var_carra] - df_aws.loc[common_idx, var])
+        RMSD = np.sqrt(np.mean((df_carra.loc[common_idx, var_carra] - df_aws.loc[common_idx,var])**2))
         # Annotate with RMSD and MD
         ax2.annotate(f'All measurements:\nRMSD: {RMSD:.2f}\nMD: {MD:.2f}',
                      xy=(0.05, 0.95), xycoords='axes fraction',
@@ -130,8 +135,8 @@ for stid in station_list:
 
         # slope, intercept, r_value, p_value, std_err = linregress(
         #     df_aws.loc[common_idx, var], df_carra.loc[common_idx, var.replace('_cor', '')])
-        max_val = max(df_aws[var].max(), df_carra[var.replace('_cor', '')].max())
-        min_val = min(df_aws[var].min(), df_carra[var.replace('_cor', '')].min())
+        max_val = max(df_aws[var].max(), df_carra[var_carra].max())
+        min_val = min(df_aws[var].min(), df_carra[var_carra].min())
         ax2.plot([min_val, max_val], [min_val, max_val], 'k-', label='1:1 Line')
         # regression_line = slope * df_aws[var] + intercept
         # ax2.plot(df_aws[var], regression_line, 'r-', label='Linear Regression')
@@ -198,12 +203,12 @@ for stid in station_list:
         df_aws = df_aws.loc[common_idx, :]
         df_carra = df_carra.loc[common_idx, :]
 
-        MD = np.mean(df_carra[var.replace('_cor', '')] - df_aws[var])
-        RMSD = np.sqrt(np.mean((df_carra[var.replace('_cor', '')] - df_aws[var])**2))
+        MD = np.mean(df_carra[var_carra] - df_aws[var])
+        RMSD = np.sqrt(np.mean((df_carra[var_carra] - df_aws[var])**2))
         MD_jja = np.mean(df_carra.loc[df_carra.index.month.isin([6,7,8]),
-                                      var.replace('_cor', '')] - df_aws.loc[df_aws.index.month.isin([6,7,8]), var])
+                                      var_carra] - df_aws.loc[df_aws.index.month.isin([6,7,8]), var])
         RMSD_jja = np.sqrt(np.mean((df_carra.loc[df_carra.index.month.isin([6,7,8]),
-                                      var.replace('_cor', '')] - df_aws.loc[df_aws.index.month.isin([6,7,8]),  var])**2))
+                                      var_carra] - df_aws.loc[df_aws.index.month.isin([6,7,8]),  var])**2))
 
         tmp = pd.DataFrame()
         tmp['var'] = [var]
@@ -218,9 +223,9 @@ for stid in station_list:
         tmp['RMSD'] = RMSD
         tmp['MD_jja'] = MD_jja
         tmp['RMSD_jja'] = RMSD_jja
-        tmp['N'] = (df_carra[var.replace('_cor', '')] * df_aws[var]).notnull().sum()
+        tmp['N'] = (df_carra[var_carra] * df_aws[var]).notnull().sum()
         tmp['N_jja'] = (df_carra.loc[df_carra.index.month.isin([6,7,8]),
-                                      var.replace('_cor', '')] - df_aws.loc[df_aws.index.month.isin([6,7,8]),
+                                      var_carra] - df_aws.loc[df_aws.index.month.isin([6,7,8]),
                                                                     var]).count()
         df_summary = pd.concat((df_summary, tmp))
 df_summary.rename(columns={'var':'variable'}).to_csv('out/summary_statistics.csv',index=None)
