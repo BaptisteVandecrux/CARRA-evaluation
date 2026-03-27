@@ -22,6 +22,3 @@ no dshf_u in hour stations data
 ![](../figures/CARRA_vs_AWS_stations_hour//CEN1_t_u.png)
  
 ## rh_u
-![](../figures/CARRA_vs_AWS_stations_hour//CEN1_rh_u.png)
- 
-## rh_u_wrt_ice_or_water

@@ -4,12 +4,15 @@ import xarray as xr
 import pandas as pd
 import os
 
+PATH_TO_CARRA = 'C:/Users/bav/OneDrive - GEUS/Data/CARRA/CARRA_at_AWS/'
 def load_CARRA_data(stid):
 
-    if os.path.exists(f"./data/CARRA_at_AWS/{stid}.nc"):
-        ds_carra = xr.open_dataset(f"./data/CARRA_at_AWS/{stid}.nc")
+    if os.path.exists(f"{PATH_TO_CARRA}/{stid}.nc"):
+        ds_carra = xr.open_dataset(f"{PATH_TO_CARRA}/{stid}.nc")
+    elif os.path.exists(f"{PATH_TO_CARRA}/{stid.replace('v3','')}.nc"):
+        ds_carra = xr.open_dataset(f"{PATH_TO_CARRA}/{stid.replace('v3','')}.nc")
     else:
-        ds_carra = xr.open_dataset(f"./data/CARRA_20250212/{stid.replace('v3','')}.nc")
+        print('ERROR: Cannot read CARRA data')
     ds_carra=ds_carra.isel(station=0)
 
     df_carra = ds_carra.to_dataframe().rename(columns={

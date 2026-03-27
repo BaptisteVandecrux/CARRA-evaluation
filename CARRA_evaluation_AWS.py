@@ -56,7 +56,7 @@ else:
         'EGP',  'HUM','JAR', 'JAR_O', 'KAN_L',
        'KAN_M', 'KAN_U', 'KPC_U', 'NAE',
        'NAU',  'NEM', 'NSE', 'NUK_N','NUK_U', 'QAS_A',
-       'QAS_L', 'QAS_M', 'QAS_U',  'SCO_U', 
+       'QAS_L', 'QAS_M', 'QAS_U',  'SCO_U',
        'SCO_L', 'SDL', 'SDM',  'SWC', 'SWC_O',       'UPE_L', 'UPE_U',
        'TAS_A', 'TAS_L', 'TAS_U', 'THU_L', 'THU_L2', 'THU_U2', 'TUN',
        'FRE','WEG_L','RED_L','NUK_K', 'ZAC_A', 'ZAC_U','ZAC_L']
@@ -67,7 +67,7 @@ site_alias = {'CEN':'CEN2', 'CP1':'Crawford Point 1', 'DY2':'DYE-2',
               'NSE':'NASA-SE', 'NEM':'NEEM', 'JAR':'JAR1'}
 # % Plotting site-specific evaluation
 
-for stid in station_list[5:]:
+for stid in station_list:
 # for stid in ['NSE']:
     Msg('# '+stid)
     df_aws = lib.load_promice_data(stid, res, data_type)
