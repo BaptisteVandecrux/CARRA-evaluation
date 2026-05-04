@@ -18,26 +18,6 @@
 ## t_surf
 ![](../figures/CARRA_vs_AWS_sites_hour//HUM_t_surf.png)
  
-# JAR
-## t_surf
-![](../figures/CARRA_vs_AWS_sites_hour//JAR_t_surf.png)
- 
-# KAN_L
-## t_surf
-![](../figures/CARRA_vs_AWS_sites_hour//KAN_L_t_surf.png)
- 
-# KAN_M
-## t_surf
-![](../figures/CARRA_vs_AWS_sites_hour//KAN_M_t_surf.png)
- 
-# KAN_U
-## t_surf
-![](../figures/CARRA_vs_AWS_sites_hour//KAN_U_t_surf.png)
- 
-# KPC_U
-## t_surf
-![](../figures/CARRA_vs_AWS_sites_hour//KPC_U_t_surf.png)
- 
 # NAE
 ## t_surf
 ![](../figures/CARRA_vs_AWS_sites_hour//NAE_t_surf.png)
@@ -53,6 +33,46 @@
 # NSE
 ## t_surf
 ![](../figures/CARRA_vs_AWS_sites_hour//NSE_t_surf.png)
+ 
+# TUN
+## t_surf
+![](../figures/CARRA_vs_AWS_sites_hour//TUN_t_surf.png)
+ 
+# SDL
+## t_surf
+![](../figures/CARRA_vs_AWS_sites_hour//SDL_t_surf.png)
+ 
+# SDM
+## t_surf
+![](../figures/CARRA_vs_AWS_sites_hour//SDM_t_surf.png)
+ 
+# JAR
+## t_surf
+![](../figures/CARRA_vs_AWS_sites_hour//JAR_t_surf.png)
+ 
+# SWC
+## t_surf
+![](../figures/CARRA_vs_AWS_sites_hour//SWC_t_surf.png)
+ 
+# KAN_L
+## t_surf
+![](../figures/CARRA_vs_AWS_sites_hour//KAN_L_t_surf.png)
+ 
+# KAN_M
+## t_surf
+![](../figures/CARRA_vs_AWS_sites_hour//KAN_M_t_surf.png)
+ 
+# KAN_U
+## t_surf
+![](../figures/CARRA_vs_AWS_sites_hour//KAN_U_t_surf.png)
+ 
+# KPC_L
+## t_surf
+![](../figures/CARRA_vs_AWS_sites_hour//KPC_L_t_surf.png)
+ 
+# KPC_U
+## t_surf
+![](../figures/CARRA_vs_AWS_sites_hour//KPC_U_t_surf.png)
  
 # NUK_N
 ## t_surf
@@ -86,18 +106,6 @@
 ## t_surf
 ![](../figures/CARRA_vs_AWS_sites_hour//SCO_L_t_surf.png)
  
-# SDL
-## t_surf
-![](../figures/CARRA_vs_AWS_sites_hour//SDL_t_surf.png)
- 
-# SDM
-## t_surf
-![](../figures/CARRA_vs_AWS_sites_hour//SDM_t_surf.png)
- 
-# SWC
-## t_surf
-![](../figures/CARRA_vs_AWS_sites_hour//SWC_t_surf.png)
- 
 # UPE_L
 ## t_surf
 ![](../figures/CARRA_vs_AWS_sites_hour//UPE_L_t_surf.png)
@@ -126,4 +134,20 @@
 ## t_surf
 ![](../figures/CARRA_vs_AWS_sites_hour//THU_L2_t_surf.png)
  
-# THU_U2
+# FRE
+## t_surf
+![](../figures/CARRA_vs_AWS_sites_hour//FRE_t_surf.png)
+ 
+# WEG_L
+## t_surf
+![](../figures/CARRA_vs_AWS_sites_hour//WEG_L_t_surf.png)
+ 
+# RED_L
+# NUK_K
+## t_surf
+![](../figures/CARRA_vs_AWS_sites_hour//NUK_K_t_surf.png)
+ 
+# ZAC_A
+# ZAC_U
+# ZAC_L
+# t_surf

@@ -59,23 +59,24 @@ if data_type == 'stations':
        'NAU',  'NEM', 'NSE', 'NUK_N','NUK_U', 'NUK_Uv3', 'QAS_A',
        'QAS_L', 'QAS_Lv3', 'QAS_M', 'QAS_Mv3', 'QAS_U', 'QAS_Uv3', 'SCO_U', 'SCO_Uv3',
        'SCO_L','SCO_Lv3', 'SDL', 'SDM',  'SWC', 'SWC_O',       'UPE_L', 'UPE_U',
-       'TAS_A', 'TAS_L', 'TAS_U', 'THU_L', 'THU_L2', 'THU_U', 'TUN',
+       'TAS_A', 'TAS_L', 'TAS_U', 'THU_L', 'THU_L2', 'THU_U', 'THU_U2', 'TUN',
        'FRE','WEG_L','RED_Lv3','NUK_K', 'ZAC_A', 'ZAC_Uv3','ZAC_L']
 else:
     station_list = [
-    'CEN', 'CP1', 'DY2',
-        'EGP',  'HUM','JAR',  'KAN_L',
-       'KAN_M', 'KAN_U', 'KPC_U', 'NAE',
-       'NAU',  'NEM', 'NSE', 'NUK_N','NUK_U', 'QAS_A',
-       'QAS_L', 'QAS_M', 'QAS_U',  'SCO_U',
-       'SCO_L', 'SDL', 'SDM',  'SWC', 'UPE_L', 'UPE_U',
-       'TAS_A', 'TAS_L', 'TAS_U', 'THU_L', 'THU_L2', 'THU_U2', 'TUN',
+    'CEN', 'CP1', 'DY2', 'EGP',  'HUM',
+    'NAE','NAU',  'NEM', 'NSE',  'TUN',
+    'SDL', 'SDM', 'JAR', 'SWC',
+    'KAN_L', 'KAN_M', 'KAN_U', 'KPC_L',  'KPC_U',
+        'NUK_N','NUK_U', 'QAS_A',  'QAS_L', 'QAS_M', 'QAS_U',
+        'SCO_U', 'SCO_L',   'UPE_L', 'UPE_U',
+       'TAS_A', 'TAS_L', 'TAS_U', 'THU_L', 'THU_L2',
        'FRE','WEG_L','RED_L','NUK_K', 'ZAC_A', 'ZAC_U','ZAC_L']
 
 # station_list = df_meta.station_id
 site_alias = {'CEN':'CEN2', 'CP1':'Crawford Point 1', 'DY2':'DYE-2',
               'EGP':'EastGRIP','HUM':'Humboldt','NAE':'NASA-E','NAU':'NASA-U',
-              'NSE':'NASA-SE', 'NEM':'NEEM', 'JAR':'JAR1','THU_U':'THU_U2'}
+              'NSE':'NASA-SE', 'NEM':'NEEM', 'JAR':'JAR1','THU_U':'THU_U2',
+              'RED_L':'RED_Lv3', 'ZAC_U':'ZAC_Uv3','ZAC_L': 'ZAC_Lv3',}
 # % Plotting site-specific evaluation
 
 for stid in station_list:
@@ -84,10 +85,22 @@ for stid in station_list:
     df_aws = lib.load_promice_data(stid, res, data_type)
 
     if data_type == 'sites':
-        df_carra = lib.load_CARRA_data(site_alias.get(stid, stid))
+        try:
+            df_carra = lib.load_CARRA_data(site_alias.get(stid, stid))
+        except:
+            continue
     else:
         df_carra = lib.load_CARRA_data(stid)
     df_aws.index = df_aws.index#+pd.to_timedelta('2h')
+    df_aws = df_aws.loc[:, [v for v in var_list if v in df_aws.columns]]
+
+    valid_any = df_aws.notna().any(axis=1)
+
+    if valid_any.any():
+        df_aws = df_aws.loc[valid_any.idxmax():valid_any[::-1].idxmax()]
+    else:
+        print("No data available for any variable in var_list")
+
     if res == 'day':
         df_carra = df_carra.resample('D').mean()
     else:
@@ -96,7 +109,8 @@ for stid in station_list:
     common_idx = df_aws.index.intersection(df_carra.index)
 
     df_aws = df_aws.loc[slice(common_idx[0], common_idx[-1]), :]
-    df_aws.loc[df_aws.dsr_cor==np.nan, 'albedo']=np.nan
+    if 'albedo' in df_aws.columns:
+        df_aws.loc[df_aws.dsr_cor==np.nan, 'albedo']=np.nan
     df_carra = df_carra.loc[slice(common_idx[0], common_idx[-1]), :]
     df_carra_all = df_carra.copy()
 
@@ -139,8 +153,8 @@ for stid in station_list:
         slope_carra, intercept_carra, *_ = linregress(jja_carra.index.year, jja_carra.values)
 
         # trend lines as pandas series (so .plot works on ax1)
-        trend_aws = pd.Series(slope_aws*jja_aws.index.year + intercept_aws, index=jja_aws.index)
-        trend_carra = pd.Series(slope_carra*jja_carra.index.year + intercept_carra, index=jja_carra.index)
+        trend_aws = pd.Series(slope_aws*jja_aws.index.year + intercept_aws, index=jja_aws.index+pd.to_timedelta('195D'))
+        trend_carra = pd.Series(slope_carra*jja_carra.index.year + intercept_carra, index=jja_carra.index+pd.to_timedelta('195D'))
 
         trend_aws.plot(ax=ax1, lw=2, label=f'AWS JJA trend ({slope_aws*10:.2f}/dec)')
         trend_carra.plot(ax=ax1, lw=2, label=f'CARRA JJA trend ({slope_carra*10:.2f}/dec)')
