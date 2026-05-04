@@ -27,18 +27,29 @@ def Msg(txt):
     f = open(filename, "a")
     print(txt)
     f.write(txt + "\n")
-
+from scipy.stats import linregress
 fig_folder = f'figures/CARRA_vs_AWS_{data_type}_{res}/'
 os.makedirs(fig_folder, exist_ok=True)
 # for f in os.listdir(fig_folder):
 #     os.remove(fig_folder+f)
+def calc_jja_trend(s, min_years=5):
+    s = s.dropna()
+    s = s[s.index.month.isin([6, 7, 8])]
+    if s.empty:
+        return np.nan, np.nan, np.nan, 0
 
+    jja = s.groupby(s.index.year).mean().dropna()
+    if len(jja) < min_years:
+        return np.nan, np.nan, np.nan, len(jja)
+
+    slope, intercept, r, p, se = linregress(jja.index.values, jja.values)
+    return slope, p, r**2, len(jja)
 df_summary = pd.DataFrame()
 
 var_list =[ 'dsr',  'usr', 'albedo', 'dsr_cor',  'usr_cor',
             'dlhf_u','dshf_u','t_u', 'rh_u','rh_u_wrt_ice_or_water',
             'wspd_u','dlr', 't_surf','p_u', 'qh_u']
-# var_list =['rh_u','rh_u_cor','t_u']
+var_list =['t_surf']
 df_meta = pd.read_csv(f'../PROMICE data/thredds-data/metadata/AWS_{data_type}_metadata.csv')
 if data_type == 'stations':
     station_list = [
@@ -48,23 +59,23 @@ if data_type == 'stations':
        'NAU',  'NEM', 'NSE', 'NUK_N','NUK_U', 'NUK_Uv3', 'QAS_A',
        'QAS_L', 'QAS_Lv3', 'QAS_M', 'QAS_Mv3', 'QAS_U', 'QAS_Uv3', 'SCO_U', 'SCO_Uv3',
        'SCO_L','SCO_Lv3', 'SDL', 'SDM',  'SWC', 'SWC_O',       'UPE_L', 'UPE_U',
-       'TAS_A', 'TAS_L', 'TAS_U', 'THU_L', 'THU_L2', 'THU_U2','THU_U2v3', 'TUN',
+       'TAS_A', 'TAS_L', 'TAS_U', 'THU_L', 'THU_L2', 'THU_U', 'TUN',
        'FRE','WEG_L','RED_Lv3','NUK_K', 'ZAC_A', 'ZAC_Uv3','ZAC_L']
 else:
     station_list = [
     'CEN', 'CP1', 'DY2',
-        'EGP',  'HUM','JAR', 'JAR_O', 'KAN_L',
+        'EGP',  'HUM','JAR',  'KAN_L',
        'KAN_M', 'KAN_U', 'KPC_U', 'NAE',
        'NAU',  'NEM', 'NSE', 'NUK_N','NUK_U', 'QAS_A',
        'QAS_L', 'QAS_M', 'QAS_U',  'SCO_U',
-       'SCO_L', 'SDL', 'SDM',  'SWC', 'SWC_O',       'UPE_L', 'UPE_U',
+       'SCO_L', 'SDL', 'SDM',  'SWC', 'UPE_L', 'UPE_U',
        'TAS_A', 'TAS_L', 'TAS_U', 'THU_L', 'THU_L2', 'THU_U2', 'TUN',
        'FRE','WEG_L','RED_L','NUK_K', 'ZAC_A', 'ZAC_U','ZAC_L']
 
 # station_list = df_meta.station_id
 site_alias = {'CEN':'CEN2', 'CP1':'Crawford Point 1', 'DY2':'DYE-2',
               'EGP':'EastGRIP','HUM':'Humboldt','NAE':'NASA-E','NAU':'NASA-U',
-              'NSE':'NASA-SE', 'NEM':'NEEM', 'JAR':'JAR1'}
+              'NSE':'NASA-SE', 'NEM':'NEEM', 'JAR':'JAR1','THU_U':'THU_U2'}
 # % Plotting site-specific evaluation
 
 for stid in station_list:
@@ -73,7 +84,7 @@ for stid in station_list:
     df_aws = lib.load_promice_data(stid, res, data_type)
 
     if data_type == 'sites':
-        df_carra = lib.load_CARRA_data(site_alias[stid])
+        df_carra = lib.load_CARRA_data(site_alias.get(stid, stid))
     else:
         df_carra = lib.load_CARRA_data(stid)
     df_aws.index = df_aws.index#+pd.to_timedelta('2h')
@@ -81,7 +92,7 @@ for stid in station_list:
         df_carra = df_carra.resample('D').mean()
     else:
         df_aws = df_aws.resample('3h').mean()
-    df_aws = df_aws.loc['2017':,:]
+    # df_aws = df_aws.loc['2017':,:]
     common_idx = df_aws.index.intersection(df_carra.index)
 
     df_aws = df_aws.loc[slice(common_idx[0], common_idx[-1]), :]
@@ -89,9 +100,7 @@ for stid in station_list:
     df_carra = df_carra.loc[slice(common_idx[0], common_idx[-1]), :]
     df_carra_all = df_carra.copy()
 
-    # for var in var_list:
-    # for var in ["dlr", "dsr", "dsr_cor", "usr","usr_cor"]:
-    for var in [ "rh_u","rh_u_wrt_ice_or_water"]:
+    for var in var_list:
         var_carra =var.replace('_cor', '').replace('_wrt_ice_or_water','')
         Msg('## '+var)
         if var not in df_aws.columns:
@@ -114,6 +123,27 @@ for stid in station_list:
             Msg(f'no {var} data')
             continue
         ax1.set_title(stid)
+        # JJA yearly means with datetime index (compatible with pandas plot)
+        jja_aws = df_aws[var].dropna()
+        jja_aws = jja_aws[jja_aws.index.month.isin([6,7,8])]
+        jja_aws = jja_aws.groupby(jja_aws.index.year).mean()
+        jja_aws.index = pd.to_datetime(jja_aws.index, format='%Y')
+
+        jja_carra = df_carra_all[var_carra].dropna()
+        jja_carra = jja_carra[jja_carra.index.month.isin([6,7,8])]
+        jja_carra = jja_carra.groupby(jja_carra.index.year).mean()
+        jja_carra.index = pd.to_datetime(jja_carra.index, format='%Y')
+
+        # trends
+        slope_aws, intercept_aws, *_ = linregress(jja_aws.index.year, jja_aws.values)
+        slope_carra, intercept_carra, *_ = linregress(jja_carra.index.year, jja_carra.values)
+
+        # trend lines as pandas series (so .plot works on ax1)
+        trend_aws = pd.Series(slope_aws*jja_aws.index.year + intercept_aws, index=jja_aws.index)
+        trend_carra = pd.Series(slope_carra*jja_carra.index.year + intercept_carra, index=jja_carra.index)
+
+        trend_aws.plot(ax=ax1, lw=2, label=f'AWS JJA trend ({slope_aws*10:.2f}/dec)')
+        trend_carra.plot(ax=ax1, lw=2, label=f'CARRA JJA trend ({slope_carra*10:.2f}/dec)')
 
         # second plot
         ax2.plot(df_aws[var],
@@ -151,6 +181,12 @@ for stid in station_list:
         Msg(' ')
         plt.close(fig)
 
+        trend_aws, p_aws, r2_aws, n_aws = calc_jja_trend(df_aws.loc[common_idx, var])
+        trend_carra, p_carra, r2_carra, n_carra = calc_jja_trend(df_carra.loc[common_idx, var])
+
+        print(f"AWS: {trend_aws*10:.2f} deg decade⁻¹")
+        print(f"CARRA: {trend_carra*10:.2f} deg decade⁻¹")
+
 # %%  site-specific statistics
 plt.close('all')
 
@@ -166,18 +202,6 @@ for stid in station_list:
         if len(df_aws)==0:
             print('no',var,'at',stid)
             continue
-
-        # sec_stid=[]
-        # if stid == 'CEN1':
-        #     sec_stid = 'CEN2'
-        # if (stid+'v3' in ds_aws.stid):
-        #     sec_stid = stid+'v3'
-        # if len(sec_stid)>0:
-        #     df_sec = (ds_aws.where(ds_aws.stid==sec_stid,drop=True)
-        #               .to_dataframe()[[var]]
-        #               .reset_index('stid',drop=True))
-        #     df_sec = df_sec.dropna()
-        #     df_aws = df_aws.combine_first(df_sec)
 
         df_carra = ds_carra.sel(
             stid=stid.replace('v3','')
