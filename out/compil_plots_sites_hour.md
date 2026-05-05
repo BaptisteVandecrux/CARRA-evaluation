@@ -1,46 +1,4 @@
-_
 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
 # CEN
 ## t_surf
 ![](../figures/CARRA_vs_AWS_sites_hour//CEN_t_surf.png)
